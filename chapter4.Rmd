@@ -31,11 +31,11 @@ We will read expression data for study [GSE55268](http://www.ncbi.nlm.nih.gov/ge
 success_msg("Now that you understand the study, let's analyze some data!")
 ```
 
---- type:NormalExercise 
+--- type:NormalExercise  key:ecc45725c8
 ## Reading in the data
 To get microarray data, you'll use a package called `GEOquery` from Bioconductor to read in the data.
 
---- type:NormalExercise 
+--- type:NormalExercise  key:483c4c5eb5
 ## ExpressionSet Objects
 
 The data we just read in is stored in an object of the `ExpressionSet` class.  You can think of an `ExpressionSet` class as a container designed to combine multiple sources of information from a gene expression experiment into a single object. If interested, you can read more about this class [here](https://www.bioconductor.org/packages/devel/bioc/vignettes/Biobase/inst/doc/ExpressionSetIntroduction.pdf).
@@ -99,23 +99,23 @@ success_msg("Great! Continue to the next exercise!")
 ```
 
 
---- type:NormalExercise 
+--- type:NormalExercise  key:e7416248d9
 ## Tidy the data
 
---- type:NormalExercise 
+--- type:NormalExercise  key:9c603bbce2
 ## Plotting Gene Expression
 
 
---- type:NormalExercise 
+--- type:NormalExercise  key:9c603bbce2
 ## Plotting Gene Expression 
 
---- type:NormalExercise 
+--- type:NormalExercise  key:f548bed685
 ## Plotting Gene Expression (2)
 
---- type:NormalExercise 
+--- type:NormalExercise  key:6a67c9447e
 ## Plotting Gene Expression (3)
 
---- type:NormalExercise 
+--- type:NormalExercise  key:ae47d50b6a
 ## Data Interrogation
 
 
