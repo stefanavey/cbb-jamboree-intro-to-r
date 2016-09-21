@@ -1,7 +1,9 @@
-title            : cbb jamboree intro to r
+id               : 1841
+title            : CBB Jamboree - Intro to R
 instructors      :
  - avey.stefan@gmail.com
-description      : This is an automatically generated demo course which will help you on your way to create an awesome DataCamp course.
+ - raarjr@gmail.com
+description      : "This course is designed for the Computational Biology & Bioinformatics (CBB) program jamboree at Yale University. It is a quick introduction to basic R commands but focuses on tidy data analysis using tidyr/dplyr and visualization with ggplot2"
 university       : DataCamp
 difficulty_level : 2
 time_needed      : 1 hour
