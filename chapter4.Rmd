@@ -101,15 +101,15 @@ success_msg("Great! Continue to the next exercise!")
 --- type:NormalExercise  key:e7416248d9
 ## Tidy the data
 
-Look at the class of `expr`. To use `dplyr` tools we'll need to create a data frame. We can acheive this with the `data.frame()` function.
+Look at the class of `expr`. To tidy and work with this data you need to convert this matrix to a data frame. You can do this with the [`data.frame()`](http://www.rdocumentation.org/packages/base/functions/data.frame) function.
 
 *** =instructions
 
-- Create a new data frame called `expr_df` from `expr` using the `data.frame()` function.
-- Combine `fdat` and `expr_df` into a new data frame called `exprf_df` again using the `data.frame()` function.
+- Create a new data frame called `expr_df` from `expr` using the [`data.frame()`](http://www.rdocumentation.org/packages/base/functions/data.frame) function.
+- Combine `fdat` and `expr_df` into a new data frame called `exprf_df` again using the [`data.frame()`](http://www.rdocumentation.org/packages/base/functions/data.frame) function.
 - Click 'Submit Answer'.
 
-*Note: We set the global option `stringsAsFactors` to `FALSE` to avoid using the `factor` data type which we will not discuss.*
+*Note: We set the global option `stringsAsFactors` to `FALSE` in the Workspace to avoid using the `factor` data type which we will not cover.*
 
 *** =hint
 
@@ -122,17 +122,17 @@ options(stringsAsFactors = FALSE)
 
 *** =sample_code
 ```{r}
-# Cast expr into a data frame called expr_df
+# Convert expr into a data frame and name it expr_df
 
-# Combine fdat and expr_df into exprf_df
+# Combined fdat and expr_df into a data frame named exprf_df
 
 ```
 
 *** =solution
 ```{r}
-# Cast expr into a data frame called expr_df
+# Convert expr into a data frame and name it expr_df
 expr_df <- data.frame(expr)
-# Combined fdat and expr_df into exprf_df
+# Combined fdat and expr_df into a data frame named exprf_df
 exprf_df <- data.frame(fdat, expr_df)
 ```
 
