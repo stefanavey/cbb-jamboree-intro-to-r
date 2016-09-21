@@ -8,10 +8,10 @@ description : "In this chapter, you will combine what you learned in the first t
 
 Now that you've learned how to work with R, use `tidyr`/`dplyr` and `ggplot2` you will apply these skills to read in and visualize gene expression data.
 
-To get microarray data, a handy package `GEOquery` exists on Bioconductor to read in the data. We will read expression data for study [GSE55268](http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE55278). This study describes expression profiling of dendritic cells after infection with multiple strains of influenza viruses over an 8-hour time course. Read the abstract of [the associated publication](http://www.ncbi.nlm.nih.gov/pubmed/26223639) before continuing.
+We will read expression data for study [GSE55268](http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE55278). This study describes expression profiling of dendritic cells after infection with multiple strains of influenza viruses over an 8-hour time course. Read the abstract of [the associated publication](http://www.ncbi.nlm.nih.gov/pubmed/26223639) before continuing.
 
 *** =instructions
-- Hit Submit Answer to continue
+- Hit 'Submit Answer' to continue
 
 *** =pre_exercise_code
 ```{r}
@@ -30,4 +30,92 @@ To get microarray data, a handy package `GEOquery` exists on Bioconductor to rea
 ```{r}
 success_msg("Now that you understand the study, let's analyze some data!")
 ```
+
+--- type:NormalExercise 
+## Reading in the data
+To get microarray data, you'll use a package called `GEOquery` from Bioconductor to read in the data.
+
+--- type:NormalExercise 
+## ExpressionSet Objects
+
+The data we just read in is stored in an object of the `ExpressionSet` class.  You can think of an `ExpressionSet` class as a container designed to combine multiple sources of information from a gene expression experiment into a single object. If interested, you can read more about this class [here](https://www.bioconductor.org/packages/devel/bioc/vignettes/Biobase/inst/doc/ExpressionSetIntroduction.pdf).
+
+For this course, you need to know three functions to extract data from an `ExpressionSet`
+
+- `pData`: Retreive information on experimental phenotypes (e.g. geo\_accession, Condition, Time)
+- `fData`: Retrieve information on features (e.g. Entrez\_Gene\_ID, Symbol, Species)
+- `exprs`: Retrieve expression data matrix
+
+*** =instructions
+- Print `eset` to get an overview of the expression data it contains.
+- Create a new variable (`expr`) that contains the expression data from `eset`
+- Create a new variable (`features`) that contains the feature data from `eset`
+- Create a new variable (`phenotypes`) that contains the phenotype data from `eset`
+- Click 'Submit Answer'.
+
+*** =hint
+Remember that if you want to assign values to a variable in R, you can make use of the assignment operator `<-`. Use the functions listed above to extract data from `eset`.
+
+*** =pre_exercise_code
+```{r}
+load(url("https://campus.datacamp.com/courses/1843/eset.RData"))
+```
+
+*** =sample_code
+```{r}
+# Print eset
+
+# Extract information out of eset into 3 new variables
+
+```
+
+*** =solution
+```{r}
+# Print eset
+print(eset)
+
+# Extract information out of eset into 3 new variables
+expr <- exprs(eset)                     # expression data
+fdat <- fData(eset)
+pdat <- pData(eset)
+```
+
+*** =sct
+```{r}
+test_object("my_apples", 
+            undefined_msg = "Please make sure to define a variable `my_apples`.",
+            incorrect_msg = "Make sure that you assign the correct value to `my_apples`.")
+test_output_contains(print(eset), incorrect_msg = "Have you printed the `expr` variable?")
+test_object("expr",
+            undefined_msg = "Please make sure to define a variable `expr`.",
+            incorrect_msg = "Have you set the variable `expr`?")
+test_object("fdat",
+            undefined_msg = "Please make sure to define a variable `fdat`.",
+            incorrect_msg = "Have you set the variable `fdat`?")
+test_object("pdat",
+            undefined_msg = "Please make sure to define a variable `pdat`.",            
+            incorrect_msg = "Have you set the variable `pdat`?")
+success_msg("Great! Continue to the next exercise!")
+```
+
+
+--- type:NormalExercise 
+## Tidy the data
+
+--- type:NormalExercise 
+## Plotting Gene Expression
+
+
+--- type:NormalExercise 
+## Plotting Gene Expression 
+
+--- type:NormalExercise 
+## Plotting Gene Expression (2)
+
+--- type:NormalExercise 
+## Plotting Gene Expression (3)
+
+--- type:NormalExercise 
+## Data Interrogation
+
 
