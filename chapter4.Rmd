@@ -6,6 +6,13 @@ description : "In this chapter, you will combine what you learned in the first t
 --- type:NormalExercise xp:100 skills:1
 ## Putting it all together
 
+Now that you've learned how to work with R, use `tidyr`/`dplyr` and `ggplot2` you will apply these skills to read in and visualize gene expression data.
+
+To get microarray data, a handy package `GEOquery` exists on Bioconductor to read in the data. We will read expression data for study [GSE55268](http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE55278). This study describes expression profiling of dendritic cells after infection with multiple strains of influenza viruses over an 8-hour time course. Read the abstract of [the associated publication](http://www.ncbi.nlm.nih.gov/pubmed/26223639) before continuing.
+
+*** =instructions
+- Hit Submit Answer to continue
+
 *** =hint
 There is no code to type, just hit Submit Answer.
 
@@ -26,4 +33,3 @@ There is no code to type, just hit Submit Answer.
 ```{r}
 success_msg("Now that you understand the study, let's analyze some data!")
 ```
-
