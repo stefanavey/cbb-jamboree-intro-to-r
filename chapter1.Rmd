@@ -396,7 +396,7 @@ test_output_contains("summary(mtcars)", incorrect_msg = "Have you correctly call
 success_msg("Nice work! Can you find all the information that is listed in the exercise's assignment? Continue to the next exercise.")
 ```
 
---- type:NormalExercise xp:100
+--- type:NormalExercise xp:100 key:86cb110648
 ## Slicing data frames
 
 Data frames can be sliced (indexed) by `[row, col]` where `row` and `col` are:
