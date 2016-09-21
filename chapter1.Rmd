@@ -254,7 +254,7 @@ test_output_contains("class(my_logical)",
 success_msg("Congratulations! This was the last exercise for this chapter. Head over to the next chapter to get immersed in the world of vectors!")
 ```
 
---- type:NormalExercise xp:100 skills:1
+--- type:NormalExercise xp:100 skills:1 key:a79a6030f4
 ## What's a data frame?
 
 A **data frame** is a commonly used data type in R that stores data of different types. You will often find yourself working with data sets that contain different data types instead of only one.
@@ -291,7 +291,7 @@ success_msg("Great! Continue to the next exercise.")
 ```
 
 
---- type:NormalExercise xp:100 skills:1 
+--- type:NormalExercise xp:100 skills:1  key:b1506e572c
 ## Quick, have a look at your data set
 
 Wow, that is a lot of cars! 
@@ -348,7 +348,7 @@ success_msg("Wonderful! So, what do we have in this data set? For example, `hp` 
 ```
 
 
---- type:NormalExercise xp:100 skills:1 
+--- type:NormalExercise xp:100 skills:1  key:e94dbf26f4
 ## Have a look at the structure
 
 Another method that is often used to get a rapid overview of your data is the function [`str()`](http://www.rdocumentation.org/packages/utils/functions/str). The function [`str()`](http://www.rdocumentation.org/packages/utils/functions/str) shows you the structure of your data set. For a data frame it tells you:
