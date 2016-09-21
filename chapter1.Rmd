@@ -403,7 +403,7 @@ Data frames can be sliced (indexed) by `[row, col]` where `row` and `col` are:
 - Character vectors specifying the row and column names
 
 *** =instructions
-Slice the `mtcars` data frame to extract the 10^th^ row for the `mpg` and `carb` columns.
+Slice the `mtcars` data frame to extract the $10^{\textrm{th}}$ row for the `mpg` and `carb` columns.
 
 *** =hint
 Index `mtcars` with `[row, col]`

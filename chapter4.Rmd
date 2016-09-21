@@ -85,7 +85,7 @@ pdat <- pData(eset)
 test_object("my_apples", 
             undefined_msg = "Please make sure to define a variable `my_apples`.",
             incorrect_msg = "Make sure that you assign the correct value to `my_apples`.")
-test_output_contains(print(eset), incorrect_msg = "Have you printed the `expr` variable?")
+test_output_contains(print(eset), incorrect_msg = "Have you printed the `eset` variable?")
 test_object("expr",
             undefined_msg = "Please make sure to define a variable `expr`.",
             incorrect_msg = "Have you set the variable `expr`?")
@@ -98,9 +98,55 @@ test_object("pdat",
 success_msg("Great! Continue to the next exercise!")
 ```
 
-
 --- type:NormalExercise  key:e7416248d9
 ## Tidy the data
+
+Look at the class of `expr`. To use `dplyr` tools we'll need to create a data frame. We can acheive this with the `data.frame()` function.
+
+*** =instructions
+
+- Create a new data frame called `expr_df` from `expr` using the `data.frame()` function.
+- Combine `fdat` and `expr_df` into a new data frame called `exprf_df` again using the `data.frame()` function.
+- Click 'Submit Answer'.
+
+*Note: We set the global option `stringsAsFactors` to `FALSE` to avoid using the `factor` data type which we will not discuss.*
+
+*** =hint
+
+
+*** =pre_exercise_code
+```{r}
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1843/datasets/extractedEset.RData"))
+options(stringsAsFactors = FALSE)
+```
+
+*** =sample_code
+```{r}
+# Cast expr into a data frame called expr_df
+
+# Combine fdat and expr_df into exprf_df
+
+```
+
+*** =solution
+```{r}
+# Cast expr into a data frame called expr_df
+expr_df <- data.frame(expr)
+# Combined fdat and expr_df into exprf_df
+exprf_df <- data.frame(fdat, expr_df)
+```
+
+*** =sct
+```{r}
+test_object("expr_df",
+            undefined_msg = "Please make sure to define a variable `expr_df`.",
+            incorrect_msg = "Have you set the variable `expr_df`?")
+test_object("exprf_df", 
+            undefined_msg = "Please make sure to define a variable `exprf_df`.",
+            incorrect_msg = "Have you set the variable `expr_df`?")
+success_msg("Great! Continue to the next exercise!")
+```
+
 
 --- type:NormalExercise  key:9c603bbce2
 ## Plotting Gene Expression
