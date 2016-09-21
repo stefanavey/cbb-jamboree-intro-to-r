@@ -300,18 +300,14 @@ Working with large data sets is not uncommon in data analysis. When you work wit
 
 So how to do this in R? Well, the function [`head()`](http://www.rdocumentation.org/packages/utils/functions/head) enables you to show the first observations of a data frame (Similarly [`tail()`](http://www.rdocumentation.org/packages/utils/functions/head) prints out the last observations in your data set).
 
-It is also useful to summarize all of the observations in each column. You can do this in R with the [`summary()`](http://www.rdocumentation.org/packages/utils/functions/summary) function.
-
 *** =instructions
 
-- Call [`head()`](http://www.rdocumentation.org/packages/utils/functions/head) on the [`mtcars`](http://www.rdocumentation.org/packages/datasets/functions/mtcars) data set to have a look at the header and the first observations.
+Call [`head()`](http://www.rdocumentation.org/packages/utils/functions/head) on the [`mtcars`](http://www.rdocumentation.org/packages/datasets/functions/mtcars) data set to have a look at the header and the first observations.
 
-- Call [`summary()`](http://www.rdocumentation.org/packages/utils/functions/summary) on the [`mtcars`](http://www.rdocumentation.org/packages/datasets/functions/mtcars) data set to summarize each column.
 
 
 *** =hint
 `head(mtcars)` will show the first observations of the `mtcars` data frame.
-`summary(mtcars)` will summarize each column of the `mtcars` data frame.
 
 *** =pre_exercise_code
 ```{r}
@@ -322,18 +318,12 @@ It is also useful to summarize all of the observations in each column. You can d
 ```{r}
 # Call head() on mtcars
 
-# Call summary() on mtcars
-
 ```
 
 *** =solution
 ```{r}
 # Call head() on mtcars
 head(mtcars)
-
-# Call summary() on mtcars
-summary(mtcars)
-
 ```
 
 *** =sct
@@ -361,11 +351,20 @@ Another method that is often used to get a rapid overview of your data is the fu
 
 Applying the [`str()`](http://www.rdocumentation.org/packages/utils/functions/str) function will often be the first thing that you do when receiving a new data set or data frame. It is a great way to get more insight in your data set before diving into the real analysis.
 
+It is also useful to summarize all of the observations in each column. You can do this in R with the [`summary()`](http://www.rdocumentation.org/packages/utils/functions/summary) function.
+
 *** =instructions
-Investigate the structure of [`mtcars`](http://www.rdocumentation.org/packages/datasets/functions/mtcars). Make sure that you see the same numbers, variables and data types as mentioned above.
+
+- Investigate the structure of [`mtcars`](http://www.rdocumentation.org/packages/datasets/functions/mtcars). Make sure that you see the same numbers, variables and data types as mentioned above.
+
+- Summarize each column of [`mtcars`](http://www.rdocumentation.org/packages/datasets/functions/mtcars).
+
 
 *** =hint
 Use the [`str()`](http://www.rdocumentation.org/packages/utils/functions/str) function on [`mtcars`](http://www.rdocumentation.org/packages/datasets/functions/mtcars).
+
+Use the [`summary()`](http://www.rdocumentation.org/packages/utils/functions/summary) function on [`mtcars`](http://www.rdocumentation.org/packages/datasets/functions/mtcars).
+
 
 *** =pre_exercise_code
 ```{r}
@@ -375,17 +374,25 @@ Use the [`str()`](http://www.rdocumentation.org/packages/utils/functions/str) fu
 *** =sample_code
 ```{r}
 # Investigate the structure of mtcars
+
+# Summarize each column of mtcars
+
 ```
 
 *** =solution
 ```{r}
 # Investigate the structure of mtcars
 str(mtcars)
+
+# Summarize each column of mtcars
+summary(mtcars)
 ```
 
 *** =sct
 ```{r}
 test_output_contains("str(mtcars)", incorrect_msg = "Have you correctly called `str()` on `mtcars`?")
+test_output_contains("summary(mtcars)", incorrect_msg = "Have you correctly called `summary()` on `mtcars`?")
+
 success_msg("Nice work! Can you find all the information that is listed in the exercise's assignment? Continue to the next exercise.")
 ```
 
