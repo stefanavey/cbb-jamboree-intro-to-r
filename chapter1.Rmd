@@ -12,7 +12,7 @@ R makes use of the `#` sign to add comments, so that you and others can understa
 
 You can also execute R commands straight in the console. This is a good way to experiment with R code, as your submission is not checked for correctness.
 
-<!-- This chapter is based on Chapter 1 of DataCamp's [Intro To R course](https://www.datacamp.com/courses/free-introduction-to-r) -->
+For help on any built-in functions or operators, you can type `help("func_name")` in the console. For example, help("+").
 
 *** =instructions
 - In the editor on the right there is already some sample code. Can you see which lines are actual R code and which are comments?
@@ -298,15 +298,20 @@ Wow, that is a lot of cars!
 
 Working with large data sets is not uncommon in data analysis. When you work with (extremely) large data sets and data frames, your first task as a data analyst is to develop a clear understanding of its structure and main elements. Therefore, it is often useful to show only a small part of the entire data set. 
 
-So how to do this in R? Well, the function [`head()`](http://www.rdocumentation.org/packages/utils/functions/head) enables you to show the first observations of a data frame. Similarly, the function [`tail()`](http://www.rdocumentation.org/packages/utils/functions/head) prints out the last observations in your data set.
+So how to do this in R? Well, the function [`head()`](http://www.rdocumentation.org/packages/utils/functions/head) enables you to show the first observations of a data frame (Similarly [`tail()`](http://www.rdocumentation.org/packages/utils/functions/head) prints out the last observations in your data set).
 
-Both [`head()`](http://www.rdocumentation.org/packages/utils/functions/head) and [`tail()`](http://www.rdocumentation.org/packages/utils/functions/head) print a top line called the 'header', which contains the names of the different variables in your data set.
+It is also useful to summarize all of the observations in each column. You can do this in R with the [`summary()`](http://www.rdocumentation.org/packages/utils/functions/summary) function.
 
 *** =instructions
-Call [`head()`](http://www.rdocumentation.org/packages/utils/functions/head) on the [`mtcars`](http://www.rdocumentation.org/packages/datasets/functions/mtcars) data set to have a look at the header and the first observations.
+
+- Call [`head()`](http://www.rdocumentation.org/packages/utils/functions/head) on the [`mtcars`](http://www.rdocumentation.org/packages/datasets/functions/mtcars) data set to have a look at the header and the first observations.
+
+- Call [`summary()`](http://www.rdocumentation.org/packages/utils/functions/summary) on the [`mtcars`](http://www.rdocumentation.org/packages/datasets/functions/mtcars) data set to summarize each column.
+
 
 *** =hint
 `head(mtcars)` will show the first observations of the `mtcars` data frame.
+`summary(mtcars)` will summarize each column of the `mtcars` data frame.
 
 *** =pre_exercise_code
 ```{r}
@@ -317,19 +322,29 @@ Call [`head()`](http://www.rdocumentation.org/packages/utils/functions/head) on 
 ```{r}
 # Call head() on mtcars
 
+# Call summary() on mtcars
+
 ```
 
 *** =solution
 ```{r}
 # Call head() on mtcars
 head(mtcars)
+
+# Call summary() on mtcars
+summary(mtcars)
+
 ```
 
 *** =sct
 ```{r}
 test_function("head", "x", incorrect_msg = "Have you correctly passed `mtcars` to the `head()` function?")
 test_output_contains("head(mtcars)", incorrect_msg = "Simply print out the result of the `head()` call, no need to assign it to a new variable.")
-success_msg("Wonderful! So, what do we have in this data set? For example, `hp` for example represents the car's horsepower; the Datsun has the lowest horse power of the 6 cars that are displayed. For a full overview of the variables' meaning, type `?mtcars` in the console and read the help page. Continue to the next exercise!");
+
+test_function("summary", "x", incorrect_msg = "Have you correctly passed `mtcars` to the `summary()` function?")
+test_output_contains("summary(mtcars)", incorrect_msg = "Simply print out the result of the `summary()` call, no need to assign it to a new variable.")
+
+success_msg("Wonderful! So, what do we have in this data set? For example, `hp` for example represents the car's horsepower; the Datsun has the lowest horse power of the 6 cars that are displayed. For a full overview of the variables' meaning, type `help(\"mtcars\")` in the console and read the help page. Continue to the next exercise!");
 ```
 
 
@@ -374,32 +389,20 @@ test_output_contains("str(mtcars)", incorrect_msg = "Have you correctly called `
 success_msg("Nice work! Can you find all the information that is listed in the exercise's assignment? Continue to the next exercise.")
 ```
 
+--- type:NormalExercise xp:100
+## Slicing data frames
 
---- type:NormalExercise xp:100 skills:1
-## Creating a data frame 
+Data frames can be sliced (indexed) by `[row, col]` where `row` and `col` are:
 
-Since using built-in data sets is not even half the fun of creating your own data sets, the rest of this chapter is based on your personally developed data set. Put your jet pack on because it is time for some space exploration! 
-
-As a first goal, you want to construct a data frame that describes the main characteristics of eight planets in our solar system. According to your good friend Buzz, the main features of a planet are:
-
-- The type of planet (Terrestrial or Gas Giant).
-- The planet's diameter relative to the diameter of the Earth.
-- The planet's rotation across the sun relative to that of the Earth.
-- If the planet has rings or not (TRUE or FALSE).
-
-After doing some high-quality research on [Wikipedia](http://en.wikipedia.org/wiki/Planet), you feel confident enough to create the necessary vectors: `name`, `type`, `diameter`, `rotation` and `rings`; these vectors have already been coded up on the right. The first element in each of these vectors correspond to the first observation.
-
-You construct a data frame with the [`data.frame()`](http://www.rdocumentation.org/packages/base/functions/data.frame) function. As arguments, you pass the vectors from before: they will become the different columns of your data frame. Because every column has the same length, the vectors you pass should also have the same length. But don't forget that it is possible (and likely) that they contain different types of data.
+- Numeric vectors giving the indices
+- Logical vectors equal in length to the dimensions
+- Character vectors specifying the row and column names
 
 *** =instructions
-Use the function [`data.frame()`](http://www.rdocumentation.org/packages/base/functions/data.frame) to construct a data frame. Pass the vectors `name`, `type`, `diameter`, `rotation` and `rings` as arguments to `data.frame()`, in this order. Call the resulting data frame `planets_df`.
+Slice the `mtcars` data frame to extract the 10^th^ row for the `mpg` and `carb` columns.
 
 *** =hint
-Your `data.frame()` call starts as follows:
-```
-data.frame(planets, type, diameter)
-```
-Can you finish it?
+Index `mtcars` with `[row, col]`
 
 *** =pre_exercise_code
 ```{r}
@@ -408,44 +411,33 @@ Can you finish it?
 
 *** =sample_code
 ```{r}
-# Definition of vectors
-name <- c("Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune")
-type <- c("Terrestrial planet", "Terrestrial planet", "Terrestrial planet", 
-          "Terrestrial planet", "Gas giant", "Gas giant", "Gas giant", "Gas giant")
-diameter <- c(0.382, 0.949, 1, 0.532, 11.209, 9.449, 4.007, 3.883)
-rotation <- c(58.64, -243.02, 1, 1.03, 0.41, 0.43, -0.72, 0.67)
-rings <- c(FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, TRUE)
+# Define row to be a numeric type
+row <- 10
+# Define col to be a character vector
+col <- c("mpg", "carb")   
 
-# Create a data frame from the vectors
-planets_df <-
-
+# Slice mtcars
 ```
 
 *** =solution
 ```{r}
-# Definition of vectors
-name <- c("Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune")
-type <- c("Terrestrial planet", "Terrestrial planet", "Terrestrial planet", 
-          "Terrestrial planet", "Gas giant", "Gas giant", "Gas giant", "Gas giant")
-diameter <- c(0.382, 0.949, 1, 0.532, 11.209, 9.449, 4.007, 3.883)
-rotation <- c(58.64, -243.02, 1, 1.03, 0.41, 0.43, -0.72, 0.67)
-rings <- c(FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, TRUE)
+# Define row to be a numeric type
+row <- 10
+# Define col to be a character vector
+col <- c("mpg", "carb")   
 
-# Create a data frame from the vectors
-planets_df <- data.frame(name, type, diameter, rotation, rings)
+# Slice mtcars
+mtcars[row,col]
 ```
 
 *** =sct
 ```{r}
-msg = "Do not change anything about the definition of the vectors. Only add a `data.frame()` call to create `planets_df`."
-test_object("name", undefined_msg = msg, incorrect_msg = msg)
-test_object("type", undefined_msg = msg, incorrect_msg = msg)
-test_object("diameter", undefined_msg = msg, incorrect_msg = msg)
-test_object("rotation", undefined_msg = msg, incorrect_msg = msg)
-test_object("rings", undefined_msg = msg, incorrect_msg = msg)
+msg = "Do not change anything about the definition of the vectors. Only add a call to slice `mtcars`."
+test_object("row", undefined_msg = msg, incorrect_msg = msg)
+test_object("col", undefined_msg = msg, incorrect_msg = msg)
 
-test_object("planets_df",
-            incorrect_msg = "Have you correctly called `data.frame()` to create `planets_df`. Inside `data.frame()`, make sure to pass all vectors in the correct order: `name`, `type`, `diameter`, `rotation` and finally `rings`.")
+test_output_contains("mtcars[row,col]",
+                     incorrect_msg = "Simply print out the result of the slicing, no need to assign it to a new variable.")
 
-success_msg("Great job! Continue to the next exercise. The logical next step, as you know by now, is inspecting the data frame you just created. Head over to the next exercise.");
+success_msg("Great job! Continue to the next exercise.");
 ```
