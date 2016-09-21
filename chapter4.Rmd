@@ -105,10 +105,6 @@ success_msg("Great! Continue to the next exercise!")
 --- type:NormalExercise  key:9c603bbce2
 ## Plotting Gene Expression
 
-
---- type:NormalExercise  key:9c603bbce2
-## Plotting Gene Expression 
-
 --- type:NormalExercise  key:f548bed685
 ## Plotting Gene Expression (2)
 
