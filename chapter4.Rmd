@@ -3,7 +3,7 @@ title_meta  : Chapter 4
 title       : Application to Expression Data
 description : "In this chapter, you will combine what you learned in the first three chapters to read in, tidy, and visualize gene expression data. Let's get started!"
 
---- type:NormalExercise xp:100 skills:1 key:2200ac0aae
+--- type:NormalExercise key:2200ac0aae
 ## Putting it all together
 
 Now that you've learned how to work with R, use `tidyr`/`dplyr` and `ggplot2` you will apply these skills to read in and visualize gene expression data.
@@ -12,9 +12,6 @@ To get microarray data, a handy package `GEOquery` exists on Bioconductor to rea
 
 *** =instructions
 - Hit Submit Answer to continue
-
-*** =hint
-There is no code to type, just hit Submit Answer.
 
 *** =pre_exercise_code
 ```{r}
@@ -33,3 +30,4 @@ There is no code to type, just hit Submit Answer.
 ```{r}
 success_msg("Now that you understand the study, let's analyze some data!")
 ```
+
