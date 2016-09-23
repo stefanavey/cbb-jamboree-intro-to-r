@@ -259,7 +259,7 @@ success_msg("Congratulations! This was the last exercise for this chapter. Head 
 
 A **data frame** is a commonly used data type in R that stores data of different types. You will often find yourself working with data sets that contain different data types instead of only one.
 
-A data frame has the variables of a data set as columns and the observations as rows.
+In a data frame variables are stored in columns and observations are stored in rows.
 
 *** =instructions
 Click 'Submit Answer'. The data from the built-in example data frame [`mtcars`](http://www.rdocumentation.org/packages/datasets/functions/mtcars) will be printed to the console.
@@ -331,7 +331,7 @@ head(mtcars)
 test_function("head", "x", incorrect_msg = "Have you correctly passed `mtcars` to the `head()` function?")
 test_output_contains("head(mtcars)", incorrect_msg = "Simply print out the result of the `head()` call, no need to assign it to a new variable.")
 
-success_msg("Wonderful! So, what do we have in this data set? For example, `hp` for example represents the car's horsepower; the Datsun has the lowest horse power of the 6 cars that are displayed. For a full overview of the variables' meaning, type `help(\"mtcars\")` in the console and read the help page. Continue to the next exercise!");
+success_msg("Wonderful! So, what do we have in this data set? `hp` for example represents the car's horsepower; the Datsun has the lowest horse power of the 6 cars that are displayed. For a full overview of the variables' meaning, type `help(\"mtcars\")` in the console and read the help page. Continue to the next exercise!");
 ```
 
 
@@ -372,8 +372,8 @@ Use the [`summary()`](http://www.rdocumentation.org/packages/utils/functions/sum
 ```{r}
 # Investigate the structure of mtcars
 
-# Summarize each column of mtcars
 
+# Summarize each column of mtcars
 ```
 
 *** =solution
@@ -390,7 +390,7 @@ summary(mtcars)
 test_output_contains("str(mtcars)", incorrect_msg = "Have you correctly called `str()` on `mtcars`?")
 test_output_contains("summary(mtcars)", incorrect_msg = "Have you correctly called `summary()` on `mtcars`?")
 
-success_msg("Nice work! Can you find all the information that is listed in the exercise's assignment? Continue to the next exercise.")
+success_msg("Nice work! Can you find all the information in the list on this exercise's assignment? Continue to the next exercise.")
 ```
 
 --- type:NormalExercise xp:100 key:86cb110648
@@ -443,5 +443,5 @@ test_object("col", undefined_msg = msg, incorrect_msg = msg)
 test_output_contains("mtcars[row,col]",
                      incorrect_msg = "Simply print out the result of the slicing, no need to assign it to a new variable.")
 
-success_msg("Great job! Continue to the next exercise.");
+success_msg("Great job! Continue to Chapter 2 to learn about tidying data.");
 ```

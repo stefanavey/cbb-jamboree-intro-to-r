@@ -316,14 +316,14 @@ success_msg("Great! Now that your data is tidy, it's time to start actually look
 
 Now for the fun part - exploring and visualizing the data!
 
-You will start exploring by plotting the expression of one gene over time during a single influenza infection.
+You will start exploring by plotting the expression of one gene over time during influenza infection.
 
 
 *** =instructions
 
-- Plot the `expression` of the gene *MX1* over `Time` during the *Brevig* infection
-time course.
-  - First filter `data` to select observations where the `Symbol` is "MX1" and the `Treatment` is "Brevig" and save this in a new variable.
+- Plot the `expression` of the gene *MX1* over `Time` during infection with the *Brevig* strain.
+
+  - First [`filter()`](http://www.rdocumentation.org/packages/dplyr/functions/filter) `data` to observations where the `Symbol` is "MX1" and the `Treatment` is "Brevig" and save this in a new variable.
   - Then call `ggplot()` on this new variable and add `x` and `y` aesthetics using `aes()`.
   - Finally, add a `geom_point()` layer to the `ggplot()` call.
 
@@ -406,7 +406,7 @@ The great thing about `ggplot2` is that tweaking the visualization is as easy as
 
 *** =instructions
 
-- Add a `geom_line()` layer to the existing plot and specify the `group` aesthetic in the `geom_line()` call to be `Replicate`.
+- Add a `geom_line()` layer to the existing plot and specify the `group` aesthetic for `geom_line()` to be `Replicate`.
 
 
 *** =hint
@@ -500,11 +500,11 @@ Create a plot similar to the previous plot except:
 
 - Filter `data` only by `Symbol` to keep all values of `Treatment`
 - Specify the `color` aesthetic in the `ggplot()` call to depend on `Treatment`
-- Modify the `group` aesthetic in `geom_line()` to depend on both `Replicate` and `Treatment` using the `interaction()` function (`interaction(Replicate, Treatment)`).
+- Modify the `group` aesthetic in `geom_line()` to depend on both `Replicate` and `Treatment` by using `interaction(Replicate, Treatment)`.
 
 *** =hint
 
-Aesthetics can be specified within each layer. Your code should look something like this: `geom_line(aes(...))`
+Aesthetics can be specified within each layer. Your call to `geom_line()` should look something like this: `geom_line(aes(group = ...))`
 
 Remember you can add a layer using `+`
 
@@ -587,4 +587,5 @@ success_msg("Lookin' good! I'd publish that!")
 --- type:NormalExercise  key:ae47d50b6a
 ## Data Interrogation
 
+**TODO**: Add something here on summarizing data (using split-apply-combine methodology).
 
