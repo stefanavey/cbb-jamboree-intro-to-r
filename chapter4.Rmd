@@ -378,22 +378,212 @@ plotData <- data %>% filter(Symbol == "MX1", Treatment == "Brevig")
 ggplot(data = plotData, aes(x = Time, y = expression)) +
   geom_point() +
   theme_bw()
+
+############################################################
+# # In comparison, the same plot can be made without tidying
+# # the data first but it is less readable and more code.
+# cond <- pdat[, "Treatment"] == "Brevig"
+# exp <- expr[fdat[,"Symbol"] == "MX1", cond]
+# times <- pdat[cond, "Time"]
+# plot(x = times, y = exp, pch = 19)
 ```
 
 *** =sct
 ```{r}
 test_ggplot(check_data = TRUE, data_fail_msg = "Make sure to provide the filtered data",
-            check_aes = TRUE, aes_fail_msg = "Make sure you specify the `x` and `y` aesthetics in `aes()` to plot `Time` versus `expression`.",
-            check_geom = TRUE, geom_fail_msg = "Add a `geom_point()` layer to create a scatter plot")
-success_msg("Great job making that visualization! Let's spice it up a bit...")
+            check_aes = TRUE, aes_fail_msg = "Did you specify the `x` and `y` aesthetics in `aes()` to plot `Time` versus `expression`?",            
+            check_geom = TRUE, geom_fail_msg = "Did you add a `geom_point()` layer to create a scatter plot?")
+success_msg("Nice job making that visualization! Let's spice it up a bit...")
 ```
 
 --- type:NormalExercise  key:f548bed685
 ## Plotting Gene Expression (2)
 
+You just plotted the gene expression profile of *MX1* during an influenza infection! Did you notice there were three points at each time point? These correspond to 3 biological replicates. To see the trajectory of each replicate, you can connect each replicate over time with a line.
+
+The great thing about `ggplot2` is that tweaking the visualization is as easy as adding more layers to your plot. To see this, add a line to your scatter plot connecting the replicates over time.
+
+
+*** =instructions
+
+- Add a `geom_line()` layer to the existing plot and specify the `group` aesthetic in the `geom_line()` call to be `Replicate`.
+
+
+*** =hint
+
+Aesthetics can be specified within each layer. Your code should look something like this: `geom_line(aes(...))`
+
+Remember you can add a layer using `+`
+
+*** =pre_exercise_code
+```{r}
+
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1843/datasets/extractedEset.RData"))
+options(stringsAsFactors = FALSE)
+```
+
+*** =sample_code
+```{r}
+library(tidyr)
+library(dplyr)
+library(ggplot2)
+
+# Tidy data
+# Note we are doing the same steps here using piping (%>%)
+data <- data.frame(fdat, data.frame(expr)) %>%
+  gather(key = geo_accession, value = expression, starts_with("GSM")) %>%
+  full_join(pdat, by = "geo_accession")
+
+# Filter the data
+plotData <- data %>% filter(Symbol == "MX1", Treatment == "Brevig")
+
+# Add a line to this plot 
+ggplot(data = plotData, aes(x = Time, y = expression)) +
+  geom_point()
+
+```
+
+*** =solution
+```{r}
+library(tidyr)
+library(dplyr)
+library(ggplot2)
+
+# Tidy data
+# Note we are doing the same steps here using piping (%>%)
+data <- data.frame(fdat, data.frame(expr)) %>%
+  gather(key = geo_accession, value = expression,
+         starts_with("GSM")) %>%
+  full_join(pdat, by = "geo_accession")
+
+# Filter the data
+plotData <- data %>% filter(Symbol == "MX1", Treatment == "Brevig")
+
+# Add a line to this plot
+ggplot(data = plotData, aes(x = Time, y = expression)) +
+  geom_point() +
+  geom_line(aes(group = Replicate)) +
+  theme_bw()
+
+############################################################
+# # In comparison, the same plot can be made without tidying
+# # the data first but it is less readable and more code.
+# cond <- pdat[, "Treatment"] == "Brevig"
+# exp <- expr[fdat[,"Symbol"] == "MX1", cond]
+# times <- pdat[cond, "Time"]
+# matExp <- matrix(exp, ncol = 3, byrow = TRUE)  
+# matTimes <- matrix(times, ncol = 3, byrow = TRUE)
+# reps <- pdat[cond, "Replicate"]
+# matplot(x = matTimes, y = matExp, type = 'b',
+#         lty = 1, pch = 19, col = "black")
+```
+
+*** =sct
+```{r}
+test_ggplot(check_data = TRUE, data_fail_msg = "Make sure to provide the filtered data",
+            check_aes = TRUE, aes_fail_msg = "Did you specify the `x` and `y` aesthetics in `aes()` to plot `Time` versus `expression`?",
+            check_geom = TRUE, geom_fail_msg = "Did you keep the `geom_point()` layer and add a new `geom_line()` layer?")
+success_msg("Lookin' good! Ready to make a publication-quality visualization?")
+```
+
 --- type:NormalExercise  key:6a67c9447e
 ## Plotting Gene Expression (3)
 
+
+This experiment was designed to compare different strains of the flu virus but so far you have only been plotting a single strain (*Brevig*).
+
+Make a plot to see how *MX1* behaves in each `Treatment`.
+
+*** =instructions
+
+Create a plot similar to the previous plot except:
+
+- Filter `data` only by `Symbol` to keep all values of `Treatment`
+- Specify the `color` aesthetic in the `ggplot()` call to depend on `Treatment`
+- Modify the `group` aesthetic in `geom_line()` to depend on both `Replicate` and `Treatment` using the `interaction()` function (`interaction(Replicate, Treatment)`).
+
+*** =hint
+
+Aesthetics can be specified within each layer. Your code should look something like this: `geom_line(aes(...))`
+
+Remember you can add a layer using `+`
+
+*** =pre_exercise_code
+```{r}
+
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1843/datasets/extractedEset.RData"))
+options(stringsAsFactors = FALSE)
+```
+
+*** =sample_code
+```{r}
+library(tidyr)
+library(dplyr)
+library(ggplot2)
+
+# Tidy data
+# Note we are doing the same steps here using piping (%>%)
+data <- data.frame(fdat, data.frame(expr)) %>%
+  gather(key = geo_accession, value = expression, starts_with("GSM")) %>%
+  full_join(pdat, by = "geo_accession")
+
+# Filter the data
+plotData <- data %>% filter(Symbol == "MX1", Treatment == "Brevig")
+
+# Previous plot
+ggplot(data = plotData, aes(x = Time, y = expression)) +
+  geom_point() +
+  geom_line(aes(group = Replicate)) +
+  theme_bw()
+
+############################################################
+# Filter the data
+
+
+# New plot
+```
+
+*** =solution
+```{r}
+library(tidyr)
+library(dplyr)
+library(ggplot2)
+
+# Tidy data
+# Note we are doing the same steps here using piping (%>%)
+data <- data.frame(fdat, data.frame(expr)) %>%
+  gather(key = geo_accession, value = expression,
+         starts_with("GSM")) %>%
+  full_join(pdat, by = "geo_accession")
+
+# Filter the data
+plotData <- data %>% filter(Symbol == "MX1", Treatment == "Brevig")
+
+# Previous plot
+ggplot(data = plotData, aes(x = Time, y = expression)) +
+  geom_point() +
+  geom_line(aes(group = Replicate)) +
+  theme_bw()
+
+############################################################
+# Filter the data
+plotData <- data %>% filter(Symbol == "MX1")
+
+# New plot
+ggplot(data = plotData, aes(x = Time, y = expression, color = Treatment)) +
+  geom_point() +
+  geom_line(aes(group = interaction(Replicate, Treatment))) +
+  theme_bw()
+```
+
+*** =sct
+```{r}
+test_ggplot(index = 2,
+            check_data = TRUE, data_fail_msg = "Make sure to provide the new filtered data",
+            check_aes = TRUE, aes_fail_msg = "Did you specify the `x`, `y`, and `color` aesthetics as well as the `group` for `geom_line()`?",
+            check_geom = TRUE, geom_fail_msg = "Did you add both a `geom_point()` layer and add a `geom_line()` layer?")
+success_msg("Lookin' good! I'd publish that!")
+```
 --- type:NormalExercise  key:ae47d50b6a
 ## Data Interrogation
 
