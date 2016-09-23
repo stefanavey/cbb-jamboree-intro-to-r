@@ -306,7 +306,6 @@ data <- full_join(dat, pdat, by = "geo_accession")
 test_object("data",
             undefined_msg = "Please make sure to define a variable `data`.",
             incorrect_msg = "Looks like `data` is not set properly. Check your `full_join()` call")
-test_output_contains(str(dat), incorrect_msg = "Have you printed the structure of `dat`?")
 success_msg("Great! Now that your data is tidy, it's time to start actually looking at it!")
 ```
 
@@ -332,7 +331,7 @@ time course.
 *** =pre_exercise_code
 ```{r}
 
-load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1843/datasets/data.RData"))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1843/datasets/extractedEset.RData"))
 options(stringsAsFactors = FALSE)
 ```
 
