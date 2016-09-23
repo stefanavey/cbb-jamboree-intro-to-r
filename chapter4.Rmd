@@ -33,12 +33,40 @@ success_msg("Now that you understand the study, let's analyze some data!")
 
 --- type:NormalExercise  key:ecc45725c8
 ## Reading in the data
-To get microarray data, you'll use a package called `GEOquery` from Bioconductor to read in the data.
+To get expression data from the Gene Expression Omnibus (GEO), you can use a package called `GEOquery` from Bioconductor. The size of the data prohibits us from running the code in DataCamp but we just wanted to show how simple it is.
+
+*** =instructions
+- Look at the code required to read expression data from GEO.
+- Hit 'Submit Answer' to continue
+
+*** =pre_exercise_code
+```{r}
+# no pec
+```
+
+*** =sample_code
+```{r}
+# library(GEOquery)
+# geoList <- getGEO("GSE55278")
+# eset <- geoList[[1]]
+```
+
+*** =solution
+```{r}
+# library(GEOquery)
+# geoList <- getGEO("GSE55278")
+# eset <- geoList[[1]]
+```
+
+*** =sct
+```{r}
+success_msg("Doesn't it look easy to read in data!?  Because the data is large, you'll be provided with a subset of the data in `eset` for the rest of the chapter.")
+```
 
 --- type:NormalExercise  key:483c4c5eb5
 ## ExpressionSet Objects
 
-The data we just read in is stored in an object of the `ExpressionSet` class.  You can think of an `ExpressionSet` class as a container designed to combine multiple sources of information from a gene expression experiment into a single object. If interested, you can read more about this class [here](https://www.bioconductor.org/packages/devel/bioc/vignettes/Biobase/inst/doc/ExpressionSetIntroduction.pdf).
+`GEOQuery` returns data in an object of the `ExpressionSet` class.  You can think of an `ExpressionSet` class as a container designed to combine multiple sources of information from a gene expression experiment into a single object. If interested, you can read more about this class [here](https://www.bioconductor.org/packages/devel/bioc/vignettes/Biobase/inst/doc/ExpressionSetIntroduction.pdf).
 
 For this course, you need to know three functions to extract data from an `ExpressionSet`
 
@@ -63,14 +91,20 @@ load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1843/dat
 
 *** =sample_code
 ```{r}
+# Load Biobase package (from Bioconductor) to work with ExpressionSet Class
+library(Biobase)
+
 # Print eset
 
-# Extract information out of eset into 3 new variables
 
+# Extract information out of eset into 3 new variables
 ```
 
 *** =solution
 ```{r}
+# Load Biobase package (from Bioconductor) to work with ExpressionSet Class
+library(Biobase)                                        
+
 # Print eset
 print(eset)
 
@@ -124,15 +158,16 @@ options(stringsAsFactors = FALSE)
 ```{r}
 # Convert expr into a data frame and name it expr_df
 
-# Combined fdat and expr_df into a data frame named exprf_df
 
+# Combine fdat and expr_df into a data frame named exprf_df
 ```
 
 *** =solution
 ```{r}
 # Convert expr into a data frame and name it expr_df
 expr_df <- data.frame(expr)
-# Combined fdat and expr_df into a data frame named exprf_df
+
+# Combine fdat and expr_df into a data frame named exprf_df
 exprf_df <- data.frame(fdat, expr_df)
 ```
 
@@ -144,6 +179,61 @@ test_object("expr_df",
 test_object("exprf_df", 
             undefined_msg = "Please make sure to define a variable `exprf_df`.",
             incorrect_msg = "Have you set the variable `expr_df`?")
+success_msg("Great! Continue to the next exercise to continue tidying this expression data.")
+```
+
+--- type:NormalExercise  
+## Tidy the data (2)
+
+Next you'll need to transform your data frame into a tidy format using [`gather()`](http://www.rdocumentation.org/packages/tidyr/functions/gather) so that there is only one observation (i.e. one gene measured in one sample) per row.
+
+*** =instructions
+
+- Use [`gather()`](http://www.rdocumentation.org/packages/tidyr/functions/gather) on `exprf_df` specifying the key as 'geo_accession' and the value as 'expression' and save this in a variable called `dat`
+- Look at the structure of `dat` using the `str()` function
+
+*** =hint
+The [`gather()`](http://www.rdocumentation.org/packages/tidyr/functions/gather) function requires a key, value, and specification of which columns to gather.
+
+You can specify all of the samples named by geo\_accession using `starts_with("GSM")`
+
+*** =pre_exercise_code
+```{r}
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1843/datasets/extractedEset.RData"))
+options(stringsAsFactors = FALSE)
+```
+
+*** =sample_code
+```{r}
+# Convert expr into a data frame and name it expr_df
+expr_df <- data.frame(expr)
+
+# Combine fdat and expr_df into a data frame named exprf_df
+exprf_df <- data.frame(fdat, expr_df)
+
+# Gather expression columns of exprf_df and print structure of dat
+```
+
+*** =solution
+```{r}
+# Convert expr into a data frame and name it expr_df
+expr_df <- data.frame(expr)
+
+# Combine fdat and expr_df into a data frame named exprf_df
+exprf_df <- data.frame(fdat, expr_df)
+
+# Gather expression columns of exprf_df and print structure of dat
+dat <- gather(data = exprf_df, key = geo_accession,
+              value = expression, starts_with("GSM"))
+str(dat)  
+```
+
+*** =sct
+```{r}
+test_object("dat",
+            undefined_msg = "Please make sure to define a variable `dat`.",
+            incorrect_msg = "Looks like `dat` is not set properly. Check your `gather()` call")
+test_output_contains(str(dat), incorrect_msg = "Have you printed the structure of `dat`?")
 success_msg("Great! Continue to the next exercise!")
 ```
 
