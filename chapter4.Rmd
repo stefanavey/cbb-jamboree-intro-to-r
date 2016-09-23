@@ -244,6 +244,70 @@ test_output_contains(str(dat), incorrect_msg = "Have you printed the structure o
 success_msg("Great! Continue to the next exercise!")
 ```
 
+--- type:NormalExercise
+## Tidy the data (3)
+
+Finally, you want to add phenotype data in `pdat` to `dat` so you have all the information describing the geo_accession (i.e. sample) in each row.
+
+
+*** =instructions
+
+- Use [`full_join()`](http://www.rdocumentation.org/packages/dplyr/functions/full_join) to join `dat` and `pdat` and save the result in a new variabled called `data`
+
+*** =hint
+
+*** =pre_exercise_code
+```{r}
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1843/datasets/extractedEset.RData"))
+options(stringsAsFactors = FALSE)
+```
+
+*** =sample_code
+```{r}
+library(tidyr)
+library(dplyr)
+
+# Convert expr into a data frame and name it expr_df
+expr_df <- data.frame(expr)
+
+# Combine fdat and expr_df into a data frame named exprf_df
+exprf_df <- data.frame(fdat, expr_df)
+
+# Gather expression columns of exprf_df and print structure of dat
+dat <- gather(data = exprf_df, key = geo_accession,
+              value = expression, starts_with("GSM"))
+
+```
+
+*** =solution
+```{r}
+library(tidyr)
+library(dplyr)
+
+# Convert expr into a data frame and name it expr_df
+expr_df <- data.frame(expr)
+
+# Combine fdat and expr_df into a data frame named exprf_df
+exprf_df <- data.frame(fdat, expr_df)
+
+# Gather expression columns of exprf_df and print structure of dat
+dat <- gather(data = exprf_df, key = geo_accession,
+              value = expression, starts_with("GSM"))
+
+# Join dat and pdat
+data <- full_join(dat, pdat, by = "geo_accession")
+```
+
+*** =sct
+```{r}
+test_function("gather", args = c("data", "key", "value", "..."))
+# test_object("dat",
+#             undefined_msg = "Please make sure to define a variable `dat`.",
+#             incorrect_msg = "Looks like `dat` is not set properly. Check your `gather()` call")
+test_output_contains(str(dat), incorrect_msg = "Have you printed the structure of `dat`?")
+success_msg("Great! Continue to the next exercise!")
+```
+
 
 --- type:NormalExercise  key:9c603bbce2
 ## Plotting Gene Expression
