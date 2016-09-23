@@ -249,10 +249,12 @@ success_msg("Great! Continue to the next exercise!")
 
 Finally, you want to add phenotype data in `pdat` to `dat` so you have all the information describing the geo_accession (i.e. sample) in each row.
 
+[`full_join()`](http://www.rdocumentation.org/packages/dplyr/functions/full_join) can be used to join two data frames and retain all values, and all rows.
+
 
 *** =instructions
 
-- Use [`full_join()`](http://www.rdocumentation.org/packages/dplyr/functions/full_join) to join `dat` and `pdat` and save the result in a new variabled called `data`
+- Use [`full_join()`](http://www.rdocumentation.org/packages/dplyr/functions/full_join) to join `dat` and `pdat` by the "geo_accession" column and save the result in a new variabled called `data`
 
 *** =hint
 
@@ -277,6 +279,7 @@ exprf_df <- data.frame(fdat, expr_df)
 dat <- gather(data = exprf_df, key = geo_accession,
               value = expression, starts_with("GSM"))
 
+# Join dat and pdat
 ```
 
 *** =solution
@@ -300,17 +303,84 @@ data <- full_join(dat, pdat, by = "geo_accession")
 
 *** =sct
 ```{r}
-test_function("gather", args = c("data", "key", "value", "..."))
-# test_object("dat",
-#             undefined_msg = "Please make sure to define a variable `dat`.",
-#             incorrect_msg = "Looks like `dat` is not set properly. Check your `gather()` call")
+test_object("data",
+            undefined_msg = "Please make sure to define a variable `data`.",
+            incorrect_msg = "Looks like `data` is not set properly. Check your `full_join()` call")
 test_output_contains(str(dat), incorrect_msg = "Have you printed the structure of `dat`?")
-success_msg("Great! Continue to the next exercise!")
+success_msg("Great! Now that your data is tidy, it's time to start actually looking at it!")
 ```
 
+<!-- TODO: Add another exercise to tidy this data using piping? -->
 
 --- type:NormalExercise  key:9c603bbce2
 ## Plotting Gene Expression
+
+Now for the fun part - exploring and visualizing the data!
+
+You will start exploring by plotting the expression of one gene over time during a single influenza infection.
+
+
+*** =instructions
+
+- Plot the expression of MX1 over time during the 'Brevig' infection
+time course.
+  - First filter `data` to select observations where the Symbol is "MX1" and the Treatment is "Brevig" and save this in a new variable.
+  - Then call ggplot on this new variable specifying the data and aeshetics (x and y) and add a geom_point layer.
+
+*** =hint
+
+*** =pre_exercise_code
+```{r}
+
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1843/datasets/data.RData"))
+options(stringsAsFactors = FALSE)
+```
+
+*** =sample_code
+```{r}
+library(tidyr)
+library(dplyr)
+library(ggplot2)
+
+# Tidy data
+# Note we are doing the same steps here using piping (%>%)
+data <- data.frame(fdat, data.frame(expr)) %>%
+  gather(key = geo_accession, value = expression, starts_with("GSM")) %>%
+  full_join(pdat, by = "geo_accession")
+
+# Filter the data
+
+
+# Plot
+```
+
+*** =solution
+```{r}
+library(tidyr)
+library(dplyr)
+library(ggplot2)
+
+# Tidy data
+# Note we are doing the same steps here using piping (%>%)
+data <- data.frame(fdat, data.frame(expr)) %>%
+  gather(key = geo_accession, value = expression, starts_with("GSM")) %>%
+  full_join(pdat, by = "geo_accession")
+
+# Filter the data
+plotData <- data %>% filter(Symbol == "MX1", Treatment == "Brevig")
+
+# Plot
+ggplot(data = plotData, aes(x = Time, y = expression)) +
+  geom_point() +
+  theme_bw()
+```
+
+*** =sct
+```{r}
+test_ggplot(all_fail_msg = "Don't forget to make the plot! If you store the ggplot call in a variable `var` you can use `plot(var)` to make the plot",
+            check_data = TRUE, check_aes = TRUE, check_geom = TRUE)
+success_msg("Great job making that visualization! Let's spice it up a bit...")
+```
 
 --- type:NormalExercise  key:f548bed685
 ## Plotting Gene Expression (2)
