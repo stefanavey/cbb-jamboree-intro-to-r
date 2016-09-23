@@ -321,12 +321,17 @@ You will start exploring by plotting the expression of one gene over time during
 
 *** =instructions
 
-- Plot the expression of MX1 over time during the 'Brevig' infection
+- Plot the `expression` of the gene *MX1* over `Time` during the *Brevig* infection
 time course.
-  - First filter `data` to select observations where the Symbol is "MX1" and the Treatment is "Brevig" and save this in a new variable.
-  - Then call ggplot on this new variable specifying the data and aeshetics (x and y) and add a geom_point layer.
+  - First filter `data` to select observations where the `Symbol` is "MX1" and the `Treatment` is "Brevig" and save this in a new variable.
+  - Then call `ggplot()` on this new variable and add `x` and `y` aesthetics using `aes()`.
+  - Finally, add a `geom_point()` layer to the `ggplot()` call.
 
 *** =hint
+
+Remember to use `+` to add layers to the plotting call.
+
+Review Chapter 3 if you forget what a `ggplot()` call should look like.
 
 *** =pre_exercise_code
 ```{r}
@@ -377,7 +382,9 @@ ggplot(data = plotData, aes(x = Time, y = expression)) +
 *** =sct
 ```{r}
 test_ggplot(all_fail_msg = "Don't forget to make the plot! If you store the ggplot call in a variable `var` you can use `plot(var)` to make the plot",
-            check_data = TRUE, check_aes = TRUE, check_geom = TRUE)
+            check_data = TRUE, data_fail_msg = "Make sure to provide the filtered data",
+            check_aes = TRUE, aes_fail_msg = "Make sure you specify the `x` and `y` aesthetics in `aes()` to plot `Time` versus `expression`.",
+            check_geom = TRUE, geom_fail_msg = "Add a `geom_point()` layer to create a scatter plot")
 success_msg("Great job making that visualization! Let's spice it up a bit...")
 ```
 
