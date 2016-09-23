@@ -367,7 +367,8 @@ library(ggplot2)
 # Tidy data
 # Note we are doing the same steps here using piping (%>%)
 data <- data.frame(fdat, data.frame(expr)) %>%
-  gather(key = geo_accession, value = expression, starts_with("GSM")) %>%
+  gather(key = geo_accession, value = expression,
+         starts_with("GSM")) %>%
   full_join(pdat, by = "geo_accession")
 
 # Filter the data
@@ -381,8 +382,7 @@ ggplot(data = plotData, aes(x = Time, y = expression)) +
 
 *** =sct
 ```{r}
-test_ggplot(all_fail_msg = "Don't forget to make the plot! If you store the ggplot call in a variable `var` you can use `plot(var)` to make the plot",
-            check_data = TRUE, data_fail_msg = "Make sure to provide the filtered data",
+test_ggplot(check_data = TRUE, data_fail_msg = "Make sure to provide the filtered data",
             check_aes = TRUE, aes_fail_msg = "Make sure you specify the `x` and `y` aesthetics in `aes()` to plot `Time` versus `expression`.",
             check_geom = TRUE, geom_fail_msg = "Add a `geom_point()` layer to create a scatter plot")
 success_msg("Great job making that visualization! Let's spice it up a bit...")
