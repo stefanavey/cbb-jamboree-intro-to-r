@@ -182,7 +182,7 @@ test_object("exprf_df",
 success_msg("Great! Continue to the next exercise to continue tidying this expression data.")
 ```
 
---- type:NormalExercise  
+--- type:NormalExercise   key:f53f507908
 ## Tidy the data (2)
 
 Next you'll need to transform your data frame into a tidy format using [`gather()`](http://www.rdocumentation.org/packages/tidyr/functions/gather) so that there is only one observation (i.e. one gene measured in one sample) per row.
