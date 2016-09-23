@@ -109,25 +109,24 @@ library(Biobase)
 print(eset)
 
 # Extract information out of eset into 3 new variables
-expr <- exprs(eset)                     # expression data
+expr <- exprs(eset)
 features <- fData(eset)
 phenotypes <- pData(eset)
 ```
 
 *** =sct
 ```{r}
-test_output_contains({
-                       library(Biobase)
-                       print(eset)
-                     },
-                     incorrect_msg = "Have you printed the `eset` variable?")
+test_student_typed(c("print(eset)", "eset", "show(eset)"),
+                    fixed = TRUE, times = 1, 
+                    not_typed_msg = "Have you printed the `eset` variable?")
+# test_output_contains(print(eset), incorrect_msg = "Have you printed the `eset` variable?")
 test_object("expr",
             undefined_msg = "Please make sure to define a variable `expr`.",
             incorrect_msg = "Have you set the variable `expr`?")
-test_object("fdat",
+test_object("features",
             undefined_msg = "Please make sure to define a variable `fdat`.",
             incorrect_msg = "Have you set the variable `fdat`?")
-test_object("pdat",
+test_object("phenotypes",
             undefined_msg = "Please make sure to define a variable `pdat`.",            
             incorrect_msg = "Have you set the variable `pdat`?")
 success_msg("Great! Continue to the next exercise!")
@@ -237,9 +236,10 @@ str(dat)
 
 *** =sct
 ```{r}
-test_object("dat",
-            undefined_msg = "Please make sure to define a variable `dat`.",
-            incorrect_msg = "Looks like `dat` is not set properly. Check your `gather()` call")
+test_function("gather", args = c("data", "key", "value", "..."))
+# test_object("dat",
+#             undefined_msg = "Please make sure to define a variable `dat`.",
+#             incorrect_msg = "Looks like `dat` is not set properly. Check your `gather()` call")
 test_output_contains(str(dat), incorrect_msg = "Have you printed the structure of `dat`?")
 success_msg("Great! Continue to the next exercise!")
 ```
