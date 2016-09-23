@@ -28,7 +28,7 @@ We will read expression data for study [GSE55268](http://www.ncbi.nlm.nih.gov/ge
 
 *** =sct
 ```{r}
-success_msg("Now that you understand the study, let's analyze some data!")
+success_msg("Now that you understand the study, let's get the data!")
 ```
 
 --- type:NormalExercise  key:ecc45725c8
@@ -71,7 +71,7 @@ success_msg("Doesn't it look easy to read in data!?  Because the data is large, 
 For this course, you need to know three functions to extract data from an `ExpressionSet`
 
 - `pData`: Retreive information on experimental phenotypes (e.g. geo\_accession, Condition, Time)
-- `fData`: Retrieve information on features (e.g. Entrez\_Gene\_ID, Symbol, Species)
+- `fData`: Retrieve information on measured features (e.g. Entrez\_Gene\_ID, Symbol, Species)
 - `exprs`: Retrieve expression data matrix
 
 *** =instructions
@@ -110,15 +110,12 @@ print(eset)
 
 # Extract information out of eset into 3 new variables
 expr <- exprs(eset)                     # expression data
-fdat <- fData(eset)
-pdat <- pData(eset)
+features <- fData(eset)
+phenotypes <- pData(eset)
 ```
 
 *** =sct
 ```{r}
-test_object("my_apples", 
-            undefined_msg = "Please make sure to define a variable `my_apples`.",
-            incorrect_msg = "Make sure that you assign the correct value to `my_apples`.")
 test_output_contains(print(eset), incorrect_msg = "Have you printed the `eset` variable?")
 test_object("expr",
             undefined_msg = "Please make sure to define a variable `expr`.",
@@ -205,6 +202,8 @@ options(stringsAsFactors = FALSE)
 
 *** =sample_code
 ```{r}
+library(tidyr)
+
 # Convert expr into a data frame and name it expr_df
 expr_df <- data.frame(expr)
 
@@ -216,6 +215,8 @@ exprf_df <- data.frame(fdat, expr_df)
 
 *** =solution
 ```{r}
+library(tidyr)
+
 # Convert expr into a data frame and name it expr_df
 expr_df <- data.frame(expr)
 
