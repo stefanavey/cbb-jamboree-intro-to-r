@@ -116,7 +116,11 @@ phenotypes <- pData(eset)
 
 *** =sct
 ```{r}
-test_output_contains(print(eset), incorrect_msg = "Have you printed the `eset` variable?")
+test_output_contains({
+                       library(Biobase)
+                       print(eset)
+                     },
+                     incorrect_msg = "Have you printed the `eset` variable?")
 test_object("expr",
             undefined_msg = "Please make sure to define a variable `expr`.",
             incorrect_msg = "Have you set the variable `expr`?")
@@ -203,6 +207,7 @@ options(stringsAsFactors = FALSE)
 *** =sample_code
 ```{r}
 library(tidyr)
+library(dplyr)
 
 # Convert expr into a data frame and name it expr_df
 expr_df <- data.frame(expr)
@@ -216,6 +221,7 @@ exprf_df <- data.frame(fdat, expr_df)
 *** =solution
 ```{r}
 library(tidyr)
+library(dplyr)
 
 # Convert expr into a data frame and name it expr_df
 expr_df <- data.frame(expr)
