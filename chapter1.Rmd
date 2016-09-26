@@ -257,12 +257,14 @@ success_msg("Nice work! Now that you know the basic data types, continue on to l
 --- type:NormalExercise xp:100 skills:1 key:a79a6030f4
 ## What's a data frame?
 
-A **data frame** is a commonly used data type in R that stores data of different types. You will often find yourself working with data sets that contain different data types instead of only one.
+A **data frame** is a commonly used data type in R that can store data of multiple types. You will often find yourself working with data sets that contain different data types instead of only one. A data frame can be created with the [`data.frame()`](http://www.rdocumentation.org/packages/base/functions/data.frame) function.
 
-In a data frame variables are stored in columns and observations are stored in rows.
+In a data frame variables are stored in columns and observations are stored in rows. A data frame can also hold data of all the same type as in the built-in [`mtcars`](http://www.rdocumentation.org/packages/datasets/functions/mtcars) data set.
 
 *** =instructions
-Click 'Submit Answer'. The data from the built-in example data frame [`mtcars`](http://www.rdocumentation.org/packages/datasets/functions/mtcars) will be printed to the console.
+- Click 'Submit Answer'.
+  - A toy data frame containing numeric and character values is created using two vectors (themselves created with the combine ([`c()`](http://www.rdocumentation.org/packages/base/functions/c)) function
+  - Data from the built-in example data frame [`mtcars`](http://www.rdocumentation.org/packages/datasets/functions/mtcars) will be printed to the console.
 
 *** =hint
 Just click 'Submit Answer' and witness the magic!
@@ -274,29 +276,43 @@ Just click 'Submit Answer' and witness the magic!
 
 *** =sample_code
 ```{r}
+# Create a toy data frame to hold names and ages
+names <- c("Doreen", "Joe", "Jamal")
+ages <- c(75, 34, 23)
+toy_df <- data.frame(Name = names, Age = ages)
+toy_df
+
+
 # Print out built-in R data frame
 mtcars 
 ```
 
 *** =solution
 ```{r}
+# Create a toy data frame to hold names and ages
+names <- c("Doreen", "Joe", "Jamal")
+ages <- c(75, 34, 23)
+toy_df <- data.frame(Name = names, Age = ages)
+toy_df
+
+
 # Print out built-in R data frame
 mtcars 
 ```
 
 *** =sct
 ```{r}
+test_output_contains("toy_df", incorrect_msg = "Do not change anything about the code, Make sure that you output `toy_df`.")
 test_output_contains("mtcars", incorrect_msg = "Do not change anything about the code, Make sure that you output `mtcars`.")
 success_msg("Great! Continue to the next exercise.")
 ```
-
 
 --- type:NormalExercise xp:100 skills:1  key:b1506e572c
 ## Quick, have a look at your data set
 
 Wow, that is a lot of cars! 
 
-Working with large data sets is not uncommon in data analysis. When you work with (extremely) large data sets and data frames, your first task as a data analyst is to develop a clear understanding of its structure and main elements. Therefore, it is often useful to show only a small part of the entire data set. 
+Working with large data sets is not uncommon in bioinformatics. When you work with (extremely) large data sets and data frames, your first task as a data analyst is to develop a clear understanding of its structure and main elements. Therefore, it is often useful to show only a small part of the entire data set. 
 
 So how to do this in R? Well, the function [`head()`](http://www.rdocumentation.org/packages/utils/functions/head) enables you to show the first observations of a data frame (Similarly [`tail()`](http://www.rdocumentation.org/packages/utils/functions/head) prints out the last observations in your data set).
 

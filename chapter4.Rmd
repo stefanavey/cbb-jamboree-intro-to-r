@@ -33,7 +33,7 @@ success_msg("Now that you understand the study, let's get the data!")
 
 --- type:NormalExercise  key:ecc45725c8
 ## Reading in the data
-To get expression data from the Gene Expression Omnibus (GEO), you can use a package called `GEOquery` from Bioconductor. The size of the data prohibits us from running the code in DataCamp but we just wanted to show how simple it is.
+To get expression data from the Gene Expression Omnibus (GEO), you can use a package called `GEOquery` from Bioconductor. The size of the data prohibits us from running the code inside DataCamp but it is very simple to do in a standard R environment.
 
 *** =instructions
 - Look at the code required to read expression data from GEO.
@@ -75,10 +75,10 @@ For this course, you need to know three functions to extract data from an `Expre
 - `exprs`: Retrieve expression data matrix
 
 *** =instructions
-- Print `eset` to get an overview of the expression data it contains.
 - Create a new variable (`expr`) that contains the expression data from `eset`
 - Create a new variable (`features`) that contains the feature data from `eset`
 - Create a new variable (`phenotypes`) that contains the phenotype data from `eset`
+- Print `eset` to get an overview of the data it contains.
 - Click 'Submit Answer'.
 
 *** =hint
@@ -94,10 +94,12 @@ load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1843/dat
 # Load Biobase package (from Bioconductor) to work with ExpressionSet Class
 library(Biobase)
 
-# Print eset
-
-
 # Extract information out of eset into 3 new variables
+
+
+
+
+# Print eset
 ```
 
 *** =solution
@@ -105,13 +107,13 @@ library(Biobase)
 # Load Biobase package (from Bioconductor) to work with ExpressionSet Class
 library(Biobase)                                        
 
-# Print eset
-print(eset)
-
 # Extract information out of eset into 3 new variables
 expr <- exprs(eset)
 features <- fData(eset)
 phenotypes <- pData(eset)
+
+# Print eset
+print(eset)
 ```
 
 *** =sct
@@ -124,29 +126,32 @@ test_object("expr",
             undefined_msg = "Please make sure to define a variable `expr`.",
             incorrect_msg = "Have you set the variable `expr`?")
 test_object("features",
-            undefined_msg = "Please make sure to define a variable `fdat`.",
-            incorrect_msg = "Have you set the variable `fdat`?")
+            undefined_msg = "Please make sure to define a variable `features`.",
+            incorrect_msg = "Have you set the variable `features`?")
 test_object("phenotypes",
-            undefined_msg = "Please make sure to define a variable `pdat`.",            
-            incorrect_msg = "Have you set the variable `pdat`?")
-success_msg("Great! Continue to the next exercise!")
+            undefined_msg = "Please make sure to define a variable `phenotypes`.",            
+            incorrect_msg = "Have you set the variable `phenotypes`?")
+success_msg("Nice job! Notice in the output that printing `eset` tells you about what it contains including the number of features (genes) and samples.")
 ```
 
 --- type:NormalExercise  key:e7416248d9
-## Tidy the data
+## Combine the data
 
-Look at the class of `expr`. To tidy and work with this data you need to convert this matrix to a data frame. You can do this with the [`data.frame()`](http://www.rdocumentation.org/packages/base/functions/data.frame) function.
+Currently our data is stored in 3 variables, `expr`, `features`, and `phenotypes`. Eventually we want to combine all of these into a single tidy data frame.
+
+To begin, we can combine the information on the features with the expression data. Each row of `features` gives additional information on the gene expression probe while each row of `expr` gives the expression levels of each probe in different samples.
+
+We can combine these together in a data frame using the [`data.frame()`](http://www.rdocumentation.org/packages/base/functions/data.frame) function.
 
 *** =instructions
 
-- Create a new data frame called `expr_df` from `expr` using the [`data.frame()`](http://www.rdocumentation.org/packages/base/functions/data.frame) function.
-- Combine `fdat` and `expr_df` into a new data frame called `exprf_df` again using the [`data.frame()`](http://www.rdocumentation.org/packages/base/functions/data.frame) function.
+- Pass `features` and `expr` to the [`data.frame()`](http://www.rdocumentation.org/packages/base/functions/data.frame) function and assign this new data frame to a variable named `expr_df`.
 - Click 'Submit Answer'.
 
-*Note: We set the global option `stringsAsFactors` to `FALSE` in the Workspace to avoid using the `factor` data type which we will not cover.*
+*Note: We are ignoring the `factor` data type by setting the global option `stringsAsFactors` to `FALSE` in the R workspace.*
 
 *** =hint
-
+The [`data.frame()`](http://www.rdocumentation.org/packages/base/functions/data.frame) function can take one of more vectors, matrices or data.frames and will combining by binding columns together. A vector will be treated like a 1-D matrix.
 
 *** =pre_exercise_code
 ```{r}
@@ -156,40 +161,31 @@ options(stringsAsFactors = FALSE)
 
 *** =sample_code
 ```{r}
-# Convert expr into a data frame and name it expr_df
-
-
-# Combine fdat and expr_df into a data frame named exprf_df
+# Combine features and expr into a data frame named expr_df
 ```
 
 *** =solution
 ```{r}
-# Convert expr into a data frame and name it expr_df
-expr_df <- data.frame(expr)
-
-# Combine fdat and expr_df into a data frame named exprf_df
-exprf_df <- data.frame(fdat, expr_df)
+# Combine features and expr into a data frame named expr_df
+expr_df <- data.frame(features, expr)
 ```
 
 *** =sct
 ```{r}
-test_object("expr_df",
+test_object("expr_df", 
             undefined_msg = "Please make sure to define a variable `expr_df`.",
-            incorrect_msg = "Have you set the variable `expr_df`?")
-test_object("exprf_df", 
-            undefined_msg = "Please make sure to define a variable `exprf_df`.",
             incorrect_msg = "Have you set the variable `expr_df`?")
 success_msg("Great! Continue to the next exercise to continue tidying this expression data.")
 ```
 
 --- type:NormalExercise   key:f53f507908
-## Tidy the data (2)
+## Tidy the data
 
 Next you'll need to transform your data frame into a tidy format using [`gather()`](http://www.rdocumentation.org/packages/tidyr/functions/gather) so that there is only one observation (i.e. one gene measured in one sample) per row.
 
 *** =instructions
 
-- Use [`gather()`](http://www.rdocumentation.org/packages/tidyr/functions/gather) on `exprf_df` specifying the key as 'geo_accession' and the value as 'expression' and save this in a variable called `dat`
+- Use [`gather()`](http://www.rdocumentation.org/packages/tidyr/functions/gather) on `expr_df` specifying the key as 'geo_accession' and the value as 'expression' and save this in a variable called `dat`
 - Look at the structure of `dat` using the `str()` function
 
 *** =hint
@@ -211,10 +207,10 @@ library(dplyr)
 # Convert expr into a data frame and name it expr_df
 expr_df <- data.frame(expr)
 
-# Combine fdat and expr_df into a data frame named exprf_df
-exprf_df <- data.frame(fdat, expr_df)
+# Combine features and expr_df into a data frame named expr_df
+expr_df <- data.frame(features, expr_df)
 
-# Gather expression columns of exprf_df and print structure of dat
+# Gather expression columns of expr_df and print structure of dat
 ```
 
 *** =solution
@@ -225,11 +221,11 @@ library(dplyr)
 # Convert expr into a data frame and name it expr_df
 expr_df <- data.frame(expr)
 
-# Combine fdat and expr_df into a data frame named exprf_df
-exprf_df <- data.frame(fdat, expr_df)
+# Combine features and expr_df into a data frame named expr_df
+expr_df <- data.frame(features, expr_df)
 
-# Gather expression columns of exprf_df and print structure of dat
-dat <- gather(data = exprf_df, key = geo_accession,
+# Gather expression columns of expr_df and print structure of dat
+dat <- gather(data = expr_df, key = geo_accession,
               value = expression, starts_with("GSM"))
 str(dat)  
 ```
@@ -245,16 +241,16 @@ success_msg("Great! Continue to the next exercise!")
 ```
 
 --- type:NormalExercise key:ebeb4cda30
-## Tidy the data (3)
+## Join the data
 
-Finally, you want to add phenotype data in `pdat` to `dat` so you have all the information describing the geo_accession (i.e. sample) in each row.
+Finally, you want to add phenotype data in `phenotypes` to `dat` so you have all the information describing the geo_accession (i.e. sample) in each row.
 
 [`full_join()`](http://www.rdocumentation.org/packages/dplyr/functions/full_join) can be used to join two data frames and retain all values, and all rows.
 
 
 *** =instructions
 
-- Use [`full_join()`](http://www.rdocumentation.org/packages/dplyr/functions/full_join) to join `dat` and `pdat` by the "geo_accession" column and save the result in a new variabled called `data`
+- Use [`full_join()`](http://www.rdocumentation.org/packages/dplyr/functions/full_join) to join `dat` and `phenotypes` by the "geo_accession" column and save the result in a new variabled called `data`
 
 *** =hint
 
@@ -272,14 +268,14 @@ library(dplyr)
 # Convert expr into a data frame and name it expr_df
 expr_df <- data.frame(expr)
 
-# Combine fdat and expr_df into a data frame named exprf_df
-exprf_df <- data.frame(fdat, expr_df)
+# Combine features and expr_df into a data frame named expr_df
+expr_df <- data.frame(features, expr_df)
 
-# Gather expression columns of exprf_df and print structure of dat
-dat <- gather(data = exprf_df, key = geo_accession,
+# Gather expression columns of expr_df and print structure of dat
+dat <- gather(data = expr_df, key = geo_accession,
               value = expression, starts_with("GSM"))
 
-# Join dat and pdat
+# Join dat and phenotypes
 ```
 
 *** =solution
@@ -290,15 +286,15 @@ library(dplyr)
 # Convert expr into a data frame and name it expr_df
 expr_df <- data.frame(expr)
 
-# Combine fdat and expr_df into a data frame named exprf_df
-exprf_df <- data.frame(fdat, expr_df)
+# Combine features and expr_df into a data frame named expr_df
+expr_df <- data.frame(features, expr_df)
 
-# Gather expression columns of exprf_df and print structure of dat
-dat <- gather(data = exprf_df, key = geo_accession,
+# Gather expression columns of expr_df and print structure of dat
+dat <- gather(data = expr_df, key = geo_accession,
               value = expression, starts_with("GSM"))
 
-# Join dat and pdat
-data <- full_join(dat, pdat, by = "geo_accession")
+# Join dat and phenotypes
+data <- full_join(dat, phenotypes, by = "geo_accession")
 ```
 
 *** =sct
@@ -348,9 +344,9 @@ library(ggplot2)
 
 # Tidy data
 # Note we are doing the same steps here using piping (%>%)
-data <- data.frame(fdat, data.frame(expr)) %>%
+data <- data.frame(features, expr) %>%
   gather(key = geo_accession, value = expression, starts_with("GSM")) %>%
-  full_join(pdat, by = "geo_accession")
+  full_join(phenotypes, by = "geo_accession")
 
 # Filter the data
 
@@ -366,10 +362,10 @@ library(ggplot2)
 
 # Tidy data
 # Note we are doing the same steps here using piping (%>%)
-data <- data.frame(fdat, data.frame(expr)) %>%
+data <- data.frame(features, expr) %>%
   gather(key = geo_accession, value = expression,
          starts_with("GSM")) %>%
-  full_join(pdat, by = "geo_accession")
+  full_join(phenotypes, by = "geo_accession")
 
 # Filter the data
 plotData <- data %>% filter(Symbol == "MX1", Treatment == "Brevig")
@@ -382,9 +378,9 @@ ggplot(data = plotData, aes(x = Time, y = expression)) +
 ############################################################
 # # In comparison, the same plot can be made without tidying
 # # the data first but it is less readable and more code.
-# cond <- pdat[, "Treatment"] == "Brevig"
-# exp <- expr[fdat[,"Symbol"] == "MX1", cond]
-# times <- pdat[cond, "Time"]
+# cond <- phenotypes[, "Treatment"] == "Brevig"
+# exp <- expr[features[,"Symbol"] == "MX1", cond]
+# times <- phenotypes[cond, "Time"]
 # plot(x = times, y = exp, pch = 19)
 ```
 
@@ -430,9 +426,9 @@ library(ggplot2)
 
 # Tidy data
 # Note we are doing the same steps here using piping (%>%)
-data <- data.frame(fdat, data.frame(expr)) %>%
+data <- data.frame(features, expr) %>%
   gather(key = geo_accession, value = expression, starts_with("GSM")) %>%
-  full_join(pdat, by = "geo_accession")
+  full_join(phenotypes, by = "geo_accession")
 
 # Filter the data
 plotData <- data %>% filter(Symbol == "MX1", Treatment == "Brevig")
@@ -451,10 +447,10 @@ library(ggplot2)
 
 # Tidy data
 # Note we are doing the same steps here using piping (%>%)
-data <- data.frame(fdat, data.frame(expr)) %>%
+data <- data.frame(features, expr) %>%
   gather(key = geo_accession, value = expression,
          starts_with("GSM")) %>%
-  full_join(pdat, by = "geo_accession")
+  full_join(phenotypes, by = "geo_accession")
 
 # Filter the data
 plotData <- data %>% filter(Symbol == "MX1", Treatment == "Brevig")
@@ -468,12 +464,12 @@ ggplot(data = plotData, aes(x = Time, y = expression)) +
 ############################################################
 # # In comparison, the same plot can be made without tidying
 # # the data first but it is less readable and more code.
-# cond <- pdat[, "Treatment"] == "Brevig"
-# exp <- expr[fdat[,"Symbol"] == "MX1", cond]
-# times <- pdat[cond, "Time"]
+# cond <- phenotypes[, "Treatment"] == "Brevig"
+# exp <- expr[features[,"Symbol"] == "MX1", cond]
+# times <- phenotypes[cond, "Time"]
 # matExp <- matrix(exp, ncol = 3, byrow = TRUE)  
 # matTimes <- matrix(times, ncol = 3, byrow = TRUE)
-# reps <- pdat[cond, "Replicate"]
+# reps <- phenotypes[cond, "Replicate"]
 # matplot(x = matTimes, y = matExp, type = 'b',
 #         lty = 1, pch = 19, col = "black")
 ```
@@ -522,9 +518,9 @@ library(ggplot2)
 
 # Tidy data
 # Note we are doing the same steps here using piping (%>%)
-data <- data.frame(fdat, data.frame(expr)) %>%
+data <- data.frame(features, expr) %>%
   gather(key = geo_accession, value = expression, starts_with("GSM")) %>%
-  full_join(pdat, by = "geo_accession")
+  full_join(phenotypes, by = "geo_accession")
 
 # Filter the data
 plotData <- data %>% filter(Symbol == "MX1", Treatment == "Brevig")
@@ -550,10 +546,10 @@ library(ggplot2)
 
 # Tidy data
 # Note we are doing the same steps here using piping (%>%)
-data <- data.frame(fdat, data.frame(expr)) %>%
+data <- data.frame(features, expr) %>%
   gather(key = geo_accession, value = expression,
          starts_with("GSM")) %>%
-  full_join(pdat, by = "geo_accession")
+  full_join(phenotypes, by = "geo_accession")
 
 # Filter the data
 plotData <- data %>% filter(Symbol == "MX1", Treatment == "Brevig")
