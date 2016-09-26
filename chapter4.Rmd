@@ -204,11 +204,8 @@ options(stringsAsFactors = FALSE)
 library(tidyr)
 library(dplyr)
 
-# Convert expr into a data frame and name it expr_df
-expr_df <- data.frame(expr)
-
-# Combine features and expr_df into a data frame named expr_df
-expr_df <- data.frame(features, expr_df)
+# Combine features and expr into a data frame named expr_df
+expr_df <- data.frame(features, expr)
 
 # Gather expression columns of expr_df and print structure of dat
 ```
@@ -218,11 +215,8 @@ expr_df <- data.frame(features, expr_df)
 library(tidyr)
 library(dplyr)
 
-# Convert expr into a data frame and name it expr_df
-expr_df <- data.frame(expr)
-
-# Combine features and expr_df into a data frame named expr_df
-expr_df <- data.frame(features, expr_df)
+# Combine features and expr into a data frame named expr_df
+expr_df <- data.frame(features, expr)
 
 # Gather expression columns of expr_df and print structure of dat
 dat <- gather(data = expr_df, key = geo_accession,
@@ -265,11 +259,8 @@ options(stringsAsFactors = FALSE)
 library(tidyr)
 library(dplyr)
 
-# Convert expr into a data frame and name it expr_df
-expr_df <- data.frame(expr)
-
-# Combine features and expr_df into a data frame named expr_df
-expr_df <- data.frame(features, expr_df)
+# Combine features and expr into a data frame named expr_df
+expr_df <- data.frame(features, expr)
 
 # Gather expression columns of expr_df and print structure of dat
 dat <- gather(data = expr_df, key = geo_accession,
@@ -283,11 +274,8 @@ dat <- gather(data = expr_df, key = geo_accession,
 library(tidyr)
 library(dplyr)
 
-# Convert expr into a data frame and name it expr_df
-expr_df <- data.frame(expr)
-
-# Combine features and expr_df into a data frame named expr_df
-expr_df <- data.frame(features, expr_df)
+# Combine features and expr into a data frame named expr_df
+expr_df <- data.frame(features, expr)
 
 # Gather expression columns of expr_df and print structure of dat
 dat <- gather(data = expr_df, key = geo_accession,
