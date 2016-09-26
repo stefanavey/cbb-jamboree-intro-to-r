@@ -334,11 +334,6 @@ test_output_contains("head(mtcars)", incorrect_msg = "Simply print out the resul
 success_msg("Wonderful! So, what do we have in this data set? `hp` for example represents the car's horsepower; the Datsun has the lowest horse power of the 6 cars that are displayed. For a full overview of the variables' meaning, type `help(\"mtcars\")` in the console and read the help page. Continue to the next exercise!");
 ```
 
-
-<<<<<<< HEAD
---- type:NormalExercise xp:100 skills:1 key:0f23107394
-## Basic data types in R
-=======
 --- type:NormalExercise xp:100 skills:1  key:e94dbf26f4
 ## Have a look at the structure
 >>>>>>> devCh4
