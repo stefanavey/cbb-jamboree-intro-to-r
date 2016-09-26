@@ -377,7 +377,7 @@ ggplot(data = plotData, aes(x = Time, y = expression)) +
 test_ggplot(check_data = TRUE, data_fail_msg = "Make sure to provide the filtered data",
             check_aes = TRUE, aes_fail_msg = "Did you specify the `x` and `y` aesthetics in `aes()` to plot `Time` versus `expression`?",            
             check_geom = TRUE, geom_fail_msg = "Did you add a `geom_point()` layer to create a scatter plot?")
-success_msg("Nice job making that visualization! Let's spice it up a bit...")
+success_msg("Nice job making that visualization! You can see that the expression of *MX1* changes dramatically over the time course. That's because *MX1* is an antiviral response gene that gets activated when a cell is infected. Let's spice it up a bit...")
 ```
 
 --- type:NormalExercise  key:f548bed685
@@ -466,7 +466,7 @@ ggplot(data = plotData, aes(x = Time, y = expression)) +
 ```{r}
 test_ggplot(check_data = TRUE, data_fail_msg = "Make sure to provide the filtered data",
             check_aes = TRUE, aes_fail_msg = "Did you specify the `x` and `y` aesthetics in `aes()` to plot `Time` versus `expression`?",
-            check_geom = TRUE, geom_fail_msg = "Did you keep the `geom_point()` layer and add a new `geom_line()` layer?")
+            check_geom = TRUE, geom_fail_msg = "Did you keep the `geom_point()` layer and add a new `geom_line()` layer with a group aesthetic?")
 success_msg("Lookin' good! Ready to make a publication-quality visualization?")
 ```
 
@@ -475,11 +475,11 @@ success_msg("Lookin' good! Ready to make a publication-quality visualization?")
 
 This experiment was designed to compare different strains of the flu virus but so far you have only been plotting a single strain (*Brevig*).
 
-Make a plot to see how *MX1* behaves in each `Treatment`.
+Make a plot to see how *MX1* behaves for each `Treatment`.
 
 *** =instructions
 
-Create a plot similar to the previous plot except:
+Create a plot similar to the example plot except:
 
 - Filter `data` only by `Symbol` to keep all values of `Treatment`
 - Specify the `color` aesthetic in the `ggplot()` call to depend on `Treatment`
@@ -513,7 +513,7 @@ data <- data.frame(features, expr) %>%
 # Filter the data
 plotData <- data %>% filter(Symbol == "MX1", Treatment == "Brevig")
 
-# Previous plot
+# Example plot
 ggplot(data = plotData, aes(x = Time, y = expression)) +
   geom_point() +
   geom_line(aes(group = Replicate)) +
@@ -542,7 +542,7 @@ data <- data.frame(features, expr) %>%
 # Filter the data
 plotData <- data %>% filter(Symbol == "MX1", Treatment == "Brevig")
 
-# Previous plot
+# Example plot
 ggplot(data = plotData, aes(x = Time, y = expression)) +
   geom_point() +
   geom_line(aes(group = Replicate)) +
@@ -565,7 +565,7 @@ test_ggplot(index = 2,
             check_data = TRUE, data_fail_msg = "Make sure to provide the new filtered data",
             check_aes = TRUE, aes_fail_msg = "Did you specify the `x`, `y`, and `color` aesthetics as well as the `group` for `geom_line()`?",
             check_geom = TRUE, geom_fail_msg = "Did you add both a `geom_point()` layer and add a `geom_line()` layer?")
-success_msg("Lookin' good! I'd publish that!")
+success_msg("Lookin' good! You can use the buttons on the plot to go back and forth between multiple plots. How does the `Brevig` strain compare to the other strains (`Cal`, `NC`, `Tx`)? `AlaF` is a mock infection while `Control` is no infection. Does this make sense from the plot?")
 ```
 --- type:NormalExercise  key:ae47d50b6a
 ## Data Interrogation
