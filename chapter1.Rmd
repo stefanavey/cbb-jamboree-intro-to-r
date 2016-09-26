@@ -251,7 +251,7 @@ test_output_contains("class(my_character)",
                      incorrect_msg = sprintf(patt, "my_character"))
 test_output_contains("class(my_logical)",
                      incorrect_msg = sprintf(patt, "my_logical"))
-success_msg("Congratulations! This was the last exercise for this chapter. Head over to the next chapter to get immersed in the world of vectors!")
+success_msg("Nice work! Now that you know the basic data types, continue on to learn about data frames - one of the most useful data types in R!")
 ```
 
 --- type:NormalExercise xp:100 skills:1 key:a79a6030f4
