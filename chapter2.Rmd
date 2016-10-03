@@ -22,6 +22,11 @@ Many times when we run into data from the wild, it is often a jumble of messy ch
 > **A *variable* contains all *values* that measure the same underlying attribute across units.**
 > **An *observation* contains all *values* measured on the same unit across attributes.**
 
+To emphasize this concept, let's take a look at the following example data below:
+
+
+
+
 
 These concepts lean heavily on the formal treatise by Hadley Wickham, the lead developer of many of the packages we will be using throughout this course. See the [tidy data paper](http://vita.had.co.nz/papers/tidy-data.html) and the accompanying [R code heavy version](https://cran.r-project.org/web/packages/tidyr/vignettes/tidy-data.html).
 
@@ -31,7 +36,7 @@ These concepts lean heavily on the formal treatise by Hadley Wickham, the lead d
 - Simply click to submit to move forward!
 
 *** =hint
-Just add a line of R code that calculates the sum of 6 and 12, just like the example in the sample code!
+Why did you click this? You don't need a hint to click submit!
 
 *** =pre_exercise_code
 ```{r}
@@ -52,7 +57,12 @@ Just add a line of R code that calculates the sum of 6 and 12, just like the exa
 
 *** =sct
 ```{r}
-## see docs for usage
+test_error()
+test_object("x",
+            undefined_msg = "Make sure to define `x`!",
+            incorrect_msg = "Have you correctly assigned 5 to `x`!")
+success_msg("Good job! Head over to the next exercise!")
+
 ```
 
 
