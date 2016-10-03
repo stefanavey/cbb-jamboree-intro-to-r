@@ -1,12 +1,12 @@
 --- 
 title_meta  : Chapter 2
-title       : tidyr/dplyr
-description : "tidyr/dplyr"
+title       : Data the Tidy Way
+description : "In this chapter, you will learn some of the fundamentals of taking raw data and cleaning it to form tidy data, the fundamental currency of data science and visualization tools such as ggplot2."
 
 --- type:NormalExercise xp:100 skills:1 key:3db54e3447
-## Intro to Data Science and Tidy Data
+## Intro to Data Science and Some (Un)Tidy Data
 
-Now that you've been introduced to the fundamentals of programming in R, the next step is to learning how to data science in R. Here, we'll present some of the concepts we wish we would have learned when we first started, and go through some example data on the way. (1)
+Now that you've been introduced to the fundamentals of programming in R, the next step is to learning how to data science in R. Here, we'll present some of the concepts we wish we would have learned when we first started, and go through some example data on the way. (1, see hint)
 
 By the end of this chapter, you should be familiar with:
 
@@ -27,12 +27,11 @@ To emphasize this concept, take a look at the sample code on the right showing u
 
 *** =instructions
 - Take a moment to ponder how you might reorganize this data, then simply click submit to move forward!
- 
-(1) These concepts introduced here lean heavily on the formal treatise by Hadley Wickham, the lead developer of many of the packages we will be using throughout this course. See the [tidy data paper](http://vita.had.co.nz/papers/tidy-data.html) and the accompanying [R code heavy version](https://cran.r-project.org/web/packages/tidyr/vignettes/tidy-data.html). Definitely take the time to checkout these resources!
 
 
 *** =hint
-Why did you click this? You don't need a hint to click submit!
+(1) These concepts introduced here lean heavily on the formal treatise by Hadley Wickham, the lead developer of many of the packages we will be using throughout this course. See the [tidy data paper](http://vita.had.co.nz/papers/tidy-data.html) and the accompanying [R code heavy version](https://cran.r-project.org/web/packages/tidyr/vignettes/tidy-data.html). Definitely take the time to checkout these resources!
+
 
 *** =pre_exercise_code
 ```{r}
@@ -74,22 +73,46 @@ success_msg("Good job! Head over to the next exercise!")
 
 
 --- type:NormalExercise lang:r xp: skills: key:489128dafe
-## Test2
+## A Tidy Sample
 
-Poopie doopie loopie mcshloops!
+So we just saw what some untidy looks like, with all of its variable and values mixed up. If you took a moment to ponder the format of the previous data (to remind yourself, run the line `untidy_df` and see the output in the console), you took stock of the following.
+
+- There exist three different people with different *names*, who underwent different *treatments*, `treatmenta` and/or `treatmentb`, which resulted in different *values* in each case (with no treatment application (e.g. missing data) represented as `NA`)
+
+Given this, we can come up with three *variables* describing each unique *observation* (application of treatment X to person Y with readout/value Z):
+
+- name
+- treatment
+- value
+
+Hence, we can rewrite our untidy data into a tidy format! See the sample code for the solution. 
+
+With this in mind, let's move on to a real world dataset 'from the wild'!
 
 *** =instructions
-say hi
+Check out the tidy transformation of our untidy data, and get ready to start coding!
 
 *** =hint
+"It is often said that 80% of data analysis is spent on the process of cleaning and preparing
+the data (Dasu and Johnson 2003)" - if you haven't already, check out [this paper on tidy data](http://vita.had.co.nz/papers/tidy-data.pdf) for extra credit!
 
 *** =pre_exercise_code
 ```{r}
+# Untidy data example
+untidy_df <- data.frame(name = c("John Smith", "Jane Doe", "Mary Johnson"),
+                        treatmenta = c(NA, 4, 6),
+                        treatmentb = c(18, 1, 7))
 
 ```
 
 *** =sample_code
 ```{r}
+untidy_df # run me to see the untidy version
+
+tidy_df <- data.frame(name = rep(c("Jane Doe", "John Smith", "Mary Johnson"), each = 2),
+                      treatment = rep(c("a", "b"), 3),
+                      value = c(4, 1, NA, 18, 6, 7))
+tidy_df
 
 ```
 
@@ -100,5 +123,12 @@ say hi
 
 *** =sct
 ```{r}
+test_error()
+test_object("untidy_df",
+            undefined_msg = "Make sure to define `x`!",
+            incorrect_msg = "Have you correctly assigned 5 to `x`!")
+success_msg("Good job! Head over to the next exercise!")
 
 ```
+
+
