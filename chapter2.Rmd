@@ -3,8 +3,13 @@ title_meta  : Chapter 2
 title       : tidyr/dplyr
 description : "tidyr/dplyr"
 
+<<<<<<< HEAD
 --- type:NormalExercise xp:100 skills:1
 ## Intro to Data Science and Tidy Data
+=======
+--- type:NormalExercise xp:100 skills:1 key:1525b29b03
+## How it works
+>>>>>>> 781909c661c30aaea33bafd4250e825848586a1f
 
 Now that you've been introduced to the fundamentals of programming in R, the next step is to learning how to data science in R. Here, we'll present some of the concepts we wish we would have learned when we first started, and go through some example data on the way. 
 
