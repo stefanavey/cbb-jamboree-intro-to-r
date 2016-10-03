@@ -135,21 +135,35 @@ success_msg("Good job! Head over to the next exercise!")
 
 
 
+
 --- type:NormalExercise lang:r xp: skills: key:75bda68f14
-## <<<TITLE>>> 
+## Real (Messy) Data: Income Distribution by Religion
+
+Time for you to take a look at some actual, raw data. Here we have a survey done by Pew Research that examines the relationship between income and religious affiliation. We've already loaded the dataset up for you in the background under `pew`, but if you want to explore it on your own computer, [here is the data](http://stat405.had.co.nz/data/pew.txt).
+
+Recalling chapter 1, check out the dataset on your own, and let's apply our tidy thinking to figure out what we need to change.
+
 
 
 *** =instructions
+- What do the first and last rows of the data look like?
+- What are the dimensions? 
+- What does a simple (naive) summary of the data give us? 
+- What is the structure of the data?
 
 *** =hint
+Use the functions you learned from chapter 1 - namely, `head()`, `tail()`, `dim()`, `summary()`, and `str()` to preview the dataset on hand.
 
 *** =pre_exercise_code
 ```{r}
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1843/datasets/pew.RData"))
 
 ```
 
 *** =sample_code
 ```{r}
+## Your code here
+pew
 
 ```
 
@@ -160,34 +174,60 @@ success_msg("Good job! Head over to the next exercise!")
 
 *** =sct
 ```{r}
+test_error()
+test_object("pew",
+            undefined_msg = "Make sure to define `x`!",
+            incorrect_msg = "Have you correctly assigned 5 to `x`!")
+success_msg("Good job! Head over to the next exercise!")
 
 ```
 
 --- type:NormalExercise lang:r xp: skills: key:426a68171c
-## <<<TITLE>>> 
+## Refactoring Columns Into a Variable
+
+You might have noticed that the columns contain a variety of income *levels* (e.g. *values*)..so you might consider *income* to be a *variable* in its own right. Furthermore, an individual observation will be a combination of a religion crossed with a specific income level.
+
+Before we go on, first, I highly recommend checking out the [Data Wrangling with dplyr and tidyr Cheat Sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf) by RStudio, as this will be an invaluable resource throughout this course (and in your work).
+
+Back to our data..what we want to do is *gather* our columns into a single variable - income. To accomplish this, let's use the `tidyr` package. A quick example with the built-in `iris` dataset is shown in the Sample Code.
 
 
 *** =instructions
+Similar to the `iris` dataset in the sample code, refactor the `pew` dataset such that the data is tidy, with variables `religion`, `income`, and `value` into an object called `pew_df`.
 
 *** =hint
+See the sample code and your data wrangling cheat sheet for an example of how to use `tidyr::gather()`. Note that the opposite of this is `tidyr::spread()`.
 
 *** =pre_exercise_code
 ```{r}
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1843/datasets/pew.RData"))
+library(tidyr)
 
 ```
 
 *** =sample_code
 ```{r}
+# Example of gathering variables with the iris dataset
+iris_df <- tidyr::gather(iris, Species, value)
+head(iris_df) # there exist duplicate colnames, fix below
+colnames(iris_df) <- c("Species", "Measurement", "value") 
 
 ```
 
 *** =solution
 ```{r}
+dat <- tidyr::gather(pew, religion, income)
+colnames(dat) <- c("religion", "income", "value")
 
 ```
 
 *** =sct
 ```{r}
+test_error()
+test_object("pew_df",
+            undefined_msg = "Make sure to define `pew_df`!",
+            incorrect_msg = "Have you munged `pew`?")
+success_msg("Good job! Head over to the next exercise!")
 
 ```
 
