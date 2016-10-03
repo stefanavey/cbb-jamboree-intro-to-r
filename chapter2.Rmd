@@ -41,6 +41,7 @@ Why did you click this? You don't need a hint to click submit!
 *** =pre_exercise_code
 ```{r}
 # run this without showing user
+x <- 5
 ```
 
 *** =sample_code
