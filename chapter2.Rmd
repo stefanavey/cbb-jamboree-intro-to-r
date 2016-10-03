@@ -6,7 +6,7 @@ description : "tidyr/dplyr"
 --- type:NormalExercise xp:100 skills:1
 ## Intro to Data Science and Tidy Data
 
-Now that you've been introduced to the fundamentals of programming in R, the next step is to learning how to data science in R. Here, we'll present some of the concepts we wish we would have learned when we first started, and go through some example data on the way. 
+Now that you've been introduced to the fundamentals of programming in R, the next step is to learning how to data science in R. Here, we'll present some of the concepts we wish we would have learned when we first started, and go through some example data on the way. (1)
 
 By the end of this chapter, you should be familiar with:
 
@@ -22,18 +22,16 @@ Many times when we run into data from the wild, it is often a jumble of messy ch
 > **A *variable* contains all *values* that measure the same underlying attribute across units.**
 > **An *observation* contains all *values* measured on the same unit across attributes.**
 
-To emphasize this concept, let's take a look at the following example data below:
+To emphasize this concept, take a look at the sample code on the right showing untidy data (presented in two different ways), and print the `untidy_df` and `untidy_df_2` object out (hint: Ctrl/Cmd+Enter to run a line!). How does this dataset run counter to the principle stated above? 
 
 
 
-
-
-These concepts lean heavily on the formal treatise by Hadley Wickham, the lead developer of many of the packages we will be using throughout this course. See the [tidy data paper](http://vita.had.co.nz/papers/tidy-data.html) and the accompanying [R code heavy version](https://cran.r-project.org/web/packages/tidyr/vignettes/tidy-data.html).
+(1) These concepts introduced here lean heavily on the formal treatise by Hadley Wickham, the lead developer of many of the packages we will be using throughout this course. See the [tidy data paper](http://vita.had.co.nz/papers/tidy-data.html) and the accompanying [R code heavy version](https://cran.r-project.org/web/packages/tidyr/vignettes/tidy-data.html).
 
 
 
 *** =instructions
-- Simply click to submit to move forward!
+- Take a moment to ponder how you might reorganize this data, then simply click submit to move forward!
 
 *** =hint
 Why did you click this? You don't need a hint to click submit!
@@ -46,14 +44,24 @@ x <- 5
 
 *** =sample_code
 ```{r}
-# Data Science is Awesome!
+# Untidy data example
+untidy_df <- data.frame(name = c("John Smith", "Jane Doe", "Mary Johnson"),
+                        treatmenta = c(NA, 4, 6),
+                        treatmentb = c(18, 1, 7))
+untidy_df
+
+# Untidy data example 2
+untidy_df_2 <- data.frame(treatment = c("a", "b"),
+                      John.Smith = c(NA, 18),
+                      Jane.Doe = c(4, 1),
+                      Mary.Johnson = c(6, 7))
+untidy_df_2
 
 ```
 
 *** =solution
 ```{r}
-# Data Science is Awesome!
-# And so are you!
+
 ```
 
 *** =sct
