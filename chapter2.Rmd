@@ -3,7 +3,7 @@ title_meta  : Chapter 2
 title       : tidyr/dplyr
 description : "tidyr/dplyr"
 
---- type:NormalExercise xp:100 skills:1
+--- type:NormalExercise xp:100 skills:1 key:1525b29b03
 ## How it works
 
 In the editor on the right you should type R code to solve the exercises. When you hit the 'Submit Answer' button, every line of code is interpreted and executed by R and you get a message whether or not your code was correct. The output of your R code is shown in the console in the lower right corner.
