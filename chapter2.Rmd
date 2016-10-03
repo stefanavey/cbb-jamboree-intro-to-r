@@ -74,3 +74,31 @@ success_msg("Good job! Head over to the next exercise!")
 ```
 
 
+
+--- type:NormalExercise lang:r xp: skills: key:489128dafe
+## <<<TITLE>>> 
+
+
+*** =instructions
+
+*** =hint
+
+*** =pre_exercise_code
+```{r}
+
+```
+
+*** =sample_code
+```{r}
+
+```
+
+*** =solution
+```{r}
+
+```
+
+*** =sct
+```{r}
+
+```
