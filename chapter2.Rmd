@@ -4,46 +4,55 @@ title       : tidyr/dplyr
 description : "tidyr/dplyr"
 
 --- type:NormalExercise xp:100 skills:1
-## How it works
+## Intro to Data Science and Tidy Data
 
-In the editor on the right you should type R code to solve the exercises. When you hit the 'Submit Answer' button, every line of code is interpreted and executed by R and you get a message whether or not your code was correct. The output of your R code is shown in the console in the lower right corner.
+Now that you've been introduced to the fundamentals of programming in R, the next step is to learning how to data science in R. Here, we'll present some of the concepts we wish we would have learned when we first started, and go through some example data on the way. 
 
-Test test test test
+By the end of this chapter, you should be familiar with:
+
+- understanding how and why R is useful for data science
+- explain the advantages and concepts of tidy data
+- familiarity with modern R conventions that make it a powerful tool for data science
+
+On to our first concept: **tidy data**
+
+Many times when we run into data from the wild, it is often a jumble of messy character strings, confounding variables, missing data, and worse. The process of converting a *raw data* to *tidy data* goes by many names - here we will refer to it as *data munging* or *cleaning*. The goal of this process is singular:
+
+> **"A dataset is a collection of *values*, organized in two ways: every value belongs to a *variable* and *observation*.**
+> **A *variable* contains all *values* that measure the same underlying attribute across units.**
+> **An *observation* contains all *values* measured on the same unit across attributes.**
+
+
+These concepts lean heavily on the formal treatise by Hadley Wickham, the lead developer of many of the packages we will be using throughout this course. See the [tidy data paper](http://vita.had.co.nz/papers/tidy-data.html) and the accompanying [R code heavy version](https://cran.r-project.org/web/packages/tidyr/vignettes/tidy-data.html).
+
 
 
 *** =instructions
-- In the editor on the right there is already some sample code. Can you see which lines are actual R code and which are comments?
-- Add a line of code that calculates the sum of 6 and 12, and hit the 'Submit Answer' button.
+- Simply click to submit to move forward!
 
 *** =hint
 Just add a line of R code that calculates the sum of 6 and 12, just like the example in the sample code!
 
 *** =pre_exercise_code
 ```{r}
-# no pec
+# run this without showing user
 ```
 
 *** =sample_code
 ```{r}
-# Calculate 3 + 4
-3 + 4
-
-# Calculate 6 + 12
+# Data Science is Awesome!
 
 ```
 
 *** =solution
 ```{r}
-# Calculate 3 + 4
-3 + 4
-
-# Calculate 6 + 12
-6 + 12
+# Data Science is Awesome!
+# And so are you!
 ```
 
 *** =sct
 ```{r}
-test_output_contains("18", incorrect_msg = "Make sure to add `6 + 12` on a new line. Do not start the line with a `#`, otherwise your R code is not executed!")
-success_msg("Awesome! See how the console shows the result of the R code you submitted? Now that you're familiar with the interface, let's get down to R business!")
+## see docs for usage
 ```
+
 

@@ -17,7 +17,7 @@ For help on any built-in functions or operators, you can type `help("func_name")
 *** =instructions
 - In the editor on the right there is already some sample code. Can you see which lines are actual R code and which are comments?
 - Add a line of code that calculates the sum of 6 and 12, and hit the 'Submit Answer' button.
-
+n
 *** =hint
 Just add a line of R code that calculates the sum of 6 and 12, just like the example in the sample code!
 
