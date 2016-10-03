@@ -25,13 +25,11 @@ Many times when we run into data from the wild, it is often a jumble of messy ch
 To emphasize this concept, take a look at the sample code on the right showing untidy data (presented in two different ways), and print the `untidy_df` and `untidy_df_2` object out (hint: Ctrl/Cmd+Enter to run a line!). How does this dataset run counter to the principle stated above? 
 
 
-
-(1) These concepts introduced here lean heavily on the formal treatise by Hadley Wickham, the lead developer of many of the packages we will be using throughout this course. See the [tidy data paper](http://vita.had.co.nz/papers/tidy-data.html) and the accompanying [R code heavy version](https://cran.r-project.org/web/packages/tidyr/vignettes/tidy-data.html).
-
-
-
 *** =instructions
 - Take a moment to ponder how you might reorganize this data, then simply click submit to move forward!
+ 
+(1) These concepts introduced here lean heavily on the formal treatise by Hadley Wickham, the lead developer of many of the packages we will be using throughout this course. See the [tidy data paper](http://vita.had.co.nz/papers/tidy-data.html) and the accompanying [R code heavy version](https://cran.r-project.org/web/packages/tidyr/vignettes/tidy-data.html). Definitely take the time to checkout these resources!
+
 
 *** =hint
 Why did you click this? You don't need a hint to click submit!
