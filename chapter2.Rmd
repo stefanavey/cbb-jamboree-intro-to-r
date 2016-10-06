@@ -156,7 +156,7 @@ Use the functions you learned from chapter 1 - namely, `head()`, `tail()`, `dim(
 
 *** =pre_exercise_code
 ```{r}
-load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1843/datasets/pew.RData"))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1886/datasets/pew.RData"))
 
 ```
 
@@ -200,7 +200,7 @@ See the sample code and your data wrangling cheat sheet for an example of how to
 
 *** =pre_exercise_code
 ```{r}
-load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1843/datasets/pew.RData"))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1886/datasets/pew.RData"))
 library(tidyr)
 
 ```
