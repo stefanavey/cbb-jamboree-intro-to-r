@@ -208,9 +208,13 @@ library(tidyr)
 *** =sample_code
 ```{r}
 # Example of gathering variables with the iris dataset
-iris_df <- tidyr::gather(iris, Species, value)
-head(iris_df) # there exist duplicate colnames, fix below
-colnames(iris_df) <- c("Species", "Measurement", "value") 
+# Here, we specify new variables: 
+# - a *key* column, "measurement" (Sepal.Length, Petal.Width, etc.)
+# - a *value* column, which are the values we measured
+# - the *columns* (1:4) where values are in the original data.frame
+iris_df <- tidyr::gather(iris, measurement, value, 1:4)
+iris_df[1:3, ]
+
 
 ```
 
