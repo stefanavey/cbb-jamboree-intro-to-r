@@ -537,6 +537,14 @@ dfs <- dplyr::group_by(df, ensembl_id, symbol, cell_type) %>%
 
 *** =solution
 ```{r}
+dfs <- dplyr::right_join(ref, fpm,  by = c("GENEID" = "ensembl_id")) %>%
+    dplyr::rename(ensembl_id = GENEID, symbol = SYMBOL) %>%
+    tidyr::gather(sample, value, 3:ncol(fpm_anno)) %>%
+    tidyr::separate(sample, c("cell", "cell_type", "replicate")) %>%
+    dplyr::select(-cell) %>%
+    dplyr::group_by(df, ensembl_id, symbol, cell_type) %>%
+    dplyr::summarise(avg = mean(value, na.rm = TRUE))
+
 
 ```
 
