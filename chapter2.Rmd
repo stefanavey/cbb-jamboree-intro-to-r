@@ -315,31 +315,76 @@ success_msg("Good job! Head over to the next exercise!")
 
 ```
 
---- type:NormalExercise lang:r xp: skills: key:1b84416821
-## <<<TITLE>>> 
 
+
+--- type:NormalExercise lang:r xp: skills: key:1b84416821
+## Summarising Data I
+
+Looking at our dataset, you might notice that we have multiple replicates from a given condition when we inspect the column names (see `colnames()`). For example, you'll see:
+
+- `cell_a_1`
+- `cell_a_2`
+- ...
+
+To assist us in visualization, one thing we might want to do is take the average value of expression across all replicates for a given condition with respect to a given gene. In other words, we want to *summarise* our data.
+
+You might be able to imagine a way of taking the average across a given group of columns, and in base R parlance, doing something like the following on a dataset for columns 1 through 3 to find the average over the 1st index (rows):
+
+`apply(dat[, 1:3], 1, mean)`
+
+However, this doesn't scale well, and we would have to somehow repeat it for all our groups! Luckily, there's a better way with `dplyr`.
+
+
+   
 
 *** =instructions
+First, let's use `tidyr::gather()` to convert our dataset from wide to long format, such that the columns are:
 
+`ensembl_id`, `symbol`, `sample`, `value`
+
+    
 *** =hint
+Make sure to specify the value columns correctly - in this case, exclude our annotation columns `symbol` and `ensembl_id`. Make a new object called `fpm_long` 
+    
 
 *** =pre_exercise_code
 ```{r}
+library(dplyr)
+library(tidyr)
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1886/datasets/ref.RData"))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1886/datasets/fpm.RData"))
+fpm_anno <- dplyr::right_join(ref, fpm,  by = c("GENEID" = "ensembl_id")) %>%
+    dplyr::rename(ensembl_id = GENEID, symbol = SYMBOL)
 
 ```
 
 *** =sample_code
 ```{r}
+## Continue on with the `fpm_anno` object we created earlier
+fpm_anno
+
+## Use tidyr::gather() to organize data into the columns:
+## `ensembl_id`, `symbol`, `sample`, `value`
+fpm_long 
+    
 
 ```
 
 *** =solution
 ```{r}
 
+fpm_long <- tidyr::gather(fpm_anno, sample, value, 3:ncol(fpm_anno))
+
 ```
+	
 
 *** =sct
 ```{r}
+test_error()
+test_object("fpm_long",
+            undefined_msg = "Make sure to define `fpm_anno`!",
+            incorrect_msg = "Have you munged `ref` and `fpm`?")
+success_msg("Good job! Head over to the next exercise!")
 
 ```
 
