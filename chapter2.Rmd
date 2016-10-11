@@ -523,9 +523,11 @@ load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1886/dat
 ## We end on the tidied up dataset
 ## Explore each step by separating the individual lines into
 ## new objects and you'll see we recreated each step we took
+## Note that dot notation in the third line (`3:ncol(.)`) 
+## is a reference to the piped in (input) object
 df <- dplyr::right_join(ref, fpm,  by = c("GENEID" = "ensembl_id")) %>%
     dplyr::rename(ensembl_id = GENEID, symbol = SYMBOL) %>%
-    tidyr::gather(sample, value, 3:ncol(fpm_anno)) %>%
+    tidyr::gather(sample, value, 3:ncol(.)) %>%
     tidyr::separate(sample, c("cell", "cell_type", "replicate")) %>%
     dplyr::select(-cell)
 
