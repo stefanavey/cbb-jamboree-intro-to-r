@@ -3,7 +3,7 @@ title_meta  : Chapter 3
 title       : "Beautiful Data"
 description : "From tidy data comes great visualization - learn how to visualize your data using the grammer of graphics."
 
---- type:NormalExercise lang:r xp: skills:
+--- type:NormalExercise lang:r xp: skills: key:3a4ac0856d
 ## Introduction to ggplot2
 
 [layers on layers]
