@@ -74,8 +74,10 @@ x <- 5
 
 *** =sample_code
 ```{r}
-# Untidy data example
-untidy_df <- data.frame(name = c("John Smith", "Jane Doe", "Mary Johnson"),
+## Untidy data example
+names <- c("John Smith", "Jane Doe", "Mary Johnson")
+                                        
+untidy_df <- data.frame(names,
                         treatmenta = c(NA, 4, 6),
                         treatmentb = c(18, 1, 7))
 untidy_df
@@ -131,8 +133,10 @@ the data (Dasu and Johnson 2003)" - if you haven't already, check out [this pape
 
 *** =pre_exercise_code
 ```{r}
-# Untidy data example
-untidy_df <- data.frame(name = c("John Smith", "Jane Doe", "Mary Johnson"),
+## Untidy data example
+names <- c("John Smith", "Jane Doe", "Mary Johnson")
+
+untidy_df <- data.frame(names,
                         treatmenta = c(NA, 4, 6),
                         treatmentb = c(18, 1, 7))
 
@@ -142,11 +146,15 @@ untidy_df <- data.frame(name = c("John Smith", "Jane Doe", "Mary Johnson"),
 ```{r}
 untidy_df # run me to see the untidy version
 
-# Note: you cannot run this code line by line
-# Instead, select the entire region and then Cmd/Ctrl+Enter and run
-tidy_df <- data.frame(name = rep(c("Jane Doe", "John Smith", "Mary Johnson"), each = 2),
-                      treatment = rep(c("a", "b"), 3),
-                      value = c(4, 1, NA, 18, 6, 7))
+## Note: you cannot run this code line by line
+## Instead, select the entire region and then Cmd/Ctrl+Enter and run
+names <- rep(c("Jane Doe", "John Smith", "Mary Johnson"),
+             each = 2),
+treatment <- rep(c("a", "b"), 3)
+value <- c(4, 1, NA, 18, 6, 7))
+
+tidy_df <- data.frame(names, treatment, value)
+                      
 tidy_df
 
 ```
