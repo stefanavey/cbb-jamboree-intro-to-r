@@ -4,7 +4,7 @@ title       : Data the Tidy Way
 description : "In this chapter, you will learn some of the fundamentals of taking raw data and cleaning it to form tidy data, the fundamental currency of data science and visualization tools such as ggplot2."
 
 --- type:NormalExercise xp:100 skills:1 key:3db54e3447
-## Intro to Data Science and Some (Un)Tidy Data
+## Intro to Data Science
 
 Now that you've been introduced to the fundamentals of programming in R, the next step is to learning how to data science in R. Here, we'll present some of the concepts we wish we would have learned when we first started, and go through some example data on the way. (1, see hint)
 
@@ -13,6 +13,39 @@ By the end of this chapter, you should be familiar with:
 - understanding how and why R is useful for data science
 - explain the advantages and concepts of tidy data
 - familiarity with modern R conventions that make it a powerful tool for data science
+
+Let's get started!
+
+*** =instructions
+Simply click submit to continue!
+*** =hint
+Did you know: the R language is a dialect of S which was designed in the 1980s and has been in widespread use in the statistical community since. 
+
+*** =pre_exercise_code
+```{r}
+
+```
+
+*** =sample_code
+```{r}
+## Hiding within those mounds of data is knowledge
+## that could change the life of a patient,
+## or change the world." - Atul Butte
+
+```
+
+*** =Solution
+```{r}
+
+```
+
+*** =sct
+```{r}
+
+```
+
+--- type:NormalExercise lang:r xp: skills:
+## Some (Un)Tidy Data
 
 On to our first concept: **tidy data**
 
