@@ -434,7 +434,7 @@ fpm_sep <- tidyr::separate(fpm_long, sample, c("cell", "cell_type", "replicate")
 test_error()
 test_object("fpm_sep",
             undefined_msg = "Make sure to define `fpm_sep`!",
-            incorrect_msg = "Have you munged `fpm_anno`?")
+            incorrect_msg = "Have you munged `fpm_sep`?")
 success_msg("Good job! Head over to the next exercise!")
 
 ```
