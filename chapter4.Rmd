@@ -290,7 +290,7 @@ data <- full_join(dat, phenotypes, by = "geo_accession")
 test_object("data",
             undefined_msg = "Please make sure to define a variable `data`.",
             incorrect_msg = "Looks like `data` is not set properly. Check your `full_join()` call")
-success_msg("Great! Now that your data is tidy, it's time to start actually looking at it!")
+success_msg("Great! Now that your data is tidy, it's time for the fun part - exploring and visualizing the data!")
 ```
 
 <!-- TODO: Add another exercise to tidy this data using piping? -->
@@ -298,9 +298,7 @@ success_msg("Great! Now that your data is tidy, it's time to start actually look
 --- type:NormalExercise  key:9c603bbce2
 ## Plotting Gene Expression
 
-Now for the fun part - exploring and visualizing the data!
-
-You will start exploring by plotting the expression of one gene over time during influenza infection.
+You will start visually exploring by plotting the expression of one gene over time during influenza infection.
 
 
 *** =instructions
@@ -475,7 +473,7 @@ success_msg("Lookin' good! Ready to make a publication-quality visualization?")
 
 This experiment was designed to compare different strains of the flu virus but so far you have only been plotting a single strain (*Brevig*).
 
-Make a plot to see how *MX1* behaves for each `Treatment`.
+Make one plot that compares the expression levels of *MX1* for all values of `Treatment`.
 
 *** =instructions
 
@@ -565,10 +563,7 @@ test_ggplot(index = 2,
             check_data = TRUE, data_fail_msg = "Make sure to provide the new filtered data",
             check_aes = TRUE, aes_fail_msg = "Did you specify the `x`, `y`, and `color` aesthetics as well as the `group` for `geom_line()`?",
             check_geom = TRUE, geom_fail_msg = "Did you add both a `geom_point()` layer and add a `geom_line()` layer?")
-success_msg("Lookin' good! You can use the buttons on the plot to go back and forth between multiple plots. How does the `Brevig` strain compare to the other strains (`Cal`, `NC`, `Tx`)? `AlaF` is a mock infection while `Control` is no infection. Does this make sense from the plot?")
+success_msg("Lookin' good! You can use the buttons on the plot to go back and forth between multiple plots. How does the `Brevig` strain compare to the other strains (`Cal`, `NC`, `Tx`)? `AlaF` is a mock infection while `Control` is no infection. Does this make sense from the plot?
+
+This was the last exercise in the CBB Jamboree Intro to R. You now have a solid basis for downloading, manipulating, transforming, and visualizing data in R!")
 ```
---- type:NormalExercise  key:ae47d50b6a
-## Data Interrogation
-
-**TODO**: Add something here on summarizing data (using split-apply-combine methodology).
-
