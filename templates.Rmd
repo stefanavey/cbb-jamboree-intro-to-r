@@ -1,0 +1,51 @@
+--- type:NormalExercise lang:r xp: skills:
+## <<<TITLE>>>
+
+
+*** =instructions
+
+*** =hint
+
+*** =pre_exercise_code
+```{r}
+
+```
+
+*** =sample_code
+```{r}
+
+```
+
+*** =solution
+```{r}
+
+```
+
+*** =sct
+```{r}
+
+```
+
+--- type:VideoExercise lang:r xp: skills:
+## <<<TITLE>>>
+
+
+*** =video_link
+
+--- type:MultipleChoiceExercise lang:r xp: skills:
+## <<<TITLE>>>
+
+
+*** =instructions
+
+*** =hint
+
+*** =pre_exercise_code
+```{r}
+
+```
+
+*** =sct
+```{r}
+
+```

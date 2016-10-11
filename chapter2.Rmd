@@ -544,7 +544,7 @@ dfs <- dplyr::right_join(ref, fpm,  by = c("GENEID" = "ensembl_id")) %>%
     tidyr::gather(sample, value, 3:ncol(.)) %>%
     tidyr::separate(sample, c("cell", "cell_type", "replicate")) %>%
     dplyr::select(-cell) %>%
-    dplyr::group_by(df, ensembl_id, symbol, cell_type) %>%
+    dplyr::group_by(ensembl_id, symbol, cell_type) %>%
     dplyr::summarise(avg = mean(value, na.rm = TRUE))
 
 
