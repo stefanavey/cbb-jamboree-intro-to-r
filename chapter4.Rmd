@@ -563,6 +563,5 @@ test_ggplot(index = 2,
             check_data = TRUE, data_fail_msg = "Make sure to provide the new filtered data",
             check_aes = TRUE, aes_fail_msg = "Did you specify the `x`, `y`, and `color` aesthetics as well as the `group` for `geom_line()`?",
             check_geom = TRUE, geom_fail_msg = "Did you add both a `geom_point()` layer and add a `geom_line()` layer?")
-success_msg("Lookin' good! You can use the buttons on the plot to go back and forth between multiple plots. How does the `Brevig` strain compare to the other strains (`Cal`, `NC`, `Tx`)? `AlaF` is a mock infection while `Control` is no infection. Does this make sense from the plot?\n\n
-This was the last exercise in the CBB Jamboree Intro to R. You now have a solid basis for downloading, manipulating, transforming, and visualizing data in R!")
+success_msg("Lookin' good! You can use the buttons on the plot to go back and forth between multiple plots. How does the `Brevig` strain compare to the other strains (`Cal`, `NC`, `Tx`)? `AlaF` is a mock infection while `Control` is no infection. Does this make sense from the plot? This was the last exercise in the CBB Jamboree Intro to R. You now have a solid basis for downloading, manipulating, transforming, and visualizing data in R!")
 ```
