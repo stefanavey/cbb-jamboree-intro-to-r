@@ -1,6 +1,11 @@
 ---
+title_meta  : Chapter 2
 title       : Challenge: Summarising Data
 description : Now at the end of our course, use what you know to take your data science investigatiosn to the next level!
+
+
+--- type:NormalExercise lang:r xp: skills:
+## Summarising Data I
 
 In your R environment, we have available two tables describing gene expression data. 
 
@@ -140,6 +145,12 @@ The structure we now have contains the columns `ensembl_id`, `symbol` (our two a
 You might notice however that the `sample` column actually contains two *separate* pieces of information - the cell type (`a` vs. `b`) and the replicate (`1` or `2`). In order to summarise our expression values, we need to split apart these two pieces of information first.
 
 To accomplish this, we will use the function `tidyr::separate()` to split upon a delimiter, in this case the underscore (`_`), keeping only the cell type and replicate information (since we will also extract `cell` if we split on the underscore).
+
+
+
+
+
+
 
 Lastly, we can drop this `cell` column, which is irrelevant since it provides no discriminatory information, using the `dplyr::select()` function. Note that one can select by specifying columns (`dplyr::select(dat, some_column_name)`) but also can *remove* columns by negation (`dplyr::select(dat, -column_to_drop)`). 
 
