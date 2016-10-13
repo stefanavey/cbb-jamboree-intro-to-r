@@ -138,7 +138,7 @@ untidy_df # run me to see the untidy version
 
 name <- rep(c("Jane Doe", "John Smith", "Mary Johnson"), each = 2)
 treatment <- rep(c("a", "b"), 3)
-value <- c(4, 1, NA, 18, 6, 7))
+value <- c(4, 1, NA, 18, 6, 7)
 
 tidy_df <- data.frame(name, treatment, value)
                       
@@ -151,7 +151,7 @@ untidy_df # run me to see the untidy version
 
 name <- rep(c("Jane Doe", "John Smith", "Mary Johnson"), each = 2)
 treatment <- rep(c("a", "b"), 3)
-value <- c(4, 1, NA, 18, 6, 7))
+value <- c(4, 1, NA, 18, 6, 7)
 
 tidy_df <- data.frame(name, treatment, value)
                       
@@ -227,14 +227,14 @@ You might have noticed that the columns contain a variety of income *levels* (e.
 
 Before we go on, first, I highly recommend checking out the [Data Wrangling with dplyr and tidyr Cheat Sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf) by RStudio, as this will be an invaluable resource throughout this course (and in your work).
 
-Back to our data..what we want to do is *gather* our columns into a single variable - income. To accomplish this, let's use the `tidyr` package. A quick example with the built-in `iris` dataset is shown in the Sample Code.
+Back to our data..what we want to do is *gather* our columns into a single variable - income. To accomplish this, let's use the [`tidyr::gather()`](http://www.rdocumentation.org/packages/tidyr/functions/gather) function from the `tidyr` package. A quick example with the built-in `iris` dataset is shown in the Sample Code.
 
 
 *** =instructions
 Similar to the `iris` dataset in the sample code, refactor the `pew` dataset such that the data is tidy, with variables `religion`, `income`, and `value` into an object called `pew_df`.
 
 *** =hint
-See the sample code and your data wrangling cheat sheet for an example of how to use `tidyr::gather()`. Note that the opposite of this is `tidyr::spread()`.
+See the sample code and your data wrangling cheat sheet for an example of how to use [`tidyr::gather()`](http://www.rdocumentation.org/packages/tidyr/functions/gather). Note that the opposite of this is [``tidyr::spread()`](http://www.rdocumentation.org/packages/tidyr/functions/spread).
 
 *** =pre_exercise_code
 ```{r}
@@ -254,8 +254,8 @@ iris_df <- tidyr::gather(iris, measurement, value, 1:4)
 iris_df[1:3, ]
 
 ## Your task:
-## Take the `pew` data set and use tidyr::gather to organize
-## the data by the variable `income`
+## Take the pew data set and use tidyr::gather to organize
+## the data by the variable income
 pew_df
 
 ```
@@ -273,8 +273,8 @@ iris_df <- tidyr::gather(iris, measurement, value, 1:4)
 iris_df[1:3, ]
 
 ## Your task:
-## Take the `pew` data set and use tidyr::gather to organize
-## the data by the variable `income`
+## Take the pew data set and use tidyr::gather to organize
+## the data by the variable income
 pew_df <- tidyr::gather(pew, income, value, 2:ncol(pew))
 ```
 
@@ -299,13 +299,13 @@ Luckily for us, the package `dplyr` has a family of *join* functions that make t
 Use a full join to combine `dat2` with `dat3`, and save the result as `dat4`.
 
 *** =hint
-You need to identify what column you are joining *by*, and in this case, note that `dat2` and `dat3` don't have the same column name for what you want to join by (the letters of the alphabet). Check out the sample code to see what to do in this case, using `dplyr::full_join()` instead of the `dplyr::inner_join()` function.
+You need to identify what column you are joining *by*, and in this case, note that `dat2` and `dat3` don't have the same column name for what you want to join by (the letters of the alphabet). Check out the sample code and linked help files to see what to do in this case, using [`dplyr::full_join()`](http://www.rdocumentation.org/packages/dplyr/functions/full_join) instead of the [`dplyr::inner_join()`](http://www.rdocumentation.org/packages/dplyr/functions/inner_join) function.
 
 *** =sample_code
 ```{r}
 library(dplyr)
 
-## Example of using dplyr::left_join()
+## Toy data sets
 dat1 <- data.frame(id = c("a", "b", "d"), reads = c(1, 2, 4))
 dat2 <- data.frame(id = c("b", "e", "f", "z"), counts = c(3, 9, 10, 25))
 dat3 <- data.frame(ALPHABET = c("d", "y", "z"), times = c(7, 7, 7))
@@ -314,14 +314,14 @@ dat3 <- data.frame(ALPHABET = c("d", "y", "z"), times = c(7, 7, 7))
 dplyr::inner_join(dat1, dat3, by = c("id" = "ALPHABET"))
 
 ## Your task:
-## Combine `dat2` with `dat3` via a full join
+## Combine dat2 with dat3 via a full join
 ```
 
 *** =solution
 ```{r}
 library(dplyr)
 
-## Example of using dplyr::left_join()
+## Toy data sets
 dat1 <- data.frame(id = c("a", "b", "d"), reads = c(1, 2, 4))
 dat2 <- data.frame(id = c("b", "e", "f", "z"), counts = c(3, 9, 10, 25))
 dat3 <- data.frame(ALPHABET = c("d", "y", "z"), times = c(7, 7, 7))
@@ -330,8 +330,8 @@ dat3 <- data.frame(ALPHABET = c("d", "y", "z"), times = c(7, 7, 7))
 dplyr::inner_join(dat1, dat3, by = c("id" = "ALPHABET"))
 
 ## Your task:
-## Combine `dat2` with `dat3` via a full join
-dplyr::full_join(dat2, dat3, by = c("id" = "ALPHABET"))
+## Combine dat2 with dat3 via a full join and save as dat4
+dat4 <- dplyr::full_join(dat2, dat3, by = c("id" = "ALPHABET"))
 ```
 
 *** =sct
@@ -345,7 +345,7 @@ success_msg("Good job! Head over to the next exercise!")
 --- type:NormalExercise lang:r xp:100 skills:1,4 key:91e31433af
 ## Filtering Down To The Most Interesting Data 
 
-Sometimes, we only want to look at the most interesting data in the world. To do that, we need to know how to *filter* our dataset. Thankfully, we have a handy `dplyr::filter()` function that does just that! 
+Sometimes, we only want to look at the most interesting data in the world. To do that, we need to know how to *filter* our dataset. Thankfully, we have a handy [`dplyr::filter()`](http://www.rdocumentation.org/packages/dplyr/functions/filter) function that does just that! 
 
 The way we filter data is we first must define what we are interested in. For example, looking at the `iris` dataset (take a gander at it via the sample code at right), we might want:
 
@@ -354,15 +354,15 @@ The way we filter data is we first must define what we are interested in. For ex
 - Flowers whose petals are wider than y
 - Any combination of the above!
 
-To do this, we use *conditionals*, such as less-than (`<`), greater-than (`>`), equals (`==`), or not-equals (`!=`) which result in *logical* (boolean) values. Then, our `dplyr::filter()` function will only keep what would evaluate to `TRUE` in our comparison. 
+To do this, we use *conditionals*, such as less-than (`<`), greater-than (`>`), equals (`==`), or not-equals (`!=`) which result in *logical* (boolean) values. Then, our [`dplyr::filter()`](http://www.rdocumentation.org/packages/dplyr/functions/filter) function will only keep what would evaluate to `TRUE` in our comparison. 
 
-Multiple filters can be done simultaneously by specifying multiple conditionals to `dplyr::filter()`.
+Multiple filters can be done simultaneously by specifying multiple conditionals to [`dplyr::filter()`](http://www.rdocumentation.org/packages/dplyr/functions/filter).
 
 *** =instructions
 Filter the `iris` dataset such that it only contains flowers whose petal width is less than `0.2` and sepal width is more than `3.0`. Save the the result as `iris_filtered`
 
 *** =hint
-Remember, `dplyr::filter()` works such that it is `dplyr::filter(data, conditional)`. Your conditional should be formatted as *Column Name* < 0.2. Inspect the `iris` data to make sure you're using the correct column.
+Remember, [`dplyr::filter()`](http://www.rdocumentation.org/packages/dplyr/functions/filter) works such that it is `dplyr::filter(data, conditional1, conditional2, ...)`. Your conditional should be formatted as *Column Name* < *Value* (note no quotes on column name). Inspect the `iris` data to make sure you're using the correct column.
 
 *** =pre_exercise_code
 ```{r}
@@ -383,7 +383,7 @@ dplyr::filter(df, value == 10)  # Note we kept the 3rd row!
 
 
 ## Your task:
-## Filter `iris` such that it only contains flowers whose petal width 
+## Filter iris such that it only contains flowers whose petal width 
 ## is less than 0.2 
 
 ```
@@ -402,7 +402,7 @@ dplyr::filter(df, value == 10)  # Note we kept the 3rd row!
 
 
 ## Your task:
-## Filter `iris` such that it only contains flowers whose petal width 
+## Filter iris such that it only contains flowers whose petal width 
 ## is less than 0.2 
 iris_filtered <- dplyr::filter(iris, Petal.Width < 0.2, Sepal.Width > 3.0)
 ```
