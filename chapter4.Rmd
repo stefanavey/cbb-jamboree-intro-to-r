@@ -375,7 +375,7 @@ ggplot(data = plotData, aes(x = Time, y = expression)) +
 test_ggplot(check_data = TRUE, data_fail_msg = "Make sure to provide the filtered data",
             check_aes = TRUE, aes_fail_msg = "Did you specify the `x` and `y` aesthetics in `aes()` to plot `Time` versus `expression`?",            
             check_geom = TRUE, geom_fail_msg = "Did you add a `geom_point()` layer to create a scatter plot?")
-success_msg("Nice job making that visualization! You can see that the expression of *MX1* changes dramatically over the time course. That's because *MX1* is an antiviral response gene that gets activated when a cell is infected. Let's spice it up a bit...")
+success_msg("Fantastic!  You just created a scatter plot of expression over time! You can see that the expression of *MX1* changes dramatically over the time course. That's because *MX1* is an antiviral response gene that gets activated when a cell is infected. Let's spice it up a bit...")
 ```
 
 --- type:NormalExercise xp:200 skills:1 key:f548bed685

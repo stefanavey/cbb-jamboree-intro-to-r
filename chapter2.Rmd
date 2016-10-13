@@ -256,7 +256,6 @@ iris_df[1:3, ]
 ## Your task:
 ## Take the pew data set and use tidyr::gather to organize
 ## the data by the variable income
-pew_df
 
 ```
 

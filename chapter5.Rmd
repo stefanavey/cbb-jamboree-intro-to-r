@@ -1,6 +1,6 @@
  ---
 title_meta  : Chapter 5
-title       : Challenge - Summarising Data
+title       : Extra Credit: Summarising Data
 description : "Now at the end of our course, use what you know to take your data science investigations to the next level!"
 
 --- type:NormalExercise lang:r xp: skills: key:a72efbc26f
@@ -25,9 +25,6 @@ A `key` value is a column which is present in both tables: what column looks ver
 
 *** =pre_exercise_code
 ```{r}
-library(tidyr)
-library(dplyr)
-
 load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1841/datasets/ref.RData"))
 load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1841/datasets/fpm.RData"))
 
@@ -35,6 +32,9 @@ load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1841/dat
 
 *** =sample_code
 ```{r}
+library(tidyr)
+library(dplyr)
+
 ## -------------------------------------
 ## Your task
 ## Create an object `fpm_anno` with the column SYMBOL from `ref` added to `fpm`
@@ -51,6 +51,9 @@ fpm_anno # your code result is this object: annotated expression data
 
 *** =solution
 ```{r}
+library(tidyr)
+library(dplyr)
+
 fpm_anno <- dplyr::right_join(ref, fpm,  by = c("GENEID" = "ensembl_id")) %>%
     dplyr::rename(ensembl_id = GENEID, symbol = SYMBOL)
 
@@ -58,7 +61,6 @@ fpm_anno <- dplyr::right_join(ref, fpm,  by = c("GENEID" = "ensembl_id")) %>%
 
 *** =sct
 ```{r}
-test_error()
 test_object("fpm_anno",
             undefined_msg = "Make sure to define `fpm_anno`!",
             incorrect_msg = "Have you munged `ref` and `fpm`?")
@@ -100,14 +102,15 @@ Make sure to specify the value columns correctly - in this case, exclude our ann
 
 *** =pre_exercise_code
 ```{r}
-library(dplyr)
-library(tidyr)
 load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1841/datasets/fpm_anno.RData"))
 
 ```
 
 *** =sample_code
 ```{r}
+library(dplyr)
+library(tidyr)
+
 ## Continue on with the `fpm_anno` object we created earlier
 fpm_anno
 
@@ -120,20 +123,19 @@ fpm_long
 
 *** =solution
 ```{r}
+library(dplyr)
+library(tidyr)
 
 fpm_long <- tidyr::gather(fpm_anno, sample, value, 3:ncol(fpm_anno))
-
 ```
 	
 
 *** =sct
 ```{r}
-test_error()
 test_object("fpm_long",
             undefined_msg = "Make sure to define `fpm_anno`!",
             incorrect_msg = "Have you munged `ref` and `fpm`?")
 success_msg("Good job! Head over to the next exercise!")
-
 ```
 
 --- type:NormalExercise lang:r xp: skills: key:6b6704a03c
@@ -155,14 +157,15 @@ The documentation for `tidyr::separate()` is the data, the column to separate, i
 
 *** =pre_exercise_code
     ```{r}
-library(dplyr)
-library(tidyr)
 load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1841/datasets/fpm_long.RData"))
 
 ```
 
 *** =sample_code
 ```{r}
+library(dplyr)
+library(tidyr)
+
 ## Continuing on with the `fpm_long` object we created prior
 fpm_long
 
@@ -173,9 +176,12 @@ fpm_sep
 
 *** =solution
 ```{r}
+library(dplyr)
+library(tidyr)
+
 fpm_sep <- tidyr::separate(fpm_long, sample, c("cell", "cell_type", "replicate")) %>%
-    dplyr::select(-cell)
-    
+  dplyr::select(-cell)
+
 
 ```
 
@@ -259,16 +265,15 @@ Simply hit submit when you're ready!
     
 *** =pre_exercise_code
 ```{r}
-library(tidyr)
-library(dplyr)
-
 load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1841/datasets/ref.RData"))
 load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1841/datasets/fpm.RData"))
-
 ```
 
 *** =sample_code
 ```{r}
+library(tidyr)
+library(dplyr)
+
 ## The whole pipeline starting from `fpm` and `ref` objects
 ## We end on the tidied up dataset
 ## Explore each step by separating the individual lines into
@@ -289,6 +294,9 @@ dfs <- dplyr::group_by(df, ensembl_id, symbol, cell_type) %>%
 
 *** =solution
 ```{r}
+library(tidyr)
+library(dplyr)
+
 dfs <- dplyr::right_join(ref, fpm,  by = c("GENEID" = "ensembl_id")) %>%
     dplyr::rename(ensembl_id = GENEID, symbol = SYMBOL) %>%
     tidyr::gather(sample, value, 3:ncol(.)) %>%
