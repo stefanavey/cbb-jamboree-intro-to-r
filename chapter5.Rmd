@@ -4,7 +4,7 @@ title       : Challenge - Summarising Data
 description : "Now at the end of our course, use what you know to take your data science investigations to the next level!"
 
 --- type:NormalExercise lang:r xp: skills: key:a72efbc26f
-## Summarising Data I
+## Summarising Data
 
 In your R environment, we have available two tables describing gene expression data. 
 
@@ -69,7 +69,7 @@ success_msg("Good job! Head over to the next exercise!")
 
 
 --- type:NormalExercise lang:r xp: skills: key:1b84416821
-## Summarising Data I
+## Summarising Data (2)
 
 Looking at our dataset, you might notice that we have multiple replicates from a given condition when we inspect the column names (see `colnames()`). For example, you'll see:
 
@@ -137,7 +137,7 @@ success_msg("Good job! Head over to the next exercise!")
 ```
 
 --- type:NormalExercise lang:r xp: skills: key:6b6704a03c
-## Summarising Data II
+## Summarising Data (3)
 
 The structure we now have contains the columns `ensembl_id`, `symbol` (our two annotation columns), and `sample` (with values such as `cell_a_1`) and `value` (the expression strength).
 
@@ -190,7 +190,7 @@ success_msg("Good job! Head over to the next exercise!")
 ```
 
 --- type:NormalExercise lang:r xp: skills: key:17efa72568
-## Summarising Data III
+## Summarising Data (4)
 
 Finally, we have a dataset that we can summarise the mean expression across different the replicates for a given cell type on a gene-level basis.
 
@@ -245,7 +245,7 @@ success_msg("Good job! Head over to the next exercise!")
 ```
 
 --- type:NormalExercise lang:r xp: skills: key:53c0281c34
-## Summarising Data IV: Conclusion
+## Summarising Data (5): Conclusion
 
 Congrats! You've now stepped through using some of the fundamental operations in tidying and summarising a dataset. Of course, there's many more tools we haven't covered in the `dplyr` and `tidyr` packages, but we hope that you'll now be equipped to tackle new datasets with these diverse toolkits.
 
