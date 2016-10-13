@@ -256,6 +256,10 @@ library(tidyr)
 iris_df <- tidyr::gather(iris, measurement, value, 1:4)
 iris_df[1:3, ]
 
+## Your task:
+## Take the `pew` data set and use tidyr::gather to organize
+## the data by the variable `income`
+pew_df
 
 ```
 
@@ -280,323 +284,110 @@ success_msg("Good job! Head over to the next exercise!")
 
 Many times, we will encounter datasets that exist in multiple tables. While in this format we may be able to achieve a minimal representation of the data with less duplicated columns, we also make it much more difficult to actually work with the data!
 
-Luckily for us, the package `dplyr` has a family of *join* functions that make the task of gluing data back together easier than ever. A swiss army knife of joins are available for your use - see your [cheat sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf) or the sample code at right to see these joins in action!
+Luckily for us, the package `dplyr` has a family of *join* functions that make the task of gluing data back together easier than ever. A swiss army knife of joins are available for your use - see your [cheat sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf). Check out the sample code at right to see a couple of the joins in action.
 
-In your R environment, we have available two tables describing gene expression data. 
-
-- `ref` - annotation mappings between ENSEMBL gene identifiers and gene symbols for an assortment of 3000 genes
-- `fpm` - fragments per million (aka expression strength) of 1000 genes pulled at random from a genome-wide assay
-
-You'll be using these two objects over the next few exercises, so get cozy with them! You might want to explore them before working with them. 
-
-Now, on with the task at hand: annotation through joins!
 
 *** =instructions
-- Combine `fpm` and `ref` into a new `fpm_anno`, such that genes whose expression was measured are annotated with gene symbol in addition to their ENSEMBL identifiers. 
-- Only annotate genes whose expression was measured (e.g., you should not be seeing `NA` values in your final result).
+Use a left join to combine `dat2` with `dat3`, and save the result as `dat4`
 
 *** =hint
-A `key` value is a column which is present in both tables: what column looks very similar between the two (despite the different column names)? See the documentation for `dplyr::inner_join()` for exact usage and the sample code too.
-
-
-*** =pre_exercise_code
-```{r}
-library(tidyr)
-library(dplyr)
-
-load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1886/datasets/ref.RData"))
-load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1886/datasets/fpm.RData"))
-
-```
+You need to identify what column you are joining *by*, and in this case, note that `dat2` and `dat3` don't have the same column name for what you want to join by (the letters of the alphabet). Check out the sample code to see what to do in this case, using `dplyr::left_join()` instead of the `dplyr::full_join()` function.
 
 *** =sample_code
 ```{r}
 ## Example of using dplyr::left_join()
 dat1 <- data.frame(id = c("a", "b", "d"), reads = c(1, 2, 4))
-dat2 <- data.frame(id = c("b", "e", "f"), counts = c(3, 9, 10))
+dat2 <- data.frame(id = c("b", "e", "f", "z"), counts = c(3, 9, 10, 25))
 dat3 <- data.frame(ALPHABET = c("d", "y", "z"), times = c(7, 7, 7))
 
 ## Check out each join's output
-dplyr::left_join(dat1, dat2, by = "id")   
-dplyr::right_join(dat1, dat2, by = "id")  
-dplyr::full_join(dat1, dat2, by = "id")   
 dplyr::inner_join(dat1, dat2, by = "id")  
-dplyr::anti_join(dat1, dat2, by = "id")
 
 ## What to do if key columns don't have matching names:
 dplyr::full_join(dat1, dat3, by = c("id" = "ALPHABET"))
 
-## -------------------------------------
-## Your task
-## Create an object `fpm_anno` with the column SYMBOL from `ref` added to `fpm`
-## Only output rows in `fpm` - do not include rows in `ref` without cell values
-## BONUS: have SYMBOL and GENEID columns renamed to "symbol" and "ensembl_id"
-##   (see dplyr::rename)
-
-fpm      # expression data
-ref      # annotation data
-
-fpm_anno # your code result is this object: annotated expression data
+## Your task:
+## Combine `dat2` with `dat3` via a left join
+dat4
 
 ```
 
 *** =solution
 ```{r}
-fpm_anno <- dplyr::right_join(ref, fpm,  by = c("GENEID" = "ensembl_id")) %>%
-    dplyr::rename(ensembl_id = GENEID, symbol = SYMBOL)
+dat4 <- dplyr::left_join(dat2, dat3, by = c("id" = "ALPHABET"))
 
 ```
 
 *** =sct
 ```{r}
 test_error()
-test_object("fpm_anno",
-            undefined_msg = "Make sure to define `fpm_anno`!",
-            incorrect_msg = "Have you munged `ref` and `fpm`?")
+test_object("dat4",
+            undefined_msg = "Make sure to define `dat4`!",
+            incorrect_msg = "Have you munged `dat4`?")
 success_msg("Good job! Head over to the next exercise!")
 
 ```
 
 
+--- type:NormalExercise lang:r xp: skills: key:91e31433af
+## Filtering Down To The Most Interesting Data 
 
---- type:NormalExercise lang:r xp: skills: key:1b84416821
-## Summarising Data I
+Sometimes, we only want to look at the most interesting data in the world. To do that, we need to know how to *filter* our dataset. Thankfully, we have a handy `dplyr::filter()` function that does just that! 
 
-Looking at our dataset, you might notice that we have multiple replicates from a given condition when we inspect the column names (see `colnames()`). For example, you'll see:
+The way we filter data is we first must define what we are interested in. For example, looking at the `iris` dataset (take a gander at it via the sample code at right), we might want:
 
-- `cell_a_1`
-- `cell_a_2`
-- ...
+- A specific species of flower
+- Flowers whose sepals are longer than x
+- Flowers whose petals are wider than y
+- Any combination of the above!
 
-To assist us in visualization, one thing we might want to do is take the average value of expression across all replicates for a given condition with respect to a given gene. In other words, we want to *summarise* our data.
-
-You might be able to imagine a way of taking the average across a given group of columns, and in base R parlance, doing something like the following on a dataset for columns 1 through 3 to find the average over the 1st index (rows):
-
-`apply(dat[, 1:3], 1, mean)`
-
-However, this doesn't scale well, and we would have to somehow repeat it for all our groups! Luckily, there's a better way with `dplyr`.
+To do this, we use *conditionals*, such as less-than (`<`), greater-than (`>`), equals (`==`), or not-equals (`!=`) which result in *logical* (boolean) values. Then, our `dplyr::filter()` function will only keep what would evaluate to `TRUE` in our comparison. 
 
 
-   
+For more advanced filters, we could also combine them using and (`&`) and or (`|`) - we won't get into those here, but it's good to keep in mind for your applications. (Alternately, you can string together multiple individual filters as well)
+
 
 *** =instructions
-First, let's use `tidyr::gather()` to convert our dataset from wide to long format, such that the columns are:
+Filter the `iris` dataset such that it only contains flowers whose petal width is less than `0.2`, and save the result as `iris_filtered`
 
-`ensembl_id`, `symbol`, `sample`, `value`
-
-    
 *** =hint
-Make sure to specify the value columns correctly - in this case, exclude our annotation columns `symbol` and `ensembl_id`. Make a new object called `fpm_long` 
-    
+Remember, `dplyr::filter()` works such that it is `dplyr::filter(data, conditional)`. Your conditional should be formatted as *Column Name* < 0.2. Inspect the `iris` data to make sure you're using the correct column.
 
 *** =pre_exercise_code
 ```{r}
-library(dplyr)
-library(tidyr)
-load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1886/datasets/fpm_anno.RData"))
 
 ```
 
 *** =sample_code
 ```{r}
-## Continue on with the `fpm_anno` object we created earlier
-fpm_anno
+## Take a look again at the iris dataset, note the column names
+head(iris)
 
-## Use tidyr::gather() to organize data into the columns:
-## `ensembl_id`, `symbol`, `sample`, `value`
-fpm_long 
-    
+## Example of filtering using an equality - we only want value == 10
+df <- data.frame(letters = c("a", "b", "c", "d"),
+                 value = c(1, 2, 10, 5))
+df$value == 10                  # Note the TRUE in position 3
+dplyr::filter(df, value == 10)  # Note we kept the 3rd row!
 
-```
 
-*** =solution
-```{r}
-
-fpm_long <- tidyr::gather(fpm_anno, sample, value, 3:ncol(fpm_anno))
-
-```
-	
-
-*** =sct
-```{r}
-test_error()
-test_object("fpm_long",
-            undefined_msg = "Make sure to define `fpm_anno`!",
-            incorrect_msg = "Have you munged `ref` and `fpm`?")
-success_msg("Good job! Head over to the next exercise!")
-
-```
-
---- type:NormalExercise lang:r xp: skills: key:6b6704a03c
-## Summarising Data II
-
-The structure we now have contains the columns `ensembl_id`, `symbol` (our two annotation columns), and `sample` (with values such as `cell_a_1`) and `value` (the expression strength).
-
-You might notice however that the `sample` column actually contains two *separate* pieces of information - the cell type (`a` vs. `b`) and the replicate (`1` or `2`). In order to summarise our expression values, we need to split apart these two pieces of information first.
-
-To accomplish this, we will use the function `tidyr::separate()` to split upon a delimiter, in this case the underscore (`_`), keeping only the cell type and replicate information (since we will also extract `cell` if we split on the underscore).
-
-Lastly, we can drop this `cell` column, which is irrelevant since it provides no discriminatory information, using the `dplyr::select()` function. Note that one can select by specifying columns (`dplyr::select(dat, some_column_name)`) but also can *remove* columns by negation (`dplyr::select(dat, -column_to_drop)`). 
-
-*** =instructions
-Use `tidyr::separate()` to split the `sample` column into three new columns - `cell` (which should only contain the value `cell`), `cell_type` (`a` or `b`), and `replicate` (`1` or `2`). In addition, drop the irrelevant `cell` column using the `dplyr::select()` function using negation. Save this data into a new object called `fpm_sep`.
-    
-*** =hint
-The documentation for `tidyr::separate()` is the data, the column to separate, into is the names of the new columns, and the last argument you need is sep, which is the delimiter (in this case an underscore, `"_"`). Don't forget to drop the `cell` column afterwards!
-
-*** =pre_exercise_code
-    ```{r}
-library(dplyr)
-library(tidyr)
-load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1886/datasets/fpm_long.RData"))
-
-```
-
-*** =sample_code
-```{r}
-## Continuing on with the `fpm_long` object we created prior
-fpm_long
-
-## Create a new data frame called `fpm_sep`
-fpm_sep
+## Your task:
+## Filter `iris` such that it only contains flowers whose petal width 
+## is less than 0.2 
+iris_filtered
 
 ```
 
 *** =solution
 ```{r}
-fpm_sep <- tidyr::separate(fpm_long, sample, c("cell", "cell_type", "replicate")) %>%
-    dplyr::select(-cell)
-    
+iris_filtered <- dplyr::filter(iris, Petal.Width < 0.2)
 
 ```
 
 *** =sct
 ```{r}
 test_error()
-test_object("fpm_sep",
-            undefined_msg = "Make sure to define `fpm_sep`!",
-            incorrect_msg = "Have you munged `fpm_sep`?")
+test_object("iris_filtered",
+            undefined_msg = "Make sure to define `iris_filtered`!",
+            incorrect_msg = "Have you munged `iris_filtered`?")
 success_msg("Good job! Head over to the next exercise!")
-
-```
-
---- type:NormalExercise lang:r xp: skills: key:17efa72568
-## Summarising Data III
-
-Finally, we have a dataset that we can summarise the mean expression across different the replicates for a given cell type on a gene-level basis.
-
-To accomplish this last step, we will make use of two functions. Firstly, we need to *group* our data on the basis of the genes (`ensembl_id`, `symbol`) and `cell_type`. We can do this using the `dplyr::group_by()` function. The result of this is that any *summary* operations will be performed *based on the group*, rather than simply per row. We can write this roughly as:
-
-`dplyr::group_by(dat, grouping_variable_1, grouping_variable_2, ...)`
-   
-The second function provides the final outcome - `dplyr::summarise()`. Here, we provide the new column name and the operation by which to summarise across the rows. We could for example calculate the variance in expression by writing:
-
-`dplyr::summarise(dat, variance_per_group = var(value))`
-
-
-*** =instructions
-Using the `dplyr::group_by()` and `dplyr::summarise()` functions, calculate the mean expression per gene and cell type. Save the object as `fpm_summary`, where the mean of the expression is saved into a column named `avg`.
-      
-*** =hint
-Did you know you can link operations using the pipe (`%>%`) operator? Instead of saving each step as a separate function, simply use a pipe to link the operations together. This pipe essentially sends the output of one command as the input of another, e.g.:
-
-`dat %>% dplyr::group_by(...) %>% dplyr::summarise(...)`
-
-*** =pre_exercise_code
-```{r}
-load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1886/datasets/fpm_sep.RData"))
-
-```
-
-*** =sample_code
-```{r}
-## Continuing on with our `fpm_sep` object from previously..
-fpm_sep
-
-## Save your grouped/summarised data into a new object, `fpm_summary`
-fpm_summary
-
-```
-
-*** =solution
-```{r}
-fpm_summary <- dplyr::group_by(fpm_sep, ensembl_id, symbol, cell_type) %>%
-    dplyr::summarise(avg = mean(value, na.rm = TRUE))
-
-```
-
-*** =sct
-```{r}
-test_error()
-test_object("fpm_summary",
-            undefined_msg = "Make sure to munge `fpm_sep`!",
-            incorrect_msg = "Have you munged `fpm_sep`?")
-success_msg("Good job! Head over to the next exercise!")
-
-```
-
---- type:NormalExercise lang:r xp: skills: key:53c0281c34
-## Summarising Data IV: Conclusion
-
-Congrats! You've now stepped through using some of the fundamental operations in tidying and summarising a dataset. Of course, there's many more tools we haven't covered in the `dplyr` and `tidyr` packages, but we hope that you'll now be equipped to tackle new datasets with these diverse toolkits.
-
-To conclude, let's look at the entire pipeline we have created - it may seem like we did a lot, but in reality, it actually is very few lines of code to go from raw to tidy to summarised! See the sample code at right for what you've built, and when you're ready, hit submit!
-
-*** =instructions
-Be amazed by how easy it is to munge, tidy, and analyze data using `dplyr` and `tidyr`.
-
-*** =hint
-Simply hit submit when you're ready!
-    
-*** =pre_exercise_code
-```{r}
-library(tidyr)
-library(dplyr)
-
-load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1886/datasets/ref.RData"))
-load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1886/datasets/fpm.RData"))
-
-```
-
-*** =sample_code
-```{r}
-## The whole pipeline starting from `fpm` and `ref` objects
-## We end on the tidied up dataset
-## Explore each step by separating the individual lines into
-## new objects and you'll see we recreated each step we took
-## Note that dot notation in the third line (`3:ncol(.)`) 
-## is a reference to the piped in (input) object
-df <- dplyr::right_join(ref, fpm,  by = c("GENEID" = "ensembl_id")) %>%
-    dplyr::rename(ensembl_id = GENEID, symbol = SYMBOL) %>%
-    tidyr::gather(sample, value, 3:ncol(.)) %>%
-    tidyr::separate(sample, c("cell", "cell_type", "replicate")) %>%
-    dplyr::select(-cell)
-
-## We use the tidied up dataset `df` to summarise
-dfs <- dplyr::group_by(df, ensembl_id, symbol, cell_type) %>%
-    dplyr::summarise(avg = mean(value, na.rm = TRUE))
-
-```
-
-*** =solution
-```{r}
-dfs <- dplyr::right_join(ref, fpm,  by = c("GENEID" = "ensembl_id")) %>%
-    dplyr::rename(ensembl_id = GENEID, symbol = SYMBOL) %>%
-    tidyr::gather(sample, value, 3:ncol(.)) %>%
-    tidyr::separate(sample, c("cell", "cell_type", "replicate")) %>%
-    dplyr::select(-cell) %>%
-    dplyr::group_by(ensembl_id, symbol, cell_type) %>%
-    dplyr::summarise(avg = mean(value, na.rm = TRUE))
-
-
-```
-
-*** =sct
-```{r}
-test_error()
-test_object("dfs",
-            undefined_msg = "Make sure to munge `df`!",
-            incorrect_msg = "Have you munged `df`?")
-success_msg("Good job! Head over to the next exercise!")
-
 ```
