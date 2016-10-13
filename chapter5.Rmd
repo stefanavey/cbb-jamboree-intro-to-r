@@ -1,6 +1,6 @@
- ---
+---
 title_meta  : Chapter 5
-title       : Extra Credit
+title       : Extra Credit: Summarising Data
 description : "Now at the end of our course, use what you know to take your data science investigations to the next level!"
 
 --- type:NormalExercise lang:r xp: skills: key:a72efbc26f
