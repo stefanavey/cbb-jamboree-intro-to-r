@@ -1,7 +1,7 @@
 ---
 title_meta  : Chapter 2
 title       : Challenge: Summarising Data
-description : Now at the end of our course, use what you know to take your data science investigatiosn to the next level!
+description : "Now at the end of our course, use what you know to take your data science investigatiosn to the next level!"
 
 --- type:NormalExercise lang:r xp: skills:
 ## Summarising Data I
