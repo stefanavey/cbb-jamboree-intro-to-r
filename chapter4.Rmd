@@ -3,7 +3,7 @@ title_meta  : Chapter 4
 title       : Application to Expression Data
 description : "In this chapter, you will combine what you learned in the first three chapters to read in, tidy, and visualize gene expression data. Let's get started!"
 
---- type:NormalExercise key:2200ac0aae
+--- type:NormalExercise xp:25 key:2200ac0aae
 ## Putting it all together
 
 Now that you've learned how to work with R, use `tidyr`/`dplyr` and `ggplot2` you will apply these skills to read in and visualize gene expression data.
@@ -31,7 +31,7 @@ We will read expression data for study [GSE55268](http://www.ncbi.nlm.nih.gov/ge
 success_msg("Now that you understand the study, let's get the data!")
 ```
 
---- type:NormalExercise  key:ecc45725c8
+--- type:NormalExercise xp:25 skills:1,8 key:ecc45725c8
 ## Reading in the data
 To get expression data from the Gene Expression Omnibus (GEO), you can use a package called `GEOquery` from Bioconductor. The size of the data prohibits us from running the code inside DataCamp but it is very simple to do in a standard R environment.
 
@@ -63,7 +63,7 @@ To get expression data from the Gene Expression Omnibus (GEO), you can use a pac
 success_msg("Doesn't it look easy to read in data!?  Because the data is large, you'll be provided with a subset of the data in `eset` for the rest of the chapter.")
 ```
 
---- type:NormalExercise  key:483c4c5eb5
+--- type:NormalExercise  xp:100 skills:1 key:483c4c5eb5
 ## ExpressionSet Objects
 
 `GEOQuery` returns data in an object of the `ExpressionSet` class.  You can think of an `ExpressionSet` class as a container designed to combine multiple sources of information from a gene expression experiment into a single object. If interested, you can read more about this class [here](https://www.bioconductor.org/packages/devel/bioc/vignettes/Biobase/inst/doc/ExpressionSetIntroduction.pdf).
@@ -134,7 +134,7 @@ test_object("phenotypes",
 success_msg("Nice job! Notice in the output that printing `eset` tells you about what it contains including the number of features (genes) and samples.")
 ```
 
---- type:NormalExercise  key:e7416248d9
+--- type:NormalExercise  xp:100 skills:1 key:e7416248d9
 ## Combine the data
 
 Currently our data is stored in 3 variables, `expr`, `features`, and `phenotypes`. Eventually we want to combine all of these into a single tidy data frame.
@@ -178,7 +178,7 @@ test_object("expr_df",
 success_msg("Great! Continue to the next exercise to continue tidying this expression data.")
 ```
 
---- type:NormalExercise   key:f53f507908
+--- type:NormalExercise xp:100 skills:1,4 key:f53f507908
 ## Tidy the data
 
 Next you'll need to transform your data frame into a tidy format using [`gather()`](http://www.rdocumentation.org/packages/tidyr/functions/gather) so that there is only one observation (i.e. one gene measured in one sample) per row.
@@ -234,7 +234,7 @@ test_output_contains(str(dat), incorrect_msg = "Have you printed the structure o
 success_msg("Great! Continue to the next exercise!")
 ```
 
---- type:NormalExercise key:ebeb4cda30
+--- type:NormalExercise xp:100 skills:1,4 key:ebeb4cda30
 ## Join the data
 
 Finally, you want to add phenotype data in `phenotypes` to `dat` so you have all the information describing the geo_accession (i.e. sample) in each row.
@@ -295,7 +295,7 @@ success_msg("Great! Now that your data is tidy, it's time for the fun part - exp
 
 <!-- TODO: Add another exercise to tidy this data using piping? -->
 
---- type:NormalExercise  key:9c603bbce2
+--- type:NormalExercise xp:200 skills:1 key:9c603bbce2
 ## Plotting Gene Expression
 
 You will start visually exploring by plotting the expression of one gene over time during influenza infection.
@@ -378,7 +378,7 @@ test_ggplot(check_data = TRUE, data_fail_msg = "Make sure to provide the filtere
 success_msg("Nice job making that visualization! You can see that the expression of *MX1* changes dramatically over the time course. That's because *MX1* is an antiviral response gene that gets activated when a cell is infected. Let's spice it up a bit...")
 ```
 
---- type:NormalExercise  key:f548bed685
+--- type:NormalExercise xp:200 skills:1 key:f548bed685
 ## Plotting Gene Expression (2)
 
 You just plotted the gene expression profile of *MX1* during an influenza infection! Did you notice there were three points at each time point? These correspond to 3 biological replicates. To see the trajectory of each replicate, you can connect each replicate over time with a line.
@@ -468,7 +468,7 @@ test_ggplot(check_data = TRUE, data_fail_msg = "Make sure to provide the filtere
 success_msg("Lookin' good! Ready to make a publication-quality visualization?")
 ```
 
---- type:NormalExercise  key:6a67c9447e
+--- type:NormalExercise xp:200 skills:1 key:6a67c9447e
 ## Plotting Gene Expression (3)
 
 This experiment was designed to compare different strains of the flu virus but so far you have only been plotting a single strain (*Brevig*).
