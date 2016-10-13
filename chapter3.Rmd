@@ -1,5 +1,72 @@
 --- 
 title_meta  : Chapter 3
-title       : ggplot2
-description : "ggplot2"
+title       : "Beautiful Data"
+description : "From tidy data comes great visualization - learn how to visualize your data using the grammer of graphics."
+
+--- type:NormalExercise lang:r xp: skills: key:3a4ac0856d
+## Introduction to ggplot2
+
+[layers on layers]
+[intro to dataset tidied up from ch2, `df`, ensembl_id, symbol, cell_type, replicate, value cols]
+
+*** =instructions
+
+*** =hint
+
+*** =pre_exercise_code
+```{r}
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1886/datasets/df.RData"))
+
+```
+
+*** =sample_code
+```{r}
+## Object provided is `df` - check it out
+df
+
+## Final histogram code
+ggplot(df, aes(x = value,
+               fill = cell_type)) +
+    facet_grid(replicate ~ cell_type) +
+    geom_histogram() +
+    theme_bw() +
+    xlab("Expression Values") +
+    ylab("COunt") +
+    ggtitle("Distribution of Expression")
+
+
+## Correlation plot b/w replicates
+tmp <- tidyr::spread(df, replicate, value)
+colnames(tmp)[4:6] <- c("rep1", "rep2", "rep3")
+
+ggplot(tmp, aes(x = rep1,
+                y = rep2,
+                colour = cell_type)) +
+    facet_wrap(~ cell_type) + 
+    geom_point() +
+    geom_abline(slope = 1, intercept = 0) +
+    theme_bw() +
+    xlab("Replicate 1 Expression") +
+    ylab("Replicate 2 Expression") +
+    ggtitle("Correlation of Expression, Rep2 vs. Rep1")
+
+
+
+```
+
+*** =solution
+```{r}
+
+```
+
+*** =sct
+```{r}
+
+```
+
+
+
+
+
+
 
