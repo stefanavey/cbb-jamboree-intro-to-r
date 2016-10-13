@@ -1,9 +1,9 @@
 ---
 title_meta  : Chapter 5
-title       : Challenge: Summarising Data
-description : "Now at the end of our course, use what you know to take your data science investigatiosn to the next level!"
+title       : Challenge - Summarising Data
+description : "Now at the end of our course, use what you know to take your data science investigations to the next level!"
 
---- type:NormalExercise lang:r xp: skills:
+--- type:NormalExercise lang:r xp: skills: key:a72efbc26f
 ## Summarising Data I
 
 In your R environment, we have available two tables describing gene expression data. 
