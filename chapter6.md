@@ -1,3 +1,311 @@
 ---
-title       : Insert the chapter title here
-description : Insert the chapter description here
+title_meta  : Chapter 5
+title       : Challenge: Summarising Data
+description : "Now at the end of our course, use what you know to take your data science investigatiosn to the next level!"
+
+--- type:NormalExercise lang:r xp: skills:
+## Summarising Data I
+
+In your R environment, we have available two tables describing gene expression data. 
+
+- `ref` - annotation mappings between ENSEMBL gene identifiers and gene symbols for an assortment of 3000 genes
+- `fpm` - fragments per million (aka expression strength) of 1000 genes pulled at random from a genome-wide assay
+
+You'll be using these two objects over the next few exercises, so get cozy with them! You might want to explore them before working with them. 
+
+Now our first task: *joining* together expression data with annotation data.
+
+*** =instructions
+- Combine `fpm` and `ref` into a new `fpm_anno`, such that genes whose expression was measured are annotated with gene symbol in addition to their ENSEMBL identifiers. 
+- Only annotate genes whose expression was measured (e.g., you should not be seeing `NA` values in your final result).
+
+*** =hint
+A `key` value is a column which is present in both tables: what column looks very similar between the two (despite the different column names)? See the documentation for `dplyr::inner_join()` for exact usage and the sample code too.
+
+
+*** =pre_exercise_code
+```{r}
+library(tidyr)
+library(dplyr)
+
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1886/datasets/ref.RData"))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1886/datasets/fpm.RData"))
+
+```
+
+*** =sample_code
+```{r}
+## -------------------------------------
+## Your task
+## Create an object `fpm_anno` with the column SYMBOL from `ref` added to `fpm`
+## Only output rows in `fpm` - do not include rows in `ref` without cell values
+## BONUS: have SYMBOL and GENEID columns renamed to "symbol" and "ensembl_id"
+##   (see dplyr::rename)
+
+fpm      # expression data
+ref      # annotation data
+
+fpm_anno # your code result is this object: annotated expression data
+
+```
+
+*** =solution
+```{r}
+fpm_anno <- dplyr::right_join(ref, fpm,  by = c("GENEID" = "ensembl_id")) %>%
+    dplyr::rename(ensembl_id = GENEID, symbol = SYMBOL)
+
+```
+
+*** =sct
+```{r}
+test_error()
+test_object("fpm_anno",
+            undefined_msg = "Make sure to define `fpm_anno`!",
+            incorrect_msg = "Have you munged `ref` and `fpm`?")
+success_msg("Good job! Head over to the next exercise!")
+
+```
+
+
+
+--- type:NormalExercise lang:r xp: skills: key:1b84416821
+## Summarising Data I
+
+Looking at our dataset, you might notice that we have multiple replicates from a given condition when we inspect the column names (see `colnames()`). For example, you'll see:
+
+- `cell_a_1`
+- `cell_a_2`
+- ...
+
+To assist us in visualization, one thing we might want to do is take the average value of expression across all replicates for a given condition with respect to a given gene. In other words, we want to *summarise* our data.
+
+You might be able to imagine a way of taking the average across a given group of columns, and in base R parlance, doing something like the following on a dataset for columns 1 through 3 to find the average over the 1st index (rows):
+
+`apply(dat[, 1:3], 1, mean)`
+
+However, this doesn't scale well, and we would have to somehow repeat it for all our groups! Luckily, there's a better way with `dplyr`.
+
+
+   
+
+*** =instructions
+First, let's use `tidyr::gather()` to convert our dataset from wide to long format, such that the columns are:
+
+`ensembl_id`, `symbol`, `sample`, `value`
+
+    
+*** =hint
+Make sure to specify the value columns correctly - in this case, exclude our annotation columns `symbol` and `ensembl_id`. Make a new object called `fpm_long` 
+    
+
+*** =pre_exercise_code
+```{r}
+library(dplyr)
+library(tidyr)
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1886/datasets/fpm_anno.RData"))
+
+```
+
+*** =sample_code
+```{r}
+## Continue on with the `fpm_anno` object we created earlier
+fpm_anno
+
+## Use tidyr::gather() to organize data into the columns:
+## `ensembl_id`, `symbol`, `sample`, `value`
+fpm_long 
+    
+
+```
+
+*** =solution
+```{r}
+
+fpm_long <- tidyr::gather(fpm_anno, sample, value, 3:ncol(fpm_anno))
+
+```
+	
+
+*** =sct
+```{r}
+test_error()
+test_object("fpm_long",
+            undefined_msg = "Make sure to define `fpm_anno`!",
+            incorrect_msg = "Have you munged `ref` and `fpm`?")
+success_msg("Good job! Head over to the next exercise!")
+
+```
+
+--- type:NormalExercise lang:r xp: skills: key:6b6704a03c
+## Summarising Data II
+
+The structure we now have contains the columns `ensembl_id`, `symbol` (our two annotation columns), and `sample` (with values such as `cell_a_1`) and `value` (the expression strength).
+
+You might notice however that the `sample` column actually contains two *separate* pieces of information - the cell type (`a` vs. `b`) and the replicate (`1` or `2`). In order to summarise our expression values, we need to split apart these two pieces of information first.
+
+To accomplish this, we will use the function `tidyr::separate()` to split upon a delimiter, in this case the underscore (`_`), keeping only the cell type and replicate information (since we will also extract `cell` if we split on the underscore).
+
+Lastly, we can drop this `cell` column, which is irrelevant since it provides no discriminatory information, using the `dplyr::select()` function. Note that one can select by specifying columns (`dplyr::select(dat, some_column_name)`) but also can *remove* columns by negation (`dplyr::select(dat, -column_to_drop)`). 
+
+*** =instructions
+Use `tidyr::separate()` to split the `sample` column into three new columns - `cell` (which should only contain the value `cell`), `cell_type` (`a` or `b`), and `replicate` (`1` or `2`). In addition, drop the irrelevant `cell` column using the `dplyr::select()` function using negation. Save this data into a new object called `fpm_sep`.
+    
+*** =hint
+The documentation for `tidyr::separate()` is the data, the column to separate, into is the names of the new columns, and the last argument you need is sep, which is the delimiter (in this case an underscore, `"_"`). Don't forget to drop the `cell` column afterwards!
+
+*** =pre_exercise_code
+    ```{r}
+library(dplyr)
+library(tidyr)
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1886/datasets/fpm_long.RData"))
+
+```
+
+*** =sample_code
+```{r}
+## Continuing on with the `fpm_long` object we created prior
+fpm_long
+
+## Create a new data frame called `fpm_sep`
+fpm_sep
+
+```
+
+*** =solution
+```{r}
+fpm_sep <- tidyr::separate(fpm_long, sample, c("cell", "cell_type", "replicate")) %>%
+    dplyr::select(-cell)
+    
+
+```
+
+*** =sct
+```{r}
+test_error()
+test_object("fpm_sep",
+            undefined_msg = "Make sure to define `fpm_sep`!",
+            incorrect_msg = "Have you munged `fpm_sep`?")
+success_msg("Good job! Head over to the next exercise!")
+
+```
+
+--- type:NormalExercise lang:r xp: skills: key:17efa72568
+## Summarising Data III
+
+Finally, we have a dataset that we can summarise the mean expression across different the replicates for a given cell type on a gene-level basis.
+
+To accomplish this last step, we will make use of two functions. Firstly, we need to *group* our data on the basis of the genes (`ensembl_id`, `symbol`) and `cell_type`. We can do this using the `dplyr::group_by()` function. The result of this is that any *summary* operations will be performed *based on the group*, rather than simply per row. We can write this roughly as:
+
+`dplyr::group_by(dat, grouping_variable_1, grouping_variable_2, ...)`
+   
+The second function provides the final outcome - `dplyr::summarise()`. Here, we provide the new column name and the operation by which to summarise across the rows. We could for example calculate the variance in expression by writing:
+
+`dplyr::summarise(dat, variance_per_group = var(value))`
+
+
+*** =instructions
+Using the `dplyr::group_by()` and `dplyr::summarise()` functions, calculate the mean expression per gene and cell type. Save the object as `fpm_summary`, where the mean of the expression is saved into a column named `avg`.
+      
+*** =hint
+Did you know you can link operations using the pipe (`%>%`) operator? Instead of saving each step as a separate function, simply use a pipe to link the operations together. This pipe essentially sends the output of one command as the input of another, e.g.:
+
+`dat %>% dplyr::group_by(...) %>% dplyr::summarise(...)`
+
+*** =pre_exercise_code
+```{r}
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1886/datasets/fpm_sep.RData"))
+
+```
+
+*** =sample_code
+```{r}
+## Continuing on with our `fpm_sep` object from previously..
+fpm_sep
+
+## Save your grouped/summarised data into a new object, `fpm_summary`
+fpm_summary
+
+```
+
+*** =solution
+```{r}
+fpm_summary <- dplyr::group_by(fpm_sep, ensembl_id, symbol, cell_type) %>%
+    dplyr::summarise(avg = mean(value, na.rm = TRUE))
+
+```
+
+*** =sct
+```{r}
+test_error()
+test_object("fpm_summary",
+            undefined_msg = "Make sure to munge `fpm_sep`!",
+            incorrect_msg = "Have you munged `fpm_sep`?")
+success_msg("Good job! Head over to the next exercise!")
+
+```
+
+--- type:NormalExercise lang:r xp: skills: key:53c0281c34
+## Summarising Data IV: Conclusion
+
+Congrats! You've now stepped through using some of the fundamental operations in tidying and summarising a dataset. Of course, there's many more tools we haven't covered in the `dplyr` and `tidyr` packages, but we hope that you'll now be equipped to tackle new datasets with these diverse toolkits.
+
+To conclude, let's look at the entire pipeline we have created - it may seem like we did a lot, but in reality, it actually is very few lines of code to go from raw to tidy to summarised! See the sample code at right for what you've built, and when you're ready, hit submit!
+
+*** =instructions
+Be amazed by how easy it is to munge, tidy, and analyze data using `dplyr` and `tidyr`.
+
+*** =hint
+Simply hit submit when you're ready!
+    
+*** =pre_exercise_code
+```{r}
+library(tidyr)
+library(dplyr)
+
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1886/datasets/ref.RData"))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1886/datasets/fpm.RData"))
+
+```
+
+*** =sample_code
+```{r}
+## The whole pipeline starting from `fpm` and `ref` objects
+## We end on the tidied up dataset
+## Explore each step by separating the individual lines into
+## new objects and you'll see we recreated each step we took
+## Note that dot notation in the third line (`3:ncol(.)`) 
+## is a reference to the piped in (input) object
+df <- dplyr::right_join(ref, fpm,  by = c("GENEID" = "ensembl_id")) %>%
+    dplyr::rename(ensembl_id = GENEID, symbol = SYMBOL) %>%
+    tidyr::gather(sample, value, 3:ncol(.)) %>%
+    tidyr::separate(sample, c("cell", "cell_type", "replicate")) %>%
+    dplyr::select(-cell)
+
+## We use the tidied up dataset `df` to summarise
+dfs <- dplyr::group_by(df, ensembl_id, symbol, cell_type) %>%
+    dplyr::summarise(avg = mean(value, na.rm = TRUE))
+
+```
+
+*** =solution
+```{r}
+dfs <- dplyr::right_join(ref, fpm,  by = c("GENEID" = "ensembl_id")) %>%
+    dplyr::rename(ensembl_id = GENEID, symbol = SYMBOL) %>%
+    tidyr::gather(sample, value, 3:ncol(.)) %>%
+    tidyr::separate(sample, c("cell", "cell_type", "replicate")) %>%
+    dplyr::select(-cell) %>%
+    dplyr::group_by(ensembl_id, symbol, cell_type) %>%
+    dplyr::summarise(avg = mean(value, na.rm = TRUE))
+
+
+```
+
+*** =sct
+```{r}
+test_error()
+test_object("dfs",
+            undefined_msg = "Make sure to munge `df`!",
+            incorrect_msg = "Have you munged `df`?")
+success_msg("Good job! Head over to the next exercise!")
+
+```
