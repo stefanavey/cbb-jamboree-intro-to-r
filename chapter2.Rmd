@@ -3,10 +3,10 @@ title_meta  : Chapter 2
 title       : Data the Tidy Way
 description : "In this chapter, you will learn some of the fundamentals of taking raw data and cleaning it to form tidy data, the fundamental currency of data science and visualization tools such as ggplot2."
 
---- type:NormalExercise xp:50 skills:1 key:3db54e3447
+--- type:NormalExercise xp:0 skills:1 key:3db54e3447
 ## Intro to Data Science
 
-Now that you've been introduced to the fundamentals of programming in R, the next step is to learning how to data science in R. Here, we'll present some of the concepts we wish we would have learned when we first started, and go through some example data on the way. (1, see hint)
+Now that you've been introduced to the fundamentals of programming in R, the next step is to learning how to data science in R. Here, we'll present some of the concepts we wish we would have learned when we first started, and go through some example data on the way. (see hint)
 
 By the end of this chapter, you should be familiar with:
 
@@ -44,10 +44,10 @@ Did you know: the R language is a dialect of S which was designed in the 1980s a
 
 ```
 
---- type:NormalExercise lang:r xp:50 skills:1,4 key:c24bed01fc
+--- type:NormalExercise lang:r xp:0 skills:1,4 key:c24bed01fc
 ## Some (Un)Tidy Data
 
-On to our first concept: **tidy data**
+On to our first concept: **tidy data** (see hint)
 
 Many times when we run into data from the wild, it is often a jumble of messy character strings, confounding variables, missing data, and worse. The process of converting a *raw data* to *tidy data* goes by many names - here we will refer to it as *data munging* or *cleaning*. The goal of this process is singular:
 
@@ -63,48 +63,36 @@ To emphasize this concept, take a look at the sample code on the right showing u
 
 
 *** =hint
-(1) These concepts introduced here lean heavily on the formal treatise by Hadley Wickham, the lead developer of many of the packages we will be using throughout this course. See the [tidy data paper](http://vita.had.co.nz/papers/tidy-data.html) and the accompanying [R code heavy version](https://cran.r-project.org/web/packages/tidyr/vignettes/tidy-data.html). Definitely take the time to checkout these resources!
+These concepts introduced here lean heavily on the formal treatise by Hadley Wickham, the lead developer of many of the packages we will be using throughout this course. See the [tidy data paper](http://vita.had.co.nz/papers/tidy-data.html) and the accompanying [R code heavy version](https://cran.r-project.org/web/packages/tidyr/vignettes/tidy-data.html). Definitely take the time to checkout these resources!
 
 
 *** =pre_exercise_code
 ```{r}
-# run this without showing user
-x <- 5
 ```
 
 *** =sample_code
 ```{r}
 ## Untidy data example
-names <- c("John Smith", "Jane Doe", "Mary Johnson")
-                                        
-untidy_df <- data.frame(names,
-                        treatmenta = c(NA, 4, 6),
-                        treatmentb = c(18, 1, 7))
+untidy_df <- data.frame(name = c("John Smith", "Jane Doe", "Mary Johnson"),
+                        treatmenta = c(NA, 4, 6), treatmentb = c(18, 1, 7))
 untidy_df
 
 # Untidy data example 2
-untidy_df_2 <- data.frame(treatment = c("a", "b"),
-                          John.Smith = c(NA, 18),
-                          Jane.Doe = c(4, 1),
-                          Mary.Johnson = c(6, 7))
+untidy_df_2 <- data.frame(treatment = c("a", "b"), John.Smith = c(NA, 18),
+                          Jane.Doe = c(4, 1), Mary.Johnson = c(6, 7))
 untidy_df_2
 ```
 
 *** =solution
 ```{r}
 ## Untidy data example
-names <- c("John Smith", "Jane Doe", "Mary Johnson")
-                                        
-untidy_df <- data.frame(names,
-                        treatmenta = c(NA, 4, 6),
-                        treatmentb = c(18, 1, 7))
+untidy_df <- data.frame(name = c("John Smith", "Jane Doe", "Mary Johnson"),
+                        treatmenta = c(NA, 4, 6), treatmentb = c(18, 1, 7))
 untidy_df
 
 # Untidy data example 2
-untidy_df_2 <- data.frame(treatment = c("a", "b"),
-                          John.Smith = c(NA, 18),
-                          Jane.Doe = c(4, 1),
-                          Mary.Johnson = c(6, 7))
+untidy_df_2 <- data.frame(treatment = c("a", "b"), John.Smith = c(NA, 18),
+                          Jane.Doe = c(4, 1), Mary.Johnson = c(6, 7))
 untidy_df_2
 ```
 
@@ -114,9 +102,7 @@ success_msg("Head over to the next exercise!")
 
 ```
 
-
-
---- type:NormalExercise lang:r xp:50 skills:1,4 key:489128dafe
+--- type:NormalExercise lang:r xp:0 skills:1,4 key:489128dafe
 ## A Tidy Sample
 
 So we just saw what some untidy looks like, with all of its variable and values mixed up. If you took a moment to ponder the format of the previous data (to remind yourself, run the line `untidy_df` and see the output in the console), you took stock of the following.
@@ -142,17 +128,19 @@ the data (Dasu and Johnson 2003)" - if you haven't already, check out [this pape
 
 *** =pre_exercise_code
 ```{r}
+untidy_df <- data.frame(name = c("John Smith", "Jane Doe", "Mary Johnson"),
+                        treatmenta = c(NA, 4, 6), treatmentb = c(18, 1, 7))
 ```
 
 *** =sample_code
 ```{r}
 untidy_df # run me to see the untidy version
 
-names <- rep(c("Jane Doe", "John Smith", "Mary Johnson"), each = 2)
+name <- rep(c("Jane Doe", "John Smith", "Mary Johnson"), each = 2)
 treatment <- rep(c("a", "b"), 3)
 value <- c(4, 1, NA, 18, 6, 7))
 
-tidy_df <- data.frame(names, treatment, value)
+tidy_df <- data.frame(name, treatment, value)
                       
 tidy_df
 ```
@@ -161,11 +149,11 @@ tidy_df
 ```{r}
 untidy_df # run me to see the untidy version
 
-names <- rep(c("Jane Doe", "John Smith", "Mary Johnson"), each = 2)
+name <- rep(c("Jane Doe", "John Smith", "Mary Johnson"), each = 2)
 treatment <- rep(c("a", "b"), 3)
 value <- c(4, 1, NA, 18, 6, 7))
 
-tidy_df <- data.frame(names, treatment, value)
+tidy_df <- data.frame(name, treatment, value)
                       
 tidy_df
 ```
@@ -173,11 +161,7 @@ tidy_df
 *** =sct
 ```{r}
 success_msg("Head over to the next exercise!")
-
 ```
-
-
-
 
 --- type:NormalExercise lang:r xp:100 skills:1,4 key:75bda68f14
 ## Real (Messy) Data: Income Distribution by Religion
@@ -185,8 +169,6 @@ success_msg("Head over to the next exercise!")
 Time for you to take a look at some actual, raw data. Here we have a survey done by Pew Research that examines the relationship between income and religious affiliation. We've already loaded the dataset up for you in the background under `pew`, but if you want to explore it on your own computer, [here is the data](http://stat405.had.co.nz/data/pew.txt).
 
 Recalling chapter 1, check out the dataset on your own, and let's apply our tidy thinking to figure out what we need to change.
-
-
 
 *** =instructions
 - What do the first few and last few rows of the data look like?
@@ -200,7 +182,6 @@ Use the functions you learned from chapter 1 - namely, `head()`, `tail()`, `dim(
 *** =pre_exercise_code
 ```{r}
 load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1841/datasets/pew.RData"))
-
 ```
 
 *** =sample_code
@@ -258,12 +239,12 @@ See the sample code and your data wrangling cheat sheet for an example of how to
 *** =pre_exercise_code
 ```{r}
 load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1841/datasets/pew.RData"))
-library(tidyr)
-
 ```
 
 *** =sample_code
 ```{r}
+library(tidyr)
+
 # Example of gathering variables with the iris dataset
 # Here, we specify new variables: 
 # - a *key* column, "measurement" (Sepal.Length, Petal.Width, etc.)
@@ -281,6 +262,8 @@ pew_df
 
 *** =solution
 ```{r}
+library(tidyr)
+
 # Example of gathering variables with the iris dataset
 # Here, we specify new variables: 
 # - a *key* column, "measurement" (Sepal.Length, Petal.Width, etc.)
@@ -305,53 +288,50 @@ success_msg("Good job! Head over to the next exercise!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1,4 key:31d35975ad
-## Gluing Sliced and Diced Data Together
+## Joining Multiple Data Sets
 
 Many times, we will encounter datasets that exist in multiple tables. While in this format we may be able to achieve a minimal representation of the data with less duplicated columns, we also make it much more difficult to actually work with the data!
 
-Luckily for us, the package `dplyr` has a family of *join* functions that make the task of gluing data back together easier than ever. A swiss army knife of joins are available for your use - see your [cheat sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf). Check out the sample code at right to see a couple of the joins in action.
+Luckily for us, the package `dplyr` has a family of *join* functions that make the task of gluing data back together easier than ever. A swiss army knife of joins are available for your use - see your [cheat sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf). Check out the sample code at right to see a join in action.
 
 
 *** =instructions
-Use a left join to combine `dat2` with `dat3`, and save the result as `dat4`
+Use a full join to combine `dat2` with `dat3`, and save the result as `dat4`.
 
 *** =hint
-You need to identify what column you are joining *by*, and in this case, note that `dat2` and `dat3` don't have the same column name for what you want to join by (the letters of the alphabet). Check out the sample code to see what to do in this case, using `dplyr::left_join()` instead of the `dplyr::full_join()` function.
+You need to identify what column you are joining *by*, and in this case, note that `dat2` and `dat3` don't have the same column name for what you want to join by (the letters of the alphabet). Check out the sample code to see what to do in this case, using `dplyr::full_join()` instead of the `dplyr::inner_join()` function.
 
 *** =sample_code
 ```{r}
+library(dplyr)
+
 ## Example of using dplyr::left_join()
 dat1 <- data.frame(id = c("a", "b", "d"), reads = c(1, 2, 4))
 dat2 <- data.frame(id = c("b", "e", "f", "z"), counts = c(3, 9, 10, 25))
 dat3 <- data.frame(ALPHABET = c("d", "y", "z"), times = c(7, 7, 7))
 
-## Check out each join's output
-dplyr::inner_join(dat1, dat2, by = "id")  
-
 ## What to do if key columns don't have matching names:
-dplyr::full_join(dat1, dat3, by = c("id" = "ALPHABET"))
+dplyr::inner_join(dat1, dat3, by = c("id" = "ALPHABET"))
 
 ## Your task:
-## Combine `dat2` with `dat3` via a left join
-
+## Combine `dat2` with `dat3` via a full join
 ```
 
 *** =solution
 ```{r}
+library(dplyr)
+
 ## Example of using dplyr::left_join()
 dat1 <- data.frame(id = c("a", "b", "d"), reads = c(1, 2, 4))
 dat2 <- data.frame(id = c("b", "e", "f", "z"), counts = c(3, 9, 10, 25))
 dat3 <- data.frame(ALPHABET = c("d", "y", "z"), times = c(7, 7, 7))
 
-## Check out each join's output
-dplyr::inner_join(dat1, dat2, by = "id")  
-
 ## What to do if key columns don't have matching names:
-dplyr::full_join(dat1, dat3, by = c("id" = "ALPHABET"))
+dplyr::inner_join(dat1, dat3, by = c("id" = "ALPHABET"))
 
 ## Your task:
-## Combine `dat2` with `dat3` via a left join
-dat4 <- dplyr::left_join(dat2, dat3, by = c("id" = "ALPHABET"))
+## Combine `dat2` with `dat3` via a full join
+dplyr::full_join(dat2, dat3, by = c("id" = "ALPHABET"))
 ```
 
 *** =sct
@@ -361,7 +341,6 @@ test_object("dat4",
             incorrect_msg = "Have you munged `dat4`?")
 success_msg("Good job! Head over to the next exercise!")
 ```
-
 
 --- type:NormalExercise lang:r xp:100 skills:1,4 key:91e31433af
 ## Filtering Down To The Most Interesting Data 
@@ -377,12 +356,10 @@ The way we filter data is we first must define what we are interested in. For ex
 
 To do this, we use *conditionals*, such as less-than (`<`), greater-than (`>`), equals (`==`), or not-equals (`!=`) which result in *logical* (boolean) values. Then, our `dplyr::filter()` function will only keep what would evaluate to `TRUE` in our comparison. 
 
-
-For more advanced filters, we could also combine them using and (`&`) and or (`|`) - we won't get into those here, but it's good to keep in mind for your applications. (Alternately, you can string together multiple individual filters as well)
-
+Multiple filters can be done simultaneously by specifying multiple conditionals to `dplyr::filter()`.
 
 *** =instructions
-Filter the `iris` dataset such that it only contains flowers whose petal width is less than `0.2`, and save the result as `iris_filtered`
+Filter the `iris` dataset such that it only contains flowers whose petal width is less than `0.2` and sepal width is more than `3.0`. Save the the result as `iris_filtered`
 
 *** =hint
 Remember, `dplyr::filter()` works such that it is `dplyr::filter(data, conditional)`. Your conditional should be formatted as *Column Name* < 0.2. Inspect the `iris` data to make sure you're using the correct column.
@@ -394,40 +371,40 @@ Remember, `dplyr::filter()` works such that it is `dplyr::filter(data, condition
 
 *** =sample_code
 ```{r}
+library(dplyr)
+
 ## Take a look again at the iris dataset, note the column names
 head(iris)
 
 ## Example of filtering using an equality - we only want value == 10
 df <- data.frame(letters = c("a", "b", "c", "d"),
                  value = c(1, 2, 10, 5))
-df$value == 10                  # Note the TRUE in position 3
 dplyr::filter(df, value == 10)  # Note we kept the 3rd row!
 
 
 ## Your task:
 ## Filter `iris` such that it only contains flowers whose petal width 
 ## is less than 0.2 
-iris_filtered <- 
 
 ```
 
 *** =solution
 ```{r}
+library(dplyr)
+
 ## Take a look again at the iris dataset, note the column names
 head(iris)
 
 ## Example of filtering using an equality - we only want value == 10
 df <- data.frame(letters = c("a", "b", "c", "d"),
                  value = c(1, 2, 10, 5))
-df$value == 10                  # Note the TRUE in position 3
 dplyr::filter(df, value == 10)  # Note we kept the 3rd row!
 
 
 ## Your task:
 ## Filter `iris` such that it only contains flowers whose petal width 
 ## is less than 0.2 
-iris_filtered <- dplyr::filter(iris, Petal.Width < 0.2)
-
+iris_filtered <- dplyr::filter(iris, Petal.Width < 0.2, Sepal.Width > 3.0)
 ```
 
 *** =sct
