@@ -1,4 +1,4 @@
----
+ ---
 title_meta  : Chapter 5
 title       : Challenge - Summarising Data
 description : "Now at the end of our course, use what you know to take your data science investigations to the next level!"
@@ -28,8 +28,8 @@ A `key` value is a column which is present in both tables: what column looks ver
 library(tidyr)
 library(dplyr)
 
-load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1886/datasets/ref.RData"))
-load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1886/datasets/fpm.RData"))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1841/datasets/ref.RData"))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1841/datasets/fpm.RData"))
 
 ```
 
@@ -102,7 +102,7 @@ Make sure to specify the value columns correctly - in this case, exclude our ann
 ```{r}
 library(dplyr)
 library(tidyr)
-load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1886/datasets/fpm_anno.RData"))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1841/datasets/fpm_anno.RData"))
 
 ```
 
@@ -157,7 +157,7 @@ The documentation for `tidyr::separate()` is the data, the column to separate, i
     ```{r}
 library(dplyr)
 library(tidyr)
-load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1886/datasets/fpm_long.RData"))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1841/datasets/fpm_long.RData"))
 
 ```
 
@@ -213,7 +213,7 @@ Did you know you can link operations using the pipe (`%>%`) operator? Instead of
 
 *** =pre_exercise_code
 ```{r}
-load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1886/datasets/fpm_sep.RData"))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1841/datasets/fpm_sep.RData"))
 
 ```
 
@@ -262,8 +262,8 @@ Simply hit submit when you're ready!
 library(tidyr)
 library(dplyr)
 
-load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1886/datasets/ref.RData"))
-load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1886/datasets/fpm.RData"))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1841/datasets/ref.RData"))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1841/datasets/fpm.RData"))
 
 ```
 
