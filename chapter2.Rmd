@@ -177,7 +177,7 @@ Recalling chapter 1, check out the dataset on your own, and let's apply our tidy
 - What is the structure of the data?
 
 *** =hint
-Use the functions you learned from chapter 1 - namely, `head()`, `tail()`, `dim()`, `summary()`, and `str()` to preview the dataset on hand.
+Use the functions you learned from chapter 1 - namely, [`head()`](http://www.rdocumentation.org/packages/utils/functions/head), [`tail()`](http://www.rdocumentation.org/packages/utils/functions/tail), [`dim()`](http://www.rdocumentation.org/packages/base/functions/dim), [`summary()`](http://www.rdocumentation.org/packages/base/functions/summary), and [`str()`](http://www.rdocumentation.org/packages/utils/functions/str) to preview the dataset on hand.
 
 *** =pre_exercise_code
 ```{r}
@@ -216,8 +216,7 @@ str(pew)
 
 *** =sct
 ```{r}
-success_msg("If you could answer all those questions, great job. Head over to the next exercise!")
-
+success_msg("If you could answer all those questions, great job. If not, go back and look at the hint to see how you can answer them, then head over to the next exercise!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1,4 key:426a68171c
@@ -256,6 +255,7 @@ iris_df[1:3, ]
 ## Your task:
 ## Take the pew data set and use tidyr::gather to organize
 ## the data by the variable income
+
 
 ```
 
