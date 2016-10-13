@@ -3,7 +3,7 @@ title_meta  : Chapter 2
 title       : Data the Tidy Way
 description : "In this chapter, you will learn some of the fundamentals of taking raw data and cleaning it to form tidy data, the fundamental currency of data science and visualization tools such as ggplot2."
 
---- type:NormalExercise xp:100 skills:1 key:3db54e3447
+--- type:NormalExercise xp:50 skills:1 key:3db54e3447
 ## Intro to Data Science
 
 Now that you've been introduced to the fundamentals of programming in R, the next step is to learning how to data science in R. Here, we'll present some of the concepts we wish we would have learned when we first started, and go through some example data on the way. (1, see hint)
@@ -36,7 +36,7 @@ Did you know: the R language is a dialect of S which was designed in the 1980s a
 
 *** =Solution
 ```{r}
-
+## No code on this one, just hit Submit Answer to continue
 ```
 
 *** =sct
@@ -44,7 +44,7 @@ Did you know: the R language is a dialect of S which was designed in the 1980s a
 
 ```
 
---- type:NormalExercise lang:r xp: skills: key:c24bed01fc
+--- type:NormalExercise lang:r xp:50 skills:1,4 key:c24bed01fc
 ## Some (Un)Tidy Data
 
 On to our first concept: **tidy data**
@@ -92,22 +92,31 @@ untidy_df_2
 
 *** =solution
 ```{r}
+## Untidy data example
+names <- c("John Smith", "Jane Doe", "Mary Johnson")
+                                        
+untidy_df <- data.frame(names,
+                        treatmenta = c(NA, 4, 6),
+                        treatmentb = c(18, 1, 7))
+untidy_df
 
+# Untidy data example 2
+untidy_df_2 <- data.frame(treatment = c("a", "b"),
+                          John.Smith = c(NA, 18),
+                          Jane.Doe = c(4, 1),
+                          Mary.Johnson = c(6, 7))
+untidy_df_2
 ```
 
 *** =sct
 ```{r}
-test_error()
-test_object("x",
-            undefined_msg = "Make sure to define `x`!",
-            incorrect_msg = "Have you correctly assigned 5 to `x`!")
-success_msg("Good job! Head over to the next exercise!")
+success_msg("Head over to the next exercise!")
 
 ```
 
 
 
---- type:NormalExercise lang:r xp: skills: key:489128dafe
+--- type:NormalExercise lang:r xp:50 skills:1,4 key:489128dafe
 ## A Tidy Sample
 
 So we just saw what some untidy looks like, with all of its variable and values mixed up. If you took a moment to ponder the format of the previous data (to remind yourself, run the line `untidy_df` and see the output in the console), you took stock of the following.
@@ -133,51 +142,44 @@ the data (Dasu and Johnson 2003)" - if you haven't already, check out [this pape
 
 *** =pre_exercise_code
 ```{r}
-## Untidy data example
-names <- c("John Smith", "Jane Doe", "Mary Johnson")
-
-untidy_df <- data.frame(names,
-                        treatmenta = c(NA, 4, 6),
-                        treatmentb = c(18, 1, 7))
-
 ```
 
 *** =sample_code
 ```{r}
 untidy_df # run me to see the untidy version
 
-## Note: you cannot run this code line by line
-## Instead, select the entire region and then Cmd/Ctrl+Enter and run
-names <- rep(c("Jane Doe", "John Smith", "Mary Johnson"),
-             each = 2),
+names <- rep(c("Jane Doe", "John Smith", "Mary Johnson"), each = 2)
 treatment <- rep(c("a", "b"), 3)
 value <- c(4, 1, NA, 18, 6, 7))
 
 tidy_df <- data.frame(names, treatment, value)
                       
 tidy_df
-
 ```
 
 *** =solution
 ```{r}
+untidy_df # run me to see the untidy version
 
+names <- rep(c("Jane Doe", "John Smith", "Mary Johnson"), each = 2)
+treatment <- rep(c("a", "b"), 3)
+value <- c(4, 1, NA, 18, 6, 7))
+
+tidy_df <- data.frame(names, treatment, value)
+                      
+tidy_df
 ```
 
 *** =sct
 ```{r}
-test_error()
-test_object("untidy_df",
-            undefined_msg = "Make sure to define `x`!",
-            incorrect_msg = "Have you correctly assigned 5 to `x`!")
-success_msg("Good job! Head over to the next exercise!")
+success_msg("Head over to the next exercise!")
 
 ```
 
 
 
 
---- type:NormalExercise lang:r xp: skills: key:75bda68f14
+--- type:NormalExercise lang:r xp:100 skills:1,4 key:75bda68f14
 ## Real (Messy) Data: Income Distribution by Religion
 
 Time for you to take a look at some actual, raw data. Here we have a survey done by Pew Research that examines the relationship between income and religious affiliation. We've already loaded the dataset up for you in the background under `pew`, but if you want to explore it on your own computer, [here is the data](http://stat405.had.co.nz/data/pew.txt).
@@ -187,7 +189,7 @@ Recalling chapter 1, check out the dataset on your own, and let's apply our tidy
 
 
 *** =instructions
-- What do the first and last rows of the data look like?
+- What do the first few and last few rows of the data look like?
 - What are the dimensions? 
 - What does a simple (naive) summary of the data give us? 
 - What is the structure of the data?
@@ -203,27 +205,41 @@ load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1841/dat
 
 *** =sample_code
 ```{r}
-## Your code here
-pew
+## What do the first few and last few rows of the data look like?
 
+
+## What are the dimensions?
+
+
+## What does a simple (naive) summary of the data give us?
+
+
+## What is the structure of the data?
 ```
 
 *** =solution
 ```{r}
+## What do the first few and last few rows of the data look like?
+head(pew)
+tail(pew)
 
+## What are the dimensions?
+dim(pew)
+
+## What does a simple (naive) summary of the data give us?
+summary(pew)
+
+## What is the structure of the data?
+str(pew)
 ```
 
 *** =sct
 ```{r}
-test_error()
-test_object("pew",
-            undefined_msg = "Make sure to define `x`!",
-            incorrect_msg = "Have you correctly assigned 5 to `x`!")
-success_msg("Good job! Head over to the next exercise!")
+success_msg("If you could answer all those questions, great job. Head over to the next exercise!")
 
 ```
 
---- type:NormalExercise lang:r xp: skills: key:426a68171c
+--- type:NormalExercise lang:r xp:100 skills:1,4 key:426a68171c
 ## Refactoring Columns Into a Variable
 
 You might have noticed that the columns contain a variety of income *levels* (e.g. *values*)..so you might consider *income* to be a *variable* in its own right. Furthermore, an individual observation will be a combination of a religion crossed with a specific income level.
@@ -265,13 +281,22 @@ pew_df
 
 *** =solution
 ```{r}
-pew_df <- tidyr::gather(pew, income, value, 2:ncol(pew))
+# Example of gathering variables with the iris dataset
+# Here, we specify new variables: 
+# - a *key* column, "measurement" (Sepal.Length, Petal.Width, etc.)
+# - a *value* column, which are the values we measured
+# - the *columns* (1:4) where values are in the original data.frame
+iris_df <- tidyr::gather(iris, measurement, value, 1:4)
+iris_df[1:3, ]
 
+## Your task:
+## Take the `pew` data set and use tidyr::gather to organize
+## the data by the variable `income`
+pew_df <- tidyr::gather(pew, income, value, 2:ncol(pew))
 ```
 
 *** =sct
 ```{r}
-test_error()
 test_object("pew_df",
             undefined_msg = "Make sure to define `pew_df`!",
             incorrect_msg = "Have you munged `pew`?")
@@ -279,7 +304,7 @@ success_msg("Good job! Head over to the next exercise!")
 
 ```
 
---- type:NormalExercise lang:r xp: skills: key:31d35975ad
+--- type:NormalExercise lang:r xp:100 skills:1,4 key:31d35975ad
 ## Gluing Sliced and Diced Data Together
 
 Many times, we will encounter datasets that exist in multiple tables. While in this format we may be able to achieve a minimal representation of the data with less duplicated columns, we also make it much more difficult to actually work with the data!
@@ -308,28 +333,37 @@ dplyr::full_join(dat1, dat3, by = c("id" = "ALPHABET"))
 
 ## Your task:
 ## Combine `dat2` with `dat3` via a left join
-dat4
 
 ```
 
 *** =solution
 ```{r}
-dat4 <- dplyr::left_join(dat2, dat3, by = c("id" = "ALPHABET"))
+## Example of using dplyr::left_join()
+dat1 <- data.frame(id = c("a", "b", "d"), reads = c(1, 2, 4))
+dat2 <- data.frame(id = c("b", "e", "f", "z"), counts = c(3, 9, 10, 25))
+dat3 <- data.frame(ALPHABET = c("d", "y", "z"), times = c(7, 7, 7))
 
+## Check out each join's output
+dplyr::inner_join(dat1, dat2, by = "id")  
+
+## What to do if key columns don't have matching names:
+dplyr::full_join(dat1, dat3, by = c("id" = "ALPHABET"))
+
+## Your task:
+## Combine `dat2` with `dat3` via a left join
+dat4 <- dplyr::left_join(dat2, dat3, by = c("id" = "ALPHABET"))
 ```
 
 *** =sct
 ```{r}
-test_error()
 test_object("dat4",
             undefined_msg = "Make sure to define `dat4`!",
             incorrect_msg = "Have you munged `dat4`?")
 success_msg("Good job! Head over to the next exercise!")
-
 ```
 
 
---- type:NormalExercise lang:r xp: skills: key:91e31433af
+--- type:NormalExercise lang:r xp:100 skills:1,4 key:91e31433af
 ## Filtering Down To The Most Interesting Data 
 
 Sometimes, we only want to look at the most interesting data in the world. To do that, we need to know how to *filter* our dataset. Thankfully, we have a handy `dplyr::filter()` function that does just that! 
@@ -373,21 +407,33 @@ dplyr::filter(df, value == 10)  # Note we kept the 3rd row!
 ## Your task:
 ## Filter `iris` such that it only contains flowers whose petal width 
 ## is less than 0.2 
-iris_filtered
+iris_filtered <- 
 
 ```
 
 *** =solution
 ```{r}
+## Take a look again at the iris dataset, note the column names
+head(iris)
+
+## Example of filtering using an equality - we only want value == 10
+df <- data.frame(letters = c("a", "b", "c", "d"),
+                 value = c(1, 2, 10, 5))
+df$value == 10                  # Note the TRUE in position 3
+dplyr::filter(df, value == 10)  # Note we kept the 3rd row!
+
+
+## Your task:
+## Filter `iris` such that it only contains flowers whose petal width 
+## is less than 0.2 
 iris_filtered <- dplyr::filter(iris, Petal.Width < 0.2)
 
 ```
 
 *** =sct
 ```{r}
-test_error()
 test_object("iris_filtered",
             undefined_msg = "Make sure to define `iris_filtered`!",
             incorrect_msg = "Have you munged `iris_filtered`?")
-success_msg("Good job! Head over to the next exercise!")
+success_msg("Good job! That was the last exercise in the chapter. Now that you understand the basics of manipulating data, you will next learn how to visualize data!")
 ```
