@@ -171,7 +171,7 @@ Time for you to take a look at some actual, raw data. Here we have a survey done
 Recalling chapter 1, check out the dataset on your own, and let's apply our tidy thinking to figure out what we need to change.
 
 *** =instructions
-- What do the first few and last few rows of the data look like?
+- What do the first six and last six rows of the data look like?
 - What are the dimensions? 
 - What does a simple (naive) summary of the data give us? 
 - What is the structure of the data?
@@ -186,7 +186,7 @@ load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1841/dat
 
 *** =sample_code
 ```{r}
-## What do the first few and last few rows of the data look like?
+## What do the first six and last six rows of the data look like?
 
 
 ## What are the dimensions?
@@ -200,7 +200,7 @@ load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1841/dat
 
 *** =solution
 ```{r}
-## What do the first few and last few rows of the data look like?
+## What do the first six and last six rows of the data look like?
 head(pew)
 tail(pew)
 
@@ -216,18 +216,22 @@ str(pew)
 
 *** =sct
 ```{r}
-test_output_contains("pew[1:2,]",
-                     incorrect_msg = "Did you look at the first few lines of `pew`")
-test_output_contains("pew[(nrow(pew)-1):nrow(pew),]",
-                     incorrect_msg = "Did you look at the las few lines of `pew`")
-test_output_contains("nrow(pew)",
-                     incorrect_msg = "Did you look at the dimensions of `pew` (rows and columns)?")
-test_output_contains("ncol(pew)",
-                     incorrect_msg = "Did you look at the dimensions of `pew` (rows and columns)?")
+test_output_contains("head(pew)",
+                     incorrect_msg = "Did you look at the first six lines of `pew`")
+test_output_contains("tail(pew)",
+                     incorrect_msg = "Did you look at the last six lines of `pew`")
+test_or(
+    test_output_contains("nrow(pew)"),
+    test_output_contains("dim(pew)"),
+    incorrect_msg = "Did you determine the number of rows in `pew`?")
+test_or(
+    test_output_contains("ncol(pew)"),
+    test_output_contains("dim(pew)"),
+    incorrect_msg = "Did you determine the number of columns in `pew`?")
 test_output_contains("summary(pew)",
-                     incorrect_msg = "Did you get a summary of the data in `pew`?")
+                     incorrect_msg = "Did you use `summary` to summarize the data in `pew`?")
 test_output_contains("str(pew)",
-                     incorrect_msg = "Did you look at the structure of the data in `pew`?")
+                     incorrect_msg = "Did you use `str` to get the structure of the data in `pew`?")
 success_msg("If you could answer all those questions, great job. If not, go back and look at the hint to see how you can answer them, then head over to the next exercise!")
 ```
 
