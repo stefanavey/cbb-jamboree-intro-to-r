@@ -14,8 +14,6 @@ By the end of this chapter, you should be familiar with:
 - explain the advantages and concepts of tidy data
 - familiarity with modern R conventions that make it a powerful tool for data science
 
-Let's get started!
-
 *** =instructions
 Simply click submit to continue!
 *** =hint
@@ -41,7 +39,7 @@ Did you know: the R language is a dialect of S which was designed in the 1980s a
 
 *** =sct
 ```{r}
-
+success_msg("Let's get started!")
 ```
 
 --- type:NormalExercise lang:r xp:0 skills:1,4 key:c24bed01fc
@@ -99,7 +97,6 @@ untidy_df_2
 *** =sct
 ```{r}
 success_msg("Head over to the next exercise!")
-
 ```
 
 --- type:NormalExercise lang:r xp:0 skills:1,4 key:489128dafe
