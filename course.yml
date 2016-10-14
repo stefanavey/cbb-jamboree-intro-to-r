@@ -3,7 +3,7 @@ title               : CBB Jamboree - Intro to R
 instructors         :
  - avey.stefan@gmail.com
  - raarjr@gmail.com
-description         : "This course is designed for the Computational Biology & Bioinformatics (CBB) program jamboree at Yale University. It is a quick introduction to basic R commands but focuses on tidy data analysis using tidyr/dplyr and visualization with ggplot2"
+description         : "This course is designed for the Yale University Computational Biology & Bioinformatics (CBB) program's Jamboree. It provides a quick introduction to basic R commands while assuming familiarity with programming concepts. The majority of the course focuses on tidy data analysis using tidyr/dplyr and visualization using ggplot2"
 university          : Yale University
 programming_language: r
 difficulty_level    : 2
