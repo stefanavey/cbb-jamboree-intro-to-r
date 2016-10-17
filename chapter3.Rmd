@@ -20,7 +20,7 @@ Here we will start by looking at two variables, `cyl` and `mpg`, which denote th
 *** =instructions
 - Load the ggplot2 package
 - Explore the `mtcars` dataset with [`head()`](http://www.rdocumentation.org/packages/utils/functions/head) and [`str()`](http://www.rdocumentation.org/packages/utils/functions/str) to get a feel for the dataset
-- Execute the `ggplot2` code, and see if you can understand what each part does
+- Execute the `ggplot2` code, and see if you can understand what each part does (we will go through each part in depth next)
 
 *** =hint
 Simply hit submit and continue! 
@@ -59,12 +59,15 @@ ggplot(mtcars, aes(x = cyl, y = mpg)) +
 
 *** =sct
 ```{r}
+success_msg("You should see the plot appear beside the script in your window. Now you will learn the grammar of `ggplot2`")
 ```
 
 
 
 --- type:NormalExercise lang:r xp: skills: key:bdedeee564
-## The Philosophy of ggplot2
+## The grammar of ggplot2
+
+<!-- TODO: This needs to be more clear. + combines elements. Remove adding at the end since it's confusing -->
 
 All graphics production relies on some *grammar* which allows users to construct plots that fit their needs. `ggplot2` distills this grammar into four basic elements from which all graphs are constructed. Refer to the sample code at right to each part in action:
 
@@ -98,12 +101,16 @@ library(ggplot2)
 ## Compare each part of this call to our grammar
 ggplot(mtcars, aes(x = cyl, y = mpg)) +
   geom_point()
-
 ```
 
 *** =solution
 ```{r}
+## Load ggplot2
+library(ggplot2)
 
+## Compare each part of this call to our grammar
+ggplot(mtcars, aes(x = cyl, y = mpg)) +
+  geom_point()
 ```
 
 *** =sct
@@ -117,17 +124,18 @@ ggplot(mtcars, aes(x = cyl, y = mpg)) +
 
 Let's dig into some nitty gritty. If you run the code at right, you'll notice that the plot displays only displays data at x = {4, 6, 8}, yet the x-axis runs from 4 through 8 with everything in between. This is because we are dealing with a *categorical* variable, or in R parlance, a *factor*. Our dataset, `mtcars`, has the `cyl` variable set to be `numeric`, which explains why the x-axis runs from 4 to 8 continuously. 
 
-Luckily, we can convert our x-axis to a factor quite easily within the `ggplot2` call. 
+Luckily, we can convert our x-axis to a *factor* quite easily within the `ggplot2` call. 
 
 Note that similarly, we could apply any number of transformations, such as `log10()` scaling, to our aesthetic parameters, this is just one example that comes up quite a bit in real-world usage.
 
 
 *** =instructions
-- Wrap the `factor()` function around `cyl` in your ggplot2 call
+- Call the [`factor()`](http://www.rdocumentation.org/packages/base/functions/factor) function on `cyl` inside your `ggplot()` call
 - Hit submit answer to see how the plot changes
 
+
 *** =hint
-Change `x = cyl` to `x = factor(cyl)` to alter the x-axis, and submit answer.
+Change `x = cyl` to `x = factor(cyl)` to tell ggplot that `cyl` should be treated as categorical rather than numeric.
 
 *** =pre_exercise_code
 ```{r}
@@ -145,21 +153,21 @@ str(mtcars)
 ## Compare each part of this call to our grammer
 ggplot(mtcars, aes(x = cyl, y = mpg)) +
   geom_point()
-
 ```
 
 *** =solution
 ```{r}
+library(ggplot2)
 
+ggplot(mtcars, aes(x = factor(cyl), y = mpg)) +
+  geom_point()
 ```
 
 *** =sct
 ```{r}
-library(ggplot2)
-
-ggplot(mtcars, aes(x = factor(cyl), y = mpg)) +
-    geom_point()
-
+test_ggplot(check_data = TRUE, data_fail_msg = "Do not change the data argument.",
+            check_aes = TRUE, aes_fail_msg = "Did you modify the `x` aesthetic by transforming `cyl` to a factor?")
+success_msg("Well done! Notice the difference in the x-axis of the plot?")
 ```
 
 
@@ -190,7 +198,6 @@ library(ggplot2)
 ## Convert this into a bubble chart
 ggplot(mtcars, aes(x = factor(cyl), y = mpg)) +
     geom_point() 
-
 ```
 
 *** =solution
@@ -199,12 +206,13 @@ library(ggplot2)
 
 ggplot(mtcars, aes(x = factor(cyl), y = mpg, size = hp)) +
     geom_point() 
-
 ```
 
 *** =sct
 ```{r}
-
+test_ggplot(check_data = TRUE, data_fail_msg = "Do not change the data argument.",
+            check_aes = TRUE, aes_fail_msg = "Did you correctly add a `size` aesthetic?")
+success_msg("Well done! As the number of cylinders increases, what is the trend in horsepower (`hp`) and miles per gallon (`mpg`)?")
 ```
 
 
@@ -213,13 +221,14 @@ ggplot(mtcars, aes(x = factor(cyl), y = mpg, size = hp)) +
 
 You might have noticed that our bubble chart has overlapping bubbles, making it difficult to see all of the data points. To help us better see our data, let's add some transparency (e.g., change the *alpha* values) to our points to make them more visible.
 
-If we look at the [`geom_point()` docs](http://docs.ggplot2.org/current/geom_point.html), you might notice that in the **Aesthetics** section there is a variable `alpha` which controls transparency. These aesthetics can either be set to *variables*, as we have done with our `x`, `y`, and `size` aesthetics, but they can also be set to a *constant*, such that it *does not* change with the data point's values. 
 
-Additionally, we want to keep our change alpha only within the `geom_point()` layer (e.g., we only want to alter the transparency of the *points*). To do that, we change alpha by setting it *within* the `geom_point()` function. 
 
+If we look at the help for [`geom_point()`](http://www.rdocumentation.org/packages/ggplot2/functions/geom_point), you might notice that in the **Aesthetics** section there is a variable `alpha` which controls transparency. These aesthetics can either be set to *variables*, as we have done with our `x`, `y`, and `size` aesthetics, but they can also be set to a *constant*, such that it *does not* change with the data point's values. 
+
+Because (as you'll see) multiple `geom`s can be added on a single plot, it is good practice to put any aesthetics specific to a single `geom` (e.g. `geom_point()`) within that call rather than in `ggplot()`.
 
 *** =instructions
-Change the alpha parameter such that `alpha = 0.5`. Not that alpha values range from {0, 1}, where 0 is transparent and 1 is opaque. By default, all points are opaque (`alpha = 1`).
+Change the alpha parameter such that `alpha = 0.5`. Note that alpha values range from {0, 1}, where 0 is transparent and 1 is opaque. By default, all points are opaque (`alpha = 1`).
 
 *** =hint
 Replace the underscores in `geom_point(alpha = ___)` with 0.5, and feel free to check out other values too.
@@ -236,7 +245,6 @@ library(ggplot2)
 
 ggplot(mtcars, aes(x = factor(cyl), y = mpg, size = hp)) +
     geom_point(alpha = ___) 
- 
 ```
 
 *** =solution
@@ -245,12 +253,13 @@ library(ggplot2)
 
 ggplot(mtcars, aes(x = factor(cyl), y = mpg, size = hp)) +
     geom_point(alpha = 0.5) 
-
 ```
 
 *** =sct
 ```{r}
-
+test_ggplot(check_data = TRUE, data_fail_msg = "Do not change the data argument.",
+            check_aes = TRUE, aes_fail_msg = "Did you correctly add an `alpha` aesthetic to the `geom_point()` call?")
+success_msg("Well done! Notice the transparency of the points in the plot.")
 ```
 
 
@@ -259,14 +268,14 @@ ggplot(mtcars, aes(x = factor(cyl), y = mpg, size = hp)) +
 
 `ggplot2` makes it easy to add not only multiple *aesthetics* as we have done so far, but also multiple *geometries* too. Let's try adding a geometry which gives us the distribution of the `mpg` values relative to `cyl`, using the `geom_boxplot()` function.
 
-Remember, a `ggplot` is constructed by taking data, and *adding geometries*, layering our plot from bottom to top. Just like how we added the *geom_point()* , add the *geom_boxplot()* as a layer to our plot.
+Remember, a `ggplot` is constructed by taking data, and *adding geometries*, layering our plot from bottom to top.
 
 
 *** =instructions
 Add `geom_boxplot()` to our current plot, and check out the result.
 
 *** =hint
-Just like how we added the `geom_point()` layer, add the `geom_boxplot()` by using addition (`+`), s.t. we have `geom_point() + geom_boxplot()`. Note that is is common to have different layers on different lines, with the `+` indicating a continuing `ggplot` call.
+Add `geom_boxplot()` by using addition (`+`), s.t. we have `geom_point() + geom_boxplot()`. Note that is is common to have different layers on different lines, with the `+` indicating a continuing `ggplot` call.
 
 *** =pre_exercise_code
 ```{r}
@@ -279,7 +288,6 @@ library(ggplot2)
 
 ggplot(mtcars, aes(x = factor(cyl), y = mpg, size = hp)) +
     geom_point(alpha = 0.5)
-
 ```
 
 *** =solution
@@ -289,12 +297,14 @@ library(ggplot2)
 ggplot(mtcars, aes(x = factor(cyl), y = mpg, size = hp)) +
     geom_point(alpha = 0.5) +
     geom_boxplot() 
-
 ```
 
 *** =sct
 ```{r}
-
+test_ggplot(check_data = TRUE, data_fail_msg = "Do not change the data argument.",
+            check_aes = TRUE, aes_fail_msg = "Do not change the aesthetics.",
+            check_geom = TRUE, aes_fail_msg = "Did you add a `geom_boxplot()` layer?")            
+success_msg("Nice job! Do you notice any problems with this visualization?")
 ```
 
 
@@ -305,15 +315,14 @@ You might have noticed a couple of things wrong with our previous plot. First of
 
 That's because *order matters* - just like when constructing a cake or a [delicious cocktail](https://en.wikipedia.org/wiki/B-52_(cocktail)), you need to construct your plot from bottom to top. 
 
-Let's change our `ggplot` code to reflect a reordering of our layers (and change the transparency of the boxplots while we're at it!).
+Let's change our `ggplot` code to reflect a reordering of our layers.
 
 
 *** =instructions
 - Change the order of the `geom` layers, such that boxplot is plotted first (at the bottom), and then the points are plotted on top.
-- Make the boxplots transparent, similar to how the points were made transparent
 
 *** =hint
-Our final function call should look something like: `ggplot(data, aes(...)) + geom_boxplot(alpha = 0.5) + geom_point(alpha = 0.5)`. 
+Your solution should change the order to look something like: `ggplot(...) + geom_boxplot() + geom_point(...)`. 
 
 *** =pre_exercise_code
 ```{r}
@@ -335,14 +344,16 @@ ggplot(mtcars, aes(x = factor(cyl), y = mpg, size = hp)) +
 library(ggplot2)
 
 ggplot(mtcars, aes(x = factor(cyl), y = mpg, size = hp)) +
-    geom_boxplot(alpha = 0.5) +     
+    geom_boxplot() +     
     geom_point(alpha = 0.5) 
-
 ```
 
 *** =sct
 ```{r}
-
+test_ggplot(check_data = TRUE, data_fail_msg = "Do not change the data argument.",
+            check_aes = TRUE, aes_fail_msg = "Do not change the aesthetics.",
+            check_geom = TRUE, aes_fail_msg = "Did you reorder the `geom` layers?")
+success_msg("Well done!")
 ```
 
 
@@ -355,7 +366,7 @@ However, let's say that we only want the `color` aesthetic to apply to a specifi
 
 If we apply it to the top-level `aes()` call (e.g., where its wrapped by `ggplot`), the aesthetics are *inherited* across all the subsequent layers (this is by default, as set by `inherit.aes = TRUE`). This makes it such that not only are the boxplots colored, but also the points. 
 
-To color *just the boxplots*, let's add a new `aes()` call *within* the `geom_boxplot()` layer, and instead of adding *color* at the top, add it to the `geom_boxplot(aes(...))` call.
+To color *just the boxplots*, let's add a new `aes()` call *within* the `geom_boxplot()` layer.
 
 
 *** =instructions
@@ -393,6 +404,13 @@ ggplot(mtcars, aes(x = factor(cyl), y = mpg, size = hp)) +
 ```{r}
 library(ggplot2)
 
+## Top-level setting of color aesthetic
+ggplot(mtcars, aes(x = factor(cyl), y = mpg, size = hp,
+                   color = factor(cyl))) +
+    geom_boxplot(alpha = 0.5) +
+    geom_point(alpha = 0.5) 
+
+## Boxplot specific setting of color aesthetic
 ggplot(mtcars, aes(x = factor(cyl), y = mpg, size = hp)) +
     geom_boxplot(aes(color = factor(cyl)), alpha = 0.5) +
     geom_point(alpha = 0.5) 
@@ -401,7 +419,11 @@ ggplot(mtcars, aes(x = factor(cyl), y = mpg, size = hp)) +
 
 *** =sct
 ```{r}
-
+test_ggplot(index = 2,
+            check_data = TRUE, data_fail_msg = "Do not change the data argument.",
+            check_aes = TRUE, aes_fail_msg = "Did you specify the `color` aesthetic specifically for the `geom_boxplot()` layer?",
+            check_geom = TRUE, aes_fail_msg = "Do not add/remove `geom` layers.")
+success_msg("Well done!")
 ```
 
 
@@ -431,7 +453,6 @@ library(ggplot2)
 ggplot(mtcars, aes(x = factor(cyl), y = mpg, size = hp)) +
     geom_boxplot(aes(color = factor(cyl)), alpha = 0.5) +
     geom_point(alpha = 0.5) 
-
 ```
 
 *** =solution
@@ -442,12 +463,16 @@ ggplot(mtcars, aes(x = factor(cyl), y = mpg, size = hp)) +
     geom_boxplot(aes(color = factor(cyl)), alpha = 0.5) +
     geom_point(alpha = 0.5) +
     theme_bw()
-
 ```
 
 *** =sct
 ```{r}
-
+test_ggplot(index = 2,
+            check_data = TRUE, data_fail_msg = "Do not change the data argument.",
+            check_aes = TRUE, aes_fail_msg = "Do not modify the aesthetics.",
+            check_geom = TRUE, aes_fail_msg = "Do not add/remove `geom` layers.",
+            check_extra = TRUE, extra_fail_msg = "Did you change the theme to `theme_bw()`?")
+success_msg("Well done!")
 ```
 
 
@@ -483,8 +508,8 @@ Hit submit to continue!
 library(ggplot2)
 
 ggplot(mtcars, aes(x = factor(cyl), y = mpg)) +
-    facet_wrap(~ gear) +
-    geom_point()
+    geom_point() +
+    facet_wrap(~ gear)
 
 ```
 
@@ -493,12 +518,10 @@ ggplot(mtcars, aes(x = factor(cyl), y = mpg)) +
 library(ggplot2)
 
 ggplot(mtcars, aes(x = factor(cyl), y = mpg)) +
-    facet_wrap(~ gear) +
-    geom_point()
-
+    geom_point() +
+    facet_wrap(~ gear)
 ```
 
 *** =sct
 ```{r}
-
 ```
