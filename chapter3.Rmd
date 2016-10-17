@@ -54,7 +54,7 @@ ggplot(mtcars, aes(x = cyl, y = mpg)) +
 
 
 
---- type:NormalExercise lang:r xp: skills:
+--- type:NormalExercise lang:r xp: skills: key:bdedeee564
 ## The Philosophy of ggplot2
 
 All graphics production relies on some *grammar* which allows users to construct plots that fit their needs. `ggplot2` distills this grammar into four basic elements from which all graphs are constructed. Refer to the sample code at right to each part in action:
@@ -103,7 +103,7 @@ ggplot(mtcars, aes(x = cyl, y = mpg)) +
 ```
 
 
---- type:NormalExercise lang:r xp: skills:
+--- type:NormalExercise lang:r xp: skills: key:9f7a4371c5
 ## Exploring ggplot2
 
 Let's dig into some nitty gritty. If you run the code at right, you'll notice that the plot displays only displays data at x = {4, 6, 8}, yet the x-axis runs from 4 through 8 with everything in between. This is because we are dealing with a *categorical* variable, or in R parlance, a *factor*. Our dataset, `mtcars`, has the `cyl` variable set to be `numeric`, which explains why the x-axis runs from 4 to 8 continuously. 
@@ -154,7 +154,7 @@ ggplot(mtcars, aes(x = factor(cyl), y = mpg)) +
 ```
 
 
---- type:NormalExercise lang:r xp: skills:
+--- type:NormalExercise lang:r xp: skills: key:fb894fe48d
 ## Adding New Aesthetics
 
 Let's start to make our chart prettier! 
@@ -199,7 +199,7 @@ ggplot(mtcars, aes(x = factor(cyl), y = mpg, size = hp)) +
 ```
 
 
---- type:NormalExercise lang:r xp: skills:
+--- type:NormalExercise lang:r xp: skills: key:eb7067305c
 ## Refining our Aesthetics Layer by Layer
 
 You might have noticed that our bubble chart has overlapping bubbles, making it difficult to see all of the data points. To help us better see our data, let's add some transparency (e.g., change the *alpha* values) to our points to make them more visible.
@@ -245,7 +245,7 @@ ggplot(mtcars, aes(x = factor(cyl), y = mpg, size = hp)) +
 ```
 
 
---- type:NormalExercise lang:r xp: skills:
+--- type:NormalExercise lang:r xp: skills: key:97161cce5a
 ## Adding Additional Geometries
 
 `ggplot2` makes it easy to add not only multiple *aesthetics* as we have done so far, but also multiple *geometries* too. Let's try adding a geometry which gives us the distribution of the `mpg` values relative to `cyl`, using the `geom_boxplot()` function.
@@ -289,7 +289,7 @@ ggplot(mtcars, aes(x = factor(cyl), y = mpg, size = hp)) +
 ```
 
 
---- type:NormalExercise lang:r xp: skills:
+--- type:NormalExercise lang:r xp: skills: key:539fe937f5
 ## When Layering, Order Matters 
 
 You might have noticed a couple of things wrong with our previous plot. First of all, the boxplot is opaque, and obscures our beautiful data points. Secondly, it seems to be *on top* of the existing data points! 
@@ -337,7 +337,7 @@ ggplot(mtcars, aes(x = factor(cyl), y = mpg, size = hp)) +
 ```
 
 
---- type:NormalExercise lang:r xp: skills:
+--- type:NormalExercise lang:r xp: skills: key:d1ca054679
 ## A Spoonful of Color Makes the Plot Rock
 
 Wow! We've constructed quite the plot. Let's give it a dash of color by *coloring* our boxplots to better distinguish the number of cylinders. To do this, we can add another aesthetic - `color` - to our `aes()` function, just like how we added `size` previously. So we can just add `color = factor(cyl)` to our current `aes()` function.
@@ -396,7 +396,7 @@ ggplot(mtcars, aes(x = factor(cyl), y = mpg, size = hp)) +
 ```
 
 
---- type:NormalExercise lang:r xp: skills:
+--- type:NormalExercise lang:r xp: skills: key:a98b3bf3a4
 ## Theming our Plots
 
 One last tip for making nice `ggplot` graphs is by setting the `theme`! The default theme uses a gray background with white major/minor axes. While this is well and good, we personally have a fondness for simple black and white themes. Thankfully, there is a one liner we can add to our plot to do just this - `theme_bw()`.
@@ -442,7 +442,7 @@ ggplot(mtcars, aes(x = factor(cyl), y = mpg, size = hp)) +
 ```
 
 
---- type:NormalExercise lang:r xp: skills:
+--- type:NormalExercise lang:r xp: skills: key:95c9744bd7
 ## The Tools for Beautiful Plots
 
 Wow! So we've contructed quite the plot. While it won't be winning any beauty awards, we've covered all the basic ingredients that will help make your plots shine, and introduced you to some of the ins and outs of making your plots truly custom. 
