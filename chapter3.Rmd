@@ -502,4 +502,5 @@ ggplot(mtcars, aes(x = factor(cyl), y = mpg)) +
 
 *** =sct
 ```{r}
+success_msg("Well that \"wraps\" it up for this chapter. Move on to Chapter 4 to apply what you've learned so far to real biological data!")
 ```
