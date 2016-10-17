@@ -6,53 +6,89 @@ description : "From tidy data comes great visualization - learn how to visualize
 --- type:NormalExercise lang:r xp: skills: key:3a4ac0856d
 ## Introduction to ggplot2
 
-[layers on layers]
-[intro to dataset tidied up from ch2, `df`, ensembl_id, symbol, cell_type, replicate, value cols]
+> “The emphasis in ggplot2 is reducing the amount of thinking time by making it easier to go from the plot in your brain to the plot on the page.” (Wickham, 2012)
+
+`ggplot2` is an R package that allows us to show off the inner beauty of data (after we tidy it up of course!). However, `ggplot2` is quite different from base R graphics - however, while there is a steeper learning curve, we believe you'll come to love `ggplot`. The reason? `ggplot2` allows us to both rapidly *explore* multifaceted datasets, as well as create *publication quality* plots to share with others, with a minimal amount of code (say goodbye to for-loops calling your plot functions!).
+
+Let's start by taking a quick look at a built-in dataset, `mtcars`, a dataset that contains information for 32 cars from motor trends magazine from 1973. This dataset contains a variety of *categorical* (factors) and *continuous* variables for us to play with. 
+
+Here we will start by looking at two variables, `cyl` and `mpg`, which denote the number of cylinders in the engine and the miles per gallon for a given car, respectively.
+
+*Note: This section was inspired by Datacamp's first course on ["Data Visualization with ggplot2"](https://campus.datacamp.com/courses/data-visualization-with-ggplot2-1/) and Tom Hopper's excellent post on the [philosophy of ggplot2](https://www.r-bloggers.com/a-simple-introduction-to-the-graphing-philosophy-of-ggplot2/).*
+
 
 *** =instructions
+- Load the ggplot2 library
+- Explore the `mtcars` dataset with `head()` and `str()` to get a feel for the dataset
+- Execute the `ggplot` code, and see if you can understand what each part does
 
 *** =hint
+Simply hit submit and continue! 
 
 *** =pre_exercise_code
 ```{r}
-load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1886/datasets/df.RData"))
+```
+
+*** =sample_code
+```{r}
+## Explore the mtcars dataset
+head(mtcars)
+str(mtcars)
+
+# Load the ggplot2 package
+library(ggplot2)
+
+# Run this code to produce your first ggplot
+ggplot(mtcars, aes(x = cyl, y = mpg)) +
+  geom_point() 
+      
+```
+
+*** =solution
+```{r}
+```
+
+*** =sct
+```{r}
+```
+
+
+
+--- type:NormalExercise lang:r xp: skills:
+## The Philosophy of ggplot2
+
+All graphics production relies on some *grammar* which allows users to construct plots that fit their needs. `ggplot2` distills this grammar into four basic elements from which all graphs are constructed. Refer to the sample code at right to each part in action:
+
+- **Data** - the *raw data* that you want to plot; `mtcars` is used here. Note that *raw data* does not in this context imply *untidy* data, but rather implies untransformed data, as our plotting function will go on to apply a series of mappings and transformations to create a visual representation of the data
+- **Geometries** - the shapes that will *represent* the data; here we are using points by calling `geom_point()`, but we could also use a variety of other geometries, including bar charts (`geom_bar()`), histograms (`geom_histogram()`), line graphs (`geom_line()`), and more. Check out [the docs](http://docs.ggplot2.org/current/) for all the different geometries that are available!
+- **Aesthetics** - for a given geometry, we have certain parameters we must set. For example, with `geom_point()`, we must set the `x` and `y` coordinates of each point, each provided by a *variable* in our dataset. Here, we set the aesthetics for all geometries by calling `aes()` and setting `x` and `y` to the variables `cyl` (cylinders) and `mpg` (miles per gallon)
+- **Scales** - the transformation which maps data to the aesthetic dimensions, such as the data range, plot width, or colors associated with different factors. We haven't applied any scales here yet, but will add it on soon
+
+
+These are the basic ingredients of creating a plot in `ggplot2`. So, putting it all together, we get:
+
+`data + geometry + aesthetic mappings + scaling`
+
+
+*** =instructions
+Absorb the beauty of the grammar of graphics, and simply hit submit to continue!
+
+*** =hint
+Hit submit to continue!
+
+*** =pre_exercise_code
+```{r}
 
 ```
 
 *** =sample_code
 ```{r}
+## Load ggplot2
 library(ggplot2)
 
-## Object provided is `df` - check it out
-df
-
-## Final histogram code
-ggplot(df, aes(x = value,
-               fill = cell_type)) +
-    facet_grid(replicate ~ cell_type) +
-    geom_histogram() +
-    theme_bw() +
-    xlab("Expression Values") +
-    ylab("COunt") +
-    ggtitle("Distribution of Expression")
-
-
-## Correlation plot b/w replicates
-tmp <- tidyr::spread(df, replicate, value)
-colnames(tmp)[4:6] <- c("rep1", "rep2", "rep3")
-
-ggplot(tmp, aes(x = rep1,
-                y = rep2,
-                colour = cell_type)) +
-    facet_wrap(~ cell_type) + 
-    geom_point() +
-    geom_abline(slope = 1, intercept = 0) +
-    theme_bw() +
-    xlab("Replicate 1 Expression") +
-    ylab("Replicate 2 Expression") +
-    ggtitle("Correlation of Expression, Rep2 vs. Rep1")
-
-
+## Compare each part of this call to our grammar
+ggplot(mtcars, aes(x = cyl, y = mpg)) +
+  geom_point()
 
 ```
 
@@ -67,8 +103,393 @@ ggplot(tmp, aes(x = rep1,
 ```
 
 
+--- type:NormalExercise lang:r xp: skills:
+## Exploring ggplot2
+
+Let's dig into some nitty gritty. If you run the code at right, you'll notice that the plot displays only displays data at x = {4, 6, 8}, yet the x-axis runs from 4 through 8 with everything in between. This is because we are dealing with a *categorical* variable, or in R parlance, a *factor*. Our dataset, `mtcars`, has the `cyl` variable set to be `numeric`, which explains why the x-axis runs from 4 to 8 continuously. 
+
+Luckily, we can convert our x-axis to a factor quite easily within the `ggplot2` call. 
+
+Note that similarly, we could apply any number of transformations, such as `log10()` scaling, to our aesthetic parameters, this is just one example that comes up quite a bit in real-world usage.
 
 
+*** =instructions
+- Wrap the `factor()` function around `cyl` in your ggplot2 call
+- Hit submit answer to see how the plot changes
+
+*** =hint
+Change `x = cyl` to `x = factor(cyl)` to alter the x-axis, and submit answer.
+
+*** =pre_exercise_code
+```{r}
+
+```
+
+*** =sample_code
+```{r}
+## Load ggplot2
+library(ggplot2)
+
+## Check the data type of `cyl`, note that it is a numeric, not factor
+str(mtcars)
+
+## Compare each part of this call to our grammer
+ggplot(mtcars, aes(x = cyl, y = mpg)) +
+  geom_point()
+
+```
+
+*** =solution
+```{r}
+
+```
+
+*** =sct
+```{r}
+library(ggplot2)
+
+ggplot(mtcars, aes(x = factor(cyl), y = mpg)) +
+    geom_point()
+
+```
 
 
+--- type:NormalExercise lang:r xp: skills:
+## Adding New Aesthetics
 
+Let's start to make our chart prettier! 
+
+First, let's say we are interested in looking at a third variable, `hp` (horsepower), and how that associates with the `mpg` and `cyl` variables. We could create a *bubble chart* by adding a `size` aesthetic that maps to `hp`. Since this aesthetic parameter will apply to *all* of our `geom_` layers (which is only `geom_point()`, for now), we can add it to the top-level `aes()` function.
+
+
+*** =instructions
+Add an aesthetic, `size`, which maps to the variable `hp`, to the current `aes()` function, and check out the resulting bubble chart. How does `hp` correlate with `cyl` and `mpg`?
+
+*** =hint
+Just as we have `y = mpg`, let's add to the right of it `size = hp`, so that the `aes()` function looks like: `aes(x = factor(cyl), y = mpg, size = hp)`
+
+*** =pre_exercise_code
+```{r}
+
+```
+
+*** =sample_code
+```{r}
+## Load ggplot2
+library(ggplot2)
+
+## Convert this into a bubble chart
+ggplot(mtcars, aes(x = factor(cyl), y = mpg)) +
+    geom_point() 
+
+```
+
+*** =solution
+```{r}
+library(ggplot2)
+
+ggplot(mtcars, aes(x = factor(cyl), y = mpg, size = hp)) +
+    geom_point() 
+
+```
+
+*** =sct
+```{r}
+
+```
+
+
+--- type:NormalExercise lang:r xp: skills:
+## Refining our Aesthetics Layer by Layer
+
+You might have noticed that our bubble chart has overlapping bubbles, making it difficult to see all of the data points. To help us better see our data, let's add some transparency (e.g., change the *alpha* values) to our points to make them more visible.
+
+If we look at the [`geom_point()` docs](http://docs.ggplot2.org/current/geom_point.html), you might notice that in the **Aesthetics** section there is a variable `alpha` which controls transparency. These aesthetics can either be set to *variables*, as we have done with our `x`, `y`, and `size` aesthetics, but they can also be set to a *constant*, such that it *does not* change with the data point's values. 
+
+Additionally, we want to keep our change alpha only within the `geom_point()` layer (e.g., we only want to alter the transparency of the *points*). To do that, we change alpha by setting it *within* the `geom_point()` function. 
+
+
+*** =instructions
+Change the alpha parameter such that `alpha = 0.5`. Not that alpha values range from {0, 1}, where 0 is transparent and 1 is opaque. By default, all points are opaque (`alpha = 1`).
+
+*** =hint
+Replace the underscores in `geom_point(alpha = ___)` with 0.5, and feel free to check out other values too.
+
+
+*** =pre_exercise_code
+```{r}
+
+```
+
+*** =sample_code
+```{r}
+library(ggplot2)
+
+ggplot(mtcars, aes(x = factor(cyl), y = mpg, size = hp)) +
+    geom_point(alpha = ___) 
+ 
+```
+
+*** =solution
+```{r}
+library(ggplot2)
+
+ggplot(mtcars, aes(x = factor(cyl), y = mpg, size = hp)) +
+    geom_point(alpha = 0.5) 
+
+```
+
+*** =sct
+```{r}
+
+```
+
+
+--- type:NormalExercise lang:r xp: skills:
+## Adding Additional Geometries
+
+`ggplot2` makes it easy to add not only multiple *aesthetics* as we have done so far, but also multiple *geometries* too. Let's try adding a geometry which gives us the distribution of the `mpg` values relative to `cyl`, using the `geom_boxplot()` function.
+
+Remember, a `ggplot` is constructed by taking data, and *adding geometries*, layering our plot from bottom to top. Just like how we added the *geom_point()* , add the *geom_boxplot()* as a layer to our plot.
+
+
+*** =instructions
+Add `geom_boxplot()` to our current plot, and check out the result.
+
+*** =hint
+Just like how we added the `geom_point()` layer, add the `geom_boxplot()` by using addition (`+`), s.t. we have `geom_point() + geom_boxplot()`. Note that is is common to have different layers on different lines, with the `+` indicating a continuing `ggplot` call.
+
+*** =pre_exercise_code
+```{r}
+
+```
+
+*** =sample_code
+```{r}
+library(ggplot2)
+
+ggplot(mtcars, aes(x = factor(cyl), y = mpg, size = hp)) +
+    geom_point(alpha = 0.5)
+
+```
+
+*** =solution
+```{r}
+library(ggplot2)
+
+ggplot(mtcars, aes(x = factor(cyl), y = mpg, size = hp)) +
+    geom_point(alpha = 0.5) +
+    geom_boxplot() 
+
+```
+
+*** =sct
+```{r}
+
+```
+
+
+--- type:NormalExercise lang:r xp: skills:
+## When Layering, Order Matters 
+
+You might have noticed a couple of things wrong with our previous plot. First of all, the boxplot is opaque, and obscures our beautiful data points. Secondly, it seems to be *on top* of the existing data points! 
+
+That's because *order matters* - just like when constructing a cake or a [delicious cocktail](https://en.wikipedia.org/wiki/B-52_(cocktail)), you need to construct your plot from bottom to top. 
+
+Let's change our `ggplot` code to reflect a reordering of our layers (and change the transparency of the boxplots while we're at it!).
+
+
+*** =instructions
+- Change the order of the `geom` layers, such that boxplot is plotted first (at the bottom), and then the points are plotted on top.
+- Make the boxplots transparent, similar to how the points were made transparent
+
+*** =hint
+Our final function call should look something like: `ggplot(data, aes(...)) + geom_boxplot(alpha = 0.5) + geom_point(alpha = 0.5)`. 
+
+*** =pre_exercise_code
+```{r}
+
+```
+
+*** =sample_code
+```{r}
+library(ggplot2)
+
+ggplot(mtcars, aes(x = factor(cyl), y = mpg, size = hp)) +
+    geom_point(alpha = 0.5) +
+    geom_boxplot()
+
+```
+
+*** =solution
+```{r}
+library(ggplot2)
+
+ggplot(mtcars, aes(x = factor(cyl), y = mpg, size = hp)) +
+    geom_boxplot(alpha = 0.5) +     
+    geom_point(alpha = 0.5) 
+
+```
+
+*** =sct
+```{r}
+
+```
+
+
+--- type:NormalExercise lang:r xp: skills:
+## A Spoonful of Color Makes the Plot Rock
+
+Wow! We've constructed quite the plot. Let's give it a dash of color by *coloring* our boxplots to better distinguish the number of cylinders. To do this, we can add another aesthetic - `color` - to our `aes()` function, just like how we added `size` previously. So we can just add `color = factor(cyl)` to our current `aes()` function.
+
+However, let's say that we only want the `color` aesthetic to apply to a specific layer, in this case the boxplot function. 
+
+If we apply it to the top-level `aes()` call (e.g., where its wrapped by `ggplot`), the aesthetics are *inherited* across all the subsequent layers (this is by default, as set by `inherit.aes = TRUE`). This makes it such that not only are the boxplots colored, but also the points. 
+
+To color *just the boxplots*, let's add a new `aes()` call *within* the `geom_boxplot()` layer, and instead of adding *color* at the top, add it to the `geom_boxplot(aes(...))` call.
+
+
+*** =instructions
+- Check out the first part of the sample code where we set the color aesthetic at the top-level
+- Fill in the second chunk's `aes()` function to color the boxplots based on the `factor(cyl)` variable.
+
+*** =hint
+Just as in the first chunk, replace the `____` with `color = factor(cyl)`, and check out how only our boxplots are colored this time around.
+
+
+** =pre_exercise_code
+```{r}
+
+```
+
+*** =sample_code
+```{r}
+library(ggplot2)
+
+## Top-level setting of color aesthetic
+ggplot(mtcars, aes(x = factor(cyl), y = mpg, size = hp,
+                   color = factor(cyl))) +
+    geom_boxplot(alpha = 0.5) +
+    geom_point(alpha = 0.5) 
+
+
+## Boxplot specific setting of color aesthetic
+ggplot(mtcars, aes(x = factor(cyl), y = mpg, size = hp)) +
+    geom_boxplot(aes(_________), alpha = 0.5) +
+    geom_point(alpha = 0.5) 
+
+```
+
+*** =solution
+```{r}
+library(ggplot2)
+
+ggplot(mtcars, aes(x = factor(cyl), y = mpg, size = hp)) +
+    geom_boxplot(aes(color = factor(cyl)), alpha = 0.5) +
+    geom_point(alpha = 0.5) 
+
+```
+
+*** =sct
+```{r}
+
+```
+
+
+--- type:NormalExercise lang:r xp: skills:
+## Theming our Plots
+
+One last tip for making nice `ggplot` graphs is by setting the `theme`! The default theme uses a gray background with white major/minor axes. While this is well and good, we personally have a fondness for simple black and white themes. Thankfully, there is a one liner we can add to our plot to do just this - `theme_bw()`.
+
+Of course, since `ggplot2` is easily extendable, there are now a host of packages which specialize in creating beautiful themes. Check out the [`ggthemr`](https://github.com/cttobin/ggthemr) and [`ggthemes`](https://github.com/jrnold/ggthemes) packages for even more options outside of the built-in themes.
+
+
+*** =instructions
+Add `theme_bw()` as a layer to our plot and check out the result!
+
+*** =hint
+Just like with adding `geom` layers, add the `theme_bw()` as an additional layer, e.g. `ggplot(...) + geom_point() + theme_bw()`.,
+
+*** =pre_exercise_code
+```{r}
+
+```
+
+*** =sample_code
+```{r}
+library(ggplot2)
+
+ggplot(mtcars, aes(x = factor(cyl), y = mpg, size = hp)) +
+    geom_boxplot(aes(color = factor(cyl)), alpha = 0.5) +
+    geom_point(alpha = 0.5) 
+
+```
+
+*** =solution
+```{r}
+library(ggplot2)
+
+ggplot(mtcars, aes(x = factor(cyl), y = mpg, size = hp)) +
+    geom_boxplot(aes(color = factor(cyl)), alpha = 0.5) +
+    geom_point(alpha = 0.5) +
+    theme_bw()
+
+```
+
+*** =sct
+```{r}
+
+```
+
+
+--- type:NormalExercise lang:r xp: skills:
+## The Tools for Beautiful Plots
+
+Wow! So we've contructed quite the plot. While it won't be winning any beauty awards, we've covered all the basic ingredients that will help make your plots shine, and introduced you to some of the ins and outs of making your plots truly custom. 
+
+Naturally, there's some more advanced parts of the `ggplot2` grammar that we didn't cover here, but just want to touch on briefly.
+
+- **Statistical transforms** - this is controlled by the `stat_` layers, and can add quantiles, fitted curves, sums, and so on to your plot based on your raw data
+- **Coordinate systems** - the `coord_` transform controls how data is mapped onto a plane
+- **Facets** - the `facet_` arranges data into a grid of plots (also known as latticing)
+- **Visual themes** - while we introduced you to one specifically `theme_bw()`, there are a host of settings to fine-tune within `theme_`, and you can even save your `theme_` for reuse later
+
+
+Briefly, in the sample code is an example of using facetting to make a grid of plots based on `gear` (the number of gears in a car), while still looking at the relationship between `cyl` and `mpg` within each subplot (e.g. with respect to `gear`).
+
+
+*** =instructions
+Simply run the code to check out how facetting works.
+
+*** =hint
+Hit submit to continue!
+
+*** =pre_exercise_code
+```{r}
+
+```
+
+*** =sample_code
+```{r}
+library(ggplot2)
+
+ggplot(mtcars, aes(x = factor(cyl), y = mpg)) +
+    facet_wrap(~ gear) +
+    geom_point()
+
+```
+
+*** =solution
+```{r}
+library(ggplot2)
+
+ggplot(mtcars, aes(x = factor(cyl), y = mpg)) +
+    facet_wrap(~ gear) +
+    geom_point()
+
+```
+
+*** =sct
+```{r}
+
+```
