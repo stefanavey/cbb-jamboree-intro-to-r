@@ -18,9 +18,7 @@ Here we will start by looking at two variables, `cyl` and `mpg`, which denote th
 
 
 *** =instructions
-- Load the ggplot2 package
-- Explore the `mtcars` dataset with [`head()`](http://www.rdocumentation.org/packages/utils/functions/head) and [`str()`](http://www.rdocumentation.org/packages/utils/functions/str) to get a feel for the dataset
-- Execute the `ggplot2` code, and see if you can understand what each part does (we will go through each part in depth next)
+- Hit Submit Answer to continue
 
 *** =hint
 Simply hit submit and continue! 
@@ -34,13 +32,6 @@ Simply hit submit and continue!
 ## Explore the mtcars dataset
 head(mtcars)
 str(mtcars)
-
-# Load the ggplot2 package
-library(ggplot2)
-
-# Run this code to produce your first ggplot
-ggplot(mtcars, aes(x = cyl, y = mpg)) +
-  geom_point()       
 ```
 
 *** =solution
@@ -48,26 +39,17 @@ ggplot(mtcars, aes(x = cyl, y = mpg)) +
 ## Explore the mtcars dataset
 head(mtcars)
 str(mtcars)
-
-# Load the ggplot2 package
-library(ggplot2)
-
-# Run this code to produce your first ggplot
-ggplot(mtcars, aes(x = cyl, y = mpg)) +
-  geom_point() 
 ```
 
 *** =sct
 ```{r}
-success_msg("You should see the plot appear beside the script in your window. Now you will learn the grammar of `ggplot2`")
+success_msg("Nice! Next you will learn the grammar of `ggplot2`")
 ```
 
 
 
 --- type:NormalExercise lang:r xp: skills: key:bdedeee564
 ## The grammar of ggplot2
-
-<!-- TODO: This needs to be more clear. + combines elements. Remove adding at the end since it's confusing -->
 
 All graphics production relies on some *grammar* which allows users to construct plots that fit their needs. `ggplot2` distills this grammar into four basic elements from which all graphs are constructed. Refer to the sample code at right to each part in action:
 
@@ -76,11 +58,7 @@ All graphics production relies on some *grammar* which allows users to construct
 - **Aesthetics** - for a given geometry, we have certain parameters we must set. For example, with `geom_point()`, we must set the `x` and `y` coordinates of each point, each provided by a *variable* in our dataset. Here, we set the aesthetics for all geometries by calling `aes()` and setting `x` and `y` to the variables `cyl` (cylinders) and `mpg` (miles per gallon)
 - **Scales** - the transformation which maps data to the aesthetic dimensions, such as the data range, plot width, or colors associated with different factors. We haven't applied any scales here yet, but will add it on soon
 
-
-These are the basic ingredients of creating a plot in `ggplot2`. So, putting it all together, we get:
-
-`data + geometry + aesthetic mappings + scaling`
-
+The main way to create a plot in `ggplot2` is to call the `ggplot()` function to specify the data and aesthetics. This call is followed by one or more geometries and optional scales. Function calls are strung together with the `+` operator.
 
 *** =instructions
 Absorb the beauty of the grammar of graphics, and simply hit submit to continue!
@@ -115,7 +93,7 @@ ggplot(mtcars, aes(x = cyl, y = mpg)) +
 
 *** =sct
 ```{r}
-
+success_msg("Nice! Notice how a plot appears beside the script in your window.")
 ```
 
 
@@ -180,7 +158,8 @@ First, let's say we are interested in looking at a third variable, `hp` (horsepo
 
 
 *** =instructions
-Add an aesthetic, `size`, which maps to the variable `hp`, to the current `aes()` function, and check out the resulting bubble chart. How does `hp` correlate with `cyl` and `mpg`?
+- Add an aesthetic, `size`, which maps to the variable `hp`, to the current `aes()` function, and check out the resulting bubble chart.
+- How does `hp` correlate with `cyl` and `mpg`?
 
 *** =hint
 Just as we have `y = mpg`, let's add to the right of it `size = hp`, so that the `aes()` function looks like: `aes(x = factor(cyl), y = mpg, size = hp)`
@@ -212,7 +191,7 @@ ggplot(mtcars, aes(x = factor(cyl), y = mpg, size = hp)) +
 ```{r}
 test_ggplot(check_data = TRUE, data_fail_msg = "Do not change the data argument.",
             check_aes = TRUE, aes_fail_msg = "Did you correctly add a `size` aesthetic?")
-success_msg("Well done! As the number of cylinders increases, what is the trend in horsepower (`hp`) and miles per gallon (`mpg`)?")
+success_msg("Well done! As the number of cylinders increases, the horsepower (`hp`) tends to increase while the miles per gallon (`mpg`) decreases.")
 ```
 
 
@@ -268,7 +247,7 @@ success_msg("Well done! Notice the transparency of the points in the plot.")
 
 `ggplot2` makes it easy to add not only multiple *aesthetics* as we have done so far, but also multiple *geometries* too. Let's try adding a geometry which gives us the distribution of the `mpg` values relative to `cyl`, using the `geom_boxplot()` function.
 
-Remember, a `ggplot` is constructed by taking data, and *adding geometries*, layering our plot from bottom to top.
+Remember, a `ggplot` object is constructed by taking data, and *adding geometries*, layering our plot from bottom to top.
 
 
 *** =instructions
@@ -352,7 +331,7 @@ ggplot(mtcars, aes(x = factor(cyl), y = mpg, size = hp)) +
 ```{r}
 test_ggplot(check_data = TRUE, data_fail_msg = "Do not change the data argument.",
             check_aes = TRUE, aes_fail_msg = "Do not change the aesthetics.",
-            check_geom = TRUE, geom_fail_msg = "Did you reorder the `geom` layers?")
+            check_geom = TRUE, exact_geom = TRUE, geom_fail_msg = "Did you reorder the `geom` layers?")
 success_msg("Well done!")
 ```
 
@@ -467,8 +446,7 @@ ggplot(mtcars, aes(x = factor(cyl), y = mpg, size = hp)) +
 
 *** =sct
 ```{r}
-test_ggplot(index = 2,
-            check_data = TRUE, data_fail_msg = "Do not change the data argument.",
+test_ggplot(check_data = TRUE, data_fail_msg = "Do not change the data argument.",
             check_aes = TRUE, aes_fail_msg = "Do not modify the aesthetics.",
             check_geom = TRUE, geom_fail_msg = "Do not add/remove `geom` layers.",
             check_extra = TRUE, extra_fail_msg = "Did you change the theme to `theme_bw()`?")
