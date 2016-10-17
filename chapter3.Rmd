@@ -303,7 +303,7 @@ ggplot(mtcars, aes(x = factor(cyl), y = mpg, size = hp)) +
 ```{r}
 test_ggplot(check_data = TRUE, data_fail_msg = "Do not change the data argument.",
             check_aes = TRUE, aes_fail_msg = "Do not change the aesthetics.",
-            check_geom = TRUE, aes_fail_msg = "Did you add a `geom_boxplot()` layer?")            
+            check_geom = TRUE, geom_fail_msg = "Did you add a `geom_boxplot()` layer?")            
 success_msg("Nice job! Do you notice any problems with this visualization?")
 ```
 
@@ -352,7 +352,7 @@ ggplot(mtcars, aes(x = factor(cyl), y = mpg, size = hp)) +
 ```{r}
 test_ggplot(check_data = TRUE, data_fail_msg = "Do not change the data argument.",
             check_aes = TRUE, aes_fail_msg = "Do not change the aesthetics.",
-            check_geom = TRUE, aes_fail_msg = "Did you reorder the `geom` layers?")
+            check_geom = TRUE, geom_fail_msg = "Did you reorder the `geom` layers?")
 success_msg("Well done!")
 ```
 
@@ -422,7 +422,7 @@ ggplot(mtcars, aes(x = factor(cyl), y = mpg, size = hp)) +
 test_ggplot(index = 2,
             check_data = TRUE, data_fail_msg = "Do not change the data argument.",
             check_aes = TRUE, aes_fail_msg = "Did you specify the `color` aesthetic specifically for the `geom_boxplot()` layer?",
-            check_geom = TRUE, aes_fail_msg = "Do not add/remove `geom` layers.")
+            check_geom = TRUE, geom_fail_msg = "Do not add/remove `geom` layers.")
 success_msg("Well done!")
 ```
 
@@ -470,7 +470,7 @@ ggplot(mtcars, aes(x = factor(cyl), y = mpg, size = hp)) +
 test_ggplot(index = 2,
             check_data = TRUE, data_fail_msg = "Do not change the data argument.",
             check_aes = TRUE, aes_fail_msg = "Do not modify the aesthetics.",
-            check_geom = TRUE, aes_fail_msg = "Do not add/remove `geom` layers.",
+            check_geom = TRUE, geom_fail_msg = "Do not add/remove `geom` layers.",
             check_extra = TRUE, extra_fail_msg = "Did you change the theme to `theme_bw()`?")
 success_msg("Well done!")
 ```
