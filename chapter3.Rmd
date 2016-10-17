@@ -58,7 +58,7 @@ All graphics production relies on some *grammar* which allows users to construct
 - **Aesthetics** - for a given geometry, we have certain parameters we must set. For example, with `geom_point()`, we must set the `x` and `y` coordinates of each point, each provided by a *variable* in our dataset. Here, we set the aesthetics for all geometries by calling `aes()` and setting `x` and `y` to the variables `cyl` (cylinders) and `mpg` (miles per gallon)
 - **Scales** - the transformation which maps data to the aesthetic dimensions, such as the data range, plot width, or colors associated with different factors. We haven't applied any scales here yet, but will add it on soon
 
-The main way to create a plot in `ggplot2` is to call the `ggplot()` function to specify the data and aesthetics. This call is followed by one or more geometries and optional scales. Function calls are strung together with the `+` operator.
+The main way to create a plot in `ggplot2` is to call the [`ggplot()`](https://www.rdocumentation.org/packages/ggplot2/functions/ggplot) function to specify the data and aesthetics. This call is followed by one or more geometries and optional scales. Function calls are strung together with the `+` operator.
 
 *** =instructions
 Absorb the beauty of the grammar of graphics, and simply hit submit to continue!
@@ -104,7 +104,7 @@ Let's dig into some nitty gritty. If you run the code at right, you'll notice th
 
 Luckily, we can convert our x-axis to a *factor* quite easily within the `ggplot2` call. 
 
-Note that similarly, we could apply any number of transformations, such as `log10()` scaling, to our aesthetic parameters, this is just one example that comes up quite a bit in real-world usage.
+Note that similarly, we could apply any number of transformations, such as [`log10()`](https://www.rdocumentation.org/packages/base/functions/log10) scaling, to our aesthetic parameters, this is just one example that comes up quite a bit in real-world usage.
 
 
 *** =instructions
@@ -154,7 +154,7 @@ success_msg("Well done! Notice the difference in the x-axis of the plot?")
 
 Let's start to make our chart prettier! 
 
-First, let's say we are interested in looking at a third variable, `hp` (horsepower), and how that associates with the `mpg` and `cyl` variables. We could create a *bubble chart* by adding a `size` aesthetic that maps to `hp`. Since this aesthetic parameter will apply to *all* of our `geom_` layers (which is only `geom_point()`, for now), we can add it to the top-level `aes()` function.
+First, let's say we are interested in looking at a third variable, `hp` (horsepower), and how that associates with the `mpg` and `cyl` variables. We could create a *bubble chart* by adding a `size` aesthetic that maps to `hp`. Since this aesthetic parameter will apply to *all* of our `geom_` layers, we can add it to the top-level `aes()` function.
 
 
 *** =instructions
@@ -204,7 +204,7 @@ You might have noticed that our bubble chart has overlapping bubbles, making it 
 
 If we look at the help for [`geom_point()`](http://www.rdocumentation.org/packages/ggplot2/functions/geom_point), you might notice that in the **Aesthetics** section there is a variable `alpha` which controls transparency. These aesthetics can either be set to *variables*, as we have done with our `x`, `y`, and `size` aesthetics, but they can also be set to a *constant*, such that it *does not* change with the data point's values. 
 
-Because (as you'll see) multiple `geom`s can be added on a single plot, it is good practice to put any aesthetics specific to a single `geom` (e.g. `geom_point()`) within that call rather than in `ggplot()`.
+Because (as you'll see) multiple `geom`s can be added on a single plot, it is good practice to put any aesthetics specific to a single `geom` inside that function rather than in `ggplot()`.
 
 *** =instructions
 Change the alpha parameter such that `alpha = 0.5`. Note that alpha values range from {0, 1}, where 0 is transparent and 1 is opaque. By default, all points are opaque (`alpha = 1`).
@@ -245,7 +245,7 @@ success_msg("Well done! Notice the transparency of the points in the plot.")
 --- type:NormalExercise lang:r xp: skills: key:97161cce5a
 ## Adding Additional Geometries
 
-`ggplot2` makes it easy to add not only multiple *aesthetics* as we have done so far, but also multiple *geometries* too. Let's try adding a geometry which gives us the distribution of the `mpg` values relative to `cyl`, using the `geom_boxplot()` function.
+`ggplot2` makes it easy to add not only multiple *aesthetics* as we have done so far, but also multiple *geometries* too. Let's try adding a geometry which gives us the distribution of the `mpg` values relative to `cyl`, using the [`geom_boxplot()`](https://www.rdocumentation.org/packages/ggplot2/functions/geom_boxplot) function.
 
 Remember, a `ggplot` object is constructed by taking data, and *adding geometries*, layering our plot from bottom to top.
 
