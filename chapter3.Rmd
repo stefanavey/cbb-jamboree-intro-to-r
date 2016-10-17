@@ -331,7 +331,9 @@ ggplot(mtcars, aes(x = factor(cyl), y = mpg, size = hp)) +
 ```{r}
 test_ggplot(check_data = TRUE, data_fail_msg = "Do not change the data argument.",
             check_aes = TRUE, aes_fail_msg = "Do not change the aesthetics.",
-            check_geom = TRUE, exact_geom = TRUE, geom_fail_msg = "Did you reorder the `geom` layers?")
+            check_geom = TRUE, geom_fail_msg = "Do not change the `geom` layers.")
+test_student_typed("alpha[ ]*=[ ]*0[.]5[ ]*)[ ]*+", fixed = FALSE,
+                   not_typed_msg = "Did you reorder the `geom` layers?")
 success_msg("Well done!")
 ```
 
