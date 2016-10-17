@@ -8,9 +8,9 @@ description : "From tidy data comes great visualization - learn how to visualize
 
 > “The emphasis in ggplot2 is reducing the amount of thinking time by making it easier to go from the plot in your brain to the plot on the page.” (Wickham, 2012)
 
-`ggplot2` is an R package that allows us to show off the inner beauty of data (after we tidy it up of course!). However, `ggplot2` is quite different from base R graphics - however, while there is a steeper learning curve, we believe you'll come to love `ggplot`. The reason? `ggplot2` allows us to both rapidly *explore* multifaceted datasets, as well as create *publication quality* plots to share with others, with a minimal amount of code (say goodbye to for-loops calling your plot functions!).
+`ggplot2` is an R package that allows us to show off the inner beauty of data (after we tidy it up of course!). However, `ggplot2` is quite different from base R graphics - however, while there is a steeper learning curve, we believe you'll come to love `ggplot2`. The reason? `ggplot2` allows us to both rapidly *explore* multifaceted datasets, as well as create *publication quality* plots to share with others, with a minimal amount of code (say goodbye to for-loops calling your plot functions!).
 
-Let's start by taking a quick look at a built-in dataset, `mtcars`, a dataset that contains information for 32 cars from motor trends magazine from 1973. This dataset contains a variety of *categorical* (factors) and *continuous* variables for us to play with. 
+Let's start by revisiting the built-in dataset, [`mtcars`](http://www.rdocumentation.org/packages/datasets/functions/mtcars), a dataset that contains information for 32 cars from motor trends magazine from 1973. This dataset contains a variety of *categorical* (factors) and *continuous* variables for us to play with. 
 
 Here we will start by looking at two variables, `cyl` and `mpg`, which denote the number of cylinders in the engine and the miles per gallon for a given car, respectively.
 
@@ -18,9 +18,9 @@ Here we will start by looking at two variables, `cyl` and `mpg`, which denote th
 
 
 *** =instructions
-- Load the ggplot2 library
-- Explore the `mtcars` dataset with `head()` and `str()` to get a feel for the dataset
-- Execute the `ggplot` code, and see if you can understand what each part does
+- Load the ggplot2 package
+- Explore the `mtcars` dataset with [`head()`](http://www.rdocumentation.org/packages/utils/functions/head) and [`str()`](http://www.rdocumentation.org/packages/utils/functions/str) to get a feel for the dataset
+- Execute the `ggplot2` code, and see if you can understand what each part does
 
 *** =hint
 Simply hit submit and continue! 
@@ -40,12 +40,21 @@ library(ggplot2)
 
 # Run this code to produce your first ggplot
 ggplot(mtcars, aes(x = cyl, y = mpg)) +
-  geom_point() 
-      
+  geom_point()       
 ```
 
 *** =solution
 ```{r}
+## Explore the mtcars dataset
+head(mtcars)
+str(mtcars)
+
+# Load the ggplot2 package
+library(ggplot2)
+
+# Run this code to produce your first ggplot
+ggplot(mtcars, aes(x = cyl, y = mpg)) +
+  geom_point() 
 ```
 
 *** =sct
