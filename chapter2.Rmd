@@ -254,6 +254,7 @@ Before we go on, first, I highly recommend checking out the [Data Wrangling with
 
 Back to our data..what we want to do is *gather* our columns into a single variable - income. To accomplish this, let's use the [`tidyr::gather()`](http://www.rdocumentation.org/packages/tidyr/functions/gather) function from the `tidyr` package. A quick example with the built-in `iris` dataset is shown in the Sample Code.
 
+*Note: here the function is called `gather()` and it is from package `tidyr` so we use the notation `package::function`. This is not required but is useful for teaching and preventing name overlaps (masking)*
 
 *** =instructions
 Similar to the `iris` dataset in the sample code, refactor the `pew` dataset such that the data is tidy, with variables `religion`, `income`, and `value` into an object called `pew_df`.

@@ -256,16 +256,16 @@ success_msg("Great! Continue to the next exercise to continue tidying this expre
 --- type:NormalExercise xp:100 skills:1,4 key:f53f507908
 ## Tidy the data
 
-Next you'll need to transform your data frame into a tidy format using [`gather()`](http://www.rdocumentation.org/packages/tidyr/functions/gather) so that there is only one observation (i.e. one gene measured in one sample) per row.
+Next you'll need to transform your data frame into a tidy format using [`tidyr::gather()`](http://www.rdocumentation.org/packages/tidyr/functions/gather) so that there is only one observation (i.e. one gene measured in one sample) per row.
 
 *** =instructions
 
-- Use [`gather()`](http://www.rdocumentation.org/packages/tidyr/functions/gather) on `expr_df` specifying the key as `geo_accession` and the value as `expression` and save this in a variable called `dat`.
-  - You will have to specify in `gather()` which columns should be gathered (expression samples start with "GSM")
+- Use [`tidyr::gather()`](http://www.rdocumentation.org/packages/tidyr/functions/gather) on `expr_df` specifying the key as `geo_accession` and the value as `expression` and save this in a variable called `dat`.
+  - You will have to specify in `tidyr::gather()` which columns should be gathered (expression samples start with "GSM")
 - Look at the structure of `dat` using the `str()` function
 
 *** =hint
-The [`gather()`](http://www.rdocumentation.org/packages/tidyr/functions/gather) function requires a key, value, and specification of which columns to gather.
+The [`tidyr::gather()`](http://www.rdocumentation.org/packages/tidyr/functions/gather) function requires a key, value, and specification of which columns to gather.
 
 You can specify all of the samples named by geo\_accession using `starts_with("GSM")`
 
@@ -305,7 +305,7 @@ features_filtered <- dplyr::select(features, ID, Entrez_Gene_ID, Symbol)
 expr_df <- data.frame(features_filtered, expr)
 
 # Gather expression columns of expr_df and print structure of dat
-dat <- gather(data = expr_df, key = geo_accession,
+dat <- tidyr::gather(data = expr_df, key = geo_accession,
               value = expression, starts_with("GSM"))
 str(dat)  
 ```
@@ -315,7 +315,7 @@ str(dat)
 # test_function("gather", args = c("data", "key", "value", "..."))
  test_object("dat",
              undefined_msg = "Please make sure to define a variable `dat`.",
-             incorrect_msg = "Looks like `dat` is not set properly. Check your `gather()` call")
+             incorrect_msg = "Looks like `dat` is not set properly. Check your `tidyr::gather()` call")
 test_output_contains(str(dat), incorrect_msg = "Have you printed the structure of `dat`?")
 success_msg("Great! Continue to the next exercise!")
 ```
@@ -345,11 +345,16 @@ options(stringsAsFactors = FALSE)
 library(tidyr)
 library(dplyr)
 
+# Only keep subset of columns needed for analysis
+phenotypes_filtered <- dplyr::select(phenotypes, geo_accession, title,
+                                     Treatment, Time, Replicate)
+features_filtered <- dplyr::select(features, ID, Entrez_Gene_ID, Symbol)
+
 # Combine features_filtered and expr into a data frame named expr_df
 expr_df <- data.frame(features_filtered, expr)
 
 # Gather expression columns of expr_df and print structure of dat
-dat <- gather(data = expr_df, key = geo_accession,
+dat <- tidyr::gather(data = expr_df, key = geo_accession,
               value = expression, starts_with("GSM"))
 
 # Join dat and phenotypes_filtered
@@ -360,11 +365,16 @@ dat <- gather(data = expr_df, key = geo_accession,
 library(tidyr)
 library(dplyr)
 
+# Only keep subset of columns needed for analysis
+phenotypes_filtered <- dplyr::select(phenotypes, geo_accession, title,
+                                     Treatment, Time, Replicate)
+features_filtered <- dplyr::select(features, ID, Entrez_Gene_ID, Symbol)
+
 # Combine features_filtered and expr into a data frame named expr_df
 expr_df <- data.frame(features_filtered, expr)
 
 # Gather expression columns of expr_df and print structure of dat
-dat <- gather(data = expr_df, key = geo_accession,
+dat <- tidyr::gather(data = expr_df, key = geo_accession,
               value = expression, starts_with("GSM"))
 
 # Join dat and phenotypes_filtered
@@ -389,7 +399,7 @@ You will start visually exploring by plotting the expression of one gene over ti
 
 - Plot the `expression` of the gene *MX1* over `Time` during infection with the *Brevig* strain.
 
-  - First [`filter()`](http://www.rdocumentation.org/packages/dplyr/functions/filter) `data` to observations where the `Symbol` is "MX1" and the `Treatment` is "Brevig" and save this in a new variable.
+  - First [`dplyr::filter()`](http://www.rdocumentation.org/packages/dplyr/functions/filter) `data` to observations where the `Symbol` is "MX1" and the `Treatment` is "Brevig" and save this in a new variable.
   - Then call `ggplot()` on this new variable and add `x` and `y` aesthetics using `aes()`.
   - Finally, add a `geom_point()` layer to the `ggplot()` call.
 
@@ -441,7 +451,7 @@ data <- data.frame(features, expr) %>%
          ID, Entrez_Gene_ID, Symbol, expression)
 
 # Filter the data
-plotData <- data %>% filter(Symbol == "MX1", Treatment == "Brevig")
+plotData <- dplyr::filter(data, Symbol == "MX1", Treatment == "Brevig")
 
 # Plot
 ggplot(data = plotData, aes(x = Time, y = expression)) +
@@ -506,7 +516,7 @@ data <- data.frame(features, expr) %>%
          ID, Entrez_Gene_ID, Symbol, expression)
 
 # Filter the data
-plotData <- data %>% filter(Symbol == "MX1", Treatment == "Brevig")
+plotData <- dplyr::filter(data, Symbol == "MX1", Treatment == "Brevig")
 
 # Add a line to this plot 
 ggplot(data = plotData, aes(x = Time, y = expression)) +
@@ -529,7 +539,7 @@ data <- data.frame(features, expr) %>%
          ID, Entrez_Gene_ID, Symbol, expression)
 
 # Filter the data
-plotData <- data %>% filter(Symbol == "MX1", Treatment == "Brevig")
+plotData <- dplyr::filter(data, Symbol == "MX1", Treatment == "Brevig")
 
 # Add a line to this plot
 ggplot(data = plotData, aes(x = Time, y = expression)) +
@@ -601,7 +611,7 @@ data <- data.frame(features, expr) %>%
          ID, Entrez_Gene_ID, Symbol, expression)
 
 # Filter the data
-plotData <- data %>% filter(Symbol == "MX1", Treatment == "Brevig")
+plotData <- dplyr::filter(data, Symbol == "MX1", Treatment == "Brevig")
 
 # Example plot
 ggplot(data = plotData, aes(x = Time, y = expression)) +
@@ -631,7 +641,7 @@ data <- data.frame(features, expr) %>%
          ID, Entrez_Gene_ID, Symbol, expression)
 
 # Filter the data
-plotData <- data %>% filter(Symbol == "MX1", Treatment == "Brevig")
+plotData <- dplyr::filter(data, Symbol == "MX1", Treatment == "Brevig")
 
 # Example plot
 ggplot(data = plotData, aes(x = Time, y = expression)) +
@@ -641,7 +651,7 @@ ggplot(data = plotData, aes(x = Time, y = expression)) +
 
 ############################################################
 # Filter the data
-plotData <- data %>% filter(Symbol == "MX1")
+plotData <- dplyr::filter(data, Symbol == "MX1")
 
 # New plot
 ggplot(data = plotData, aes(x = Time, y = expression, color = Treatment)) +
