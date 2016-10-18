@@ -1,4 +1,4 @@
---- 
+-- 
 title_meta  : Chapter 4
 title       : Application to Expression Data
 description : "In this chapter, you will combine what you learned in the first three chapters to read in, tidy, and visualize gene expression data. Let's get started!"
