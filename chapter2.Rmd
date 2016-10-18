@@ -408,8 +408,7 @@ dplyr::filter(df, value == 10)  # Note we kept the 3rd row!
 
 
 ## Your task:
-## Filter iris such that it only contains flowers whose petal width 
-## is less than 0.2 
+## Filter iris data set
 
 ```
 
@@ -427,8 +426,7 @@ dplyr::filter(df, value == 10)  # Note we kept the 3rd row!
 
 
 ## Your task:
-## Filter iris such that it only contains flowers whose petal width 
-## is less than 0.2 
+## Filter iris data set
 iris_filtered <- dplyr::filter(iris, Petal.Width < 0.2, Sepal.Width > 3.0)
 ```
 

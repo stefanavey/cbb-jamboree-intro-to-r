@@ -329,12 +329,12 @@ ggplot(mtcars, aes(x = factor(cyl), y = mpg, size = hp)) +
 
 *** =sct
 ```{r}
-## test_ggplot(check_data = TRUE, data_fail_msg = "Do not change the data argument.",
-##             check_aes = TRUE, aes_fail_msg = "Do not change the aesthetics.",
-##             check_geom = TRUE, geom_fail_msg = "Do not change the `geom` layers.")
-## test_student_typed("alpha[[:blank:]]*=[[:blank:]]*0[.]5[[:blank:]]*)[[:blank:]]*+", fixed = FALSE,
-##                    not_typed_msg = "Did you reorder the `geom` layers?")
-success_msg("If you changed the order of the layers so that the points are plotted on top of the boxplot, well done!")
+test_ggplot(index = 1,
+            all_fail_msg = "Do not change the elements of the ggplot call")
+test_student_typed("geom_boxplot.*geom_point",
+                   fixed = FALSE,
+                   not_typed_msg = "Be sure to switch the order of `geom_point()` and `geom_boxplot()`.")
+success_msg("Nice job! If you think of your ggplot elements as layers you will remember that order matters! Continue to the next exercise to see how to add color to your visuals.")
 ```
 
 
