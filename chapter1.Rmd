@@ -207,7 +207,7 @@ success_msg("Nice work! Now that you know the basic data types, continue on to l
 
 A **data frame** is a commonly used data type in R that can store data of multiple types. You will often find yourself working with data sets that contain different data types instead of only one. A data frame can be created with the [`data.frame()`](http://www.rdocumentation.org/packages/base/functions/data.frame) function.
 
-In a data frame variables are stored in columns and observations are stored in rows. A data frame can also hold data of all the same type as in the built-in [`mtcars`](http://www.rdocumentation.org/packages/datasets/functions/mtcars) data set.
+In a data frame, variables are stored in columns and observations are stored in rows. A data frame can also hold data of all the same type as in the built-in [`mtcars`](http://www.rdocumentation.org/packages/datasets/functions/mtcars) data set.
 
 *** =instructions
 - Click 'Submit Answer'.
@@ -262,7 +262,7 @@ Wow, that is a lot of cars!
 
 Working with large data sets is not uncommon in bioinformatics. When you work with (extremely) large data sets and data frames, your first task as a data analyst is to develop a clear understanding of its structure and main elements. Therefore, it is often useful to show only a small part of the entire data set. 
 
-So how to do this in R? Well, the function [`head()`](http://www.rdocumentation.org/packages/utils/functions/head) enables you to show the first observations of a data frame (Similarly [`tail()`](http://www.rdocumentation.org/packages/utils/functions/head) prints out the last observations in your data set).
+So how to do this in R? Well, the function [`head()`](http://www.rdocumentation.org/packages/utils/functions/head) enables you to show the first few observations (6 by default) of a data frame. Similarly, [`tail()`](http://www.rdocumentation.org/packages/utils/functions/head) prints out the last few observations in your data frame.
 
 *** =instructions
 
