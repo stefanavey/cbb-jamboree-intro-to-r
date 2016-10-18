@@ -213,23 +213,10 @@ str(pew)
 
 *** =sct
 ```{r}
-test_or(
-    test_output_contains("head(pew)"),
-    test_output_contains("pew[1:2,]"),
-    test_output_contains("pew[1:3,]"),
-    test_output_contains("pew[1:4,]"),
-    test_output_contains("pew[1:5,]"),
-    test_output_contains("pew[1:6,]"), 
-    incorrect_msg = "Did you look at the first few (no more than 6) lines of `pew`?")
-nr <- nrow(pew)
-test_or(
-    test_output_contains("tail(pew)"),
-    test_output_contains("pew[(nr-1):nr,]"),
-    test_output_contains("pew[(nr-2):nr,]"),
-    test_output_contains("pew[(nr-3):nr,]"),
-    test_output_contains("pew[(nr-4):nr,]"),
-    test_output_contains("pew[(nr-5):nr,]"), 
-    incorrect_msg = "Did you look at the last few (no more than six) lines of `pew`?")
+test_output_contains("head(pew)",
+                     incorrect_msg = "Did you look at the first six lines of `pew`")
+test_output_contains("tail(pew)",
+                     incorrect_msg = "Did you look at the last six lines of `pew`")
 test_or(
     test_output_contains("nrow(pew)"),
     test_output_contains("dim(pew)"),
@@ -248,19 +235,33 @@ success_msg("If you could answer all those questions, great job. If not, go back
 --- type:NormalExercise lang:r xp:100 skills:1,4 key:426a68171c
 ## Refactoring Columns Into a Variable
 
-You might have noticed that the columns contain a variety of income *levels* (e.g. *values*)..so you might consider *income* to be a *variable* in its own right. Furthermore, an individual observation will be a combination of a religion crossed with a specific income level.
-
 Before we go on, first, I highly recommend checking out the [Data Wrangling with dplyr and tidyr Cheat Sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf) by RStudio, as this will be an invaluable resource throughout this course (and in your work).
 
-Back to our data..what we want to do is *gather* our columns into a single variable - income. To accomplish this, let's use the [`tidyr::gather()`](http://www.rdocumentation.org/packages/tidyr/functions/gather) function from the `tidyr` package. A quick example with the built-in `iris` dataset is shown in the Sample Code.
+Now back to our data - you might have noticed that the columns contain a variety of income *levels*..so you might consider *income* to be a *variable* in its own right. Furthermore, an individual observation will be a combination of a `religion` (another *variable*) crossed with a specific income level.
+
+What we want to accomplish here is to *gather* our data so that we can separate these *variables* out into `religion`, a new *key* called `income` (which is the variable that describes the income level), and then a new column where we put in the number of times we observe this specific religion and income level, which we can just refer to as `value`. 
+
+To do this in one line, let's use the [`tidyr::gather()`](http://www.rdocumentation.org/packages/tidyr/functions/gather) function from the `tidyr` package. `gather()` takes four arguments:
+
+- the dataset of interest 
+- the name of what will be the new *key* column 
+- the name of what will be the new *value* column
+- the column indices where the *keys* and *values* are currently stored in the dataset
+
+Essentially, what we end up doing is taking our dataset from a *wide* format to a *long* format. This *long* format is much friendlier with downstream applications such as `ggplot2` for constructing data visualizations (we will cover `ggplot2` in chapter 4).  
+
+Check out the sample code which uses the built-in `iris` dataset to see `tidyr::gather()` in action.  
 
 *Note: here the function is called `gather()` and it is from package `tidyr` so we use the notation `package::function`. This is not required but is useful for teaching and preventing name overlaps (masking)*
 
 *** =instructions
-Similar to the `iris` dataset in the sample code, refactor the `pew` dataset such that the data is tidy, with variables `religion`, `income`, and `value` into an object called `pew_df`.
+- Read and run the first sample code chunk to inspect how `tidyr::gather()` works
+- Similar to the `iris` dataset in the sample code, refactor the `pew` dataset such that the data is tidy.
+- Name the *key* column `income`, and name the *value* column as just `value`
+- Note that the values in the `pew` dataset are stored in columns 2:11.
 
 *** =hint
-See the sample code and your data wrangling cheat sheet for an example of how to use [`tidyr::gather()`](http://www.rdocumentation.org/packages/tidyr/functions/gather). Note that the opposite of this is [``tidyr::spread()`](http://www.rdocumentation.org/packages/tidyr/functions/spread).
+See the sample code and your data wrangling cheat sheet for an example of how to use [`tidyr::gather()`](http://www.rdocumentation.org/packages/tidyr/functions/gather). You'll need to supply four arguments to `tidyr::gather()` - the dataset, the name of the new key column (`income`), the name of the new value column, and the column indices where values are stored.
 
 *** =pre_exercise_code
 ```{r}
@@ -272,16 +273,25 @@ load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1841/dat
 library(tidyr)
 
 # Example of gathering variables with the iris dataset
-# Here, we specify new variables: 
-# - a *key* column, "measurement" (Sepal.Length, Petal.Width, etc.)
-# - a *value* column, which are the values we measured
-# - the *columns* (1:4) where values are in the original data.frame
+# The arguments are, from left to right:
+# - the dataset, `iris`
+# - the name for a new *key* column, let's call it "measurement" 
+#     this will be a new column with values 'Sepal.Length', 'Petal.Width', etc.
+# - the name for a new *value* column, where the "value"
+#     this will be the column which contains the actual measurements (2.2, 3.0, etc)
+# - the *column indices* values are located in the original dataset 
+#     in `iris`, the values are spread across columns 1 through 4
+#     you'll note in the output the column names become the *key* column (measurement)
+#     and that the *value* column takes on the actual measurements from the matrix
 iris_df <- tidyr::gather(iris, measurement, value, 1:4)
 iris_df[1:3, ]
 
 ## Your task:
 ## Take the pew data set and use tidyr::gather to organize
-## the data by the variable income
+## the data by the *key* `income`, and a *value* column named `value`
+## Save the tidied dataset as pew_df
+## Note that pew has its values stored in columns 2:11
+pew_df
 
 
 ```
@@ -290,18 +300,7 @@ iris_df[1:3, ]
 ```{r}
 library(tidyr)
 
-# Example of gathering variables with the iris dataset
-# Here, we specify new variables: 
-# - a *key* column, "measurement" (Sepal.Length, Petal.Width, etc.)
-# - a *value* column, which are the values we measured
-# - the *columns* (1:4) where values are in the original data.frame
-iris_df <- tidyr::gather(iris, measurement, value, 1:4)
-iris_df[1:3, ]
-
-## Your task:
-## Take the pew data set and use tidyr::gather to organize
-## the data by the variable income
-pew_df <- tidyr::gather(pew, income, value, 2:ncol(pew))
+pew_df <- tidyr::gather(pew, income, value, 2:11)
 ```
 
 *** =sct
@@ -384,6 +383,7 @@ To do this, we use *conditionals*, such as less-than (`<`), greater-than (`>`), 
 
 Multiple filters can be done simultaneously by specifying multiple conditionals to [`dplyr::filter()`](http://www.rdocumentation.org/packages/dplyr/functions/filter).
 
+
 *** =instructions
 Filter the `iris` dataset such that it only contains flowers whose petal width is less than `0.2` and sepal width is more than `3.0`. Save the the result as `iris_filtered`
 
@@ -405,11 +405,17 @@ head(iris)
 ## Example of filtering using an equality - we only want value == 10
 df <- data.frame(letters = c("a", "b", "c", "d"),
                  value = c(1, 2, 10, 5))
-dplyr::filter(df, value == 10)  # Note we kept the 3rd row!
+dplyr::filter(df, value == 10)  
+
+## Example of using two filters - we can separate multiple filters
+## using just a comma `,` - note that multiple filters are combined
+## as an AND (`&`) statement
+dplyr::filter(df, value > 3, value < 7) 
 
 
 ## Your task:
-## Filter iris data set
+## Filter iris such that it only contains flowers whose petal width 
+## is less than 0.2  and whose sepal width is more than 3.0
 
 ```
 
@@ -427,7 +433,8 @@ dplyr::filter(df, value == 10)  # Note we kept the 3rd row!
 
 
 ## Your task:
-## Filter iris data set
+## Filter iris such that it only contains flowers whose petal width 
+## is less than 0.2 
 iris_filtered <- dplyr::filter(iris, Petal.Width < 0.2, Sepal.Width > 3.0)
 ```
 
