@@ -382,6 +382,7 @@ To do this, we use *conditionals*, such as less-than (`<`), greater-than (`>`), 
 
 Multiple filters can be done simultaneously by specifying multiple conditionals to [`dplyr::filter()`](http://www.rdocumentation.org/packages/dplyr/functions/filter).
 
+
 *** =instructions
 Filter the `iris` dataset such that it only contains flowers whose petal width is less than `0.2` and sepal width is more than `3.0`. Save the the result as `iris_filtered`
 
@@ -403,12 +404,17 @@ head(iris)
 ## Example of filtering using an equality - we only want value == 10
 df <- data.frame(letters = c("a", "b", "c", "d"),
                  value = c(1, 2, 10, 5))
-dplyr::filter(df, value == 10)  # Note we kept the 3rd row!
+dplyr::filter(df, value == 10)  
+
+## Example of using two filters - we can separate multiple filters
+## using just a comma `,` - note that multiple filters are combined
+## as an AND (`&`) statement
+dplyr::filter(df, value > 3, value < 7) 
 
 
 ## Your task:
 ## Filter iris such that it only contains flowers whose petal width 
-## is less than 0.2 
+## is less than 0.2  and whose sepal width is more than 3.0
 
 ```
 
