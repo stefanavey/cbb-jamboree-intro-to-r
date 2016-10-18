@@ -134,18 +134,79 @@ test_object("phenotypes",
 success_msg("Nice job! Notice in the output that printing `eset` tells you about what it contains including the number of features (genes) and samples.")
 ```
 
+--- type:NormalExercise  xp:100 skills:1 key:
+## Filter the Data
+
+Now that we extracted our data from the Expression Set, we can take a quick look.
+
+
+*** =instructions
+
+- Print out the column names of `phenotypes` and `features`
+- Use `dplyr::select()` to select `geo_accession`, `title`, `Treatment`, `Time`, and `Replicate` from `phenotypes` and save the result in `phenotypes_filtered`
+- Use `dplyr::select()` to select `ID`, `Entrez_Gene_ID`, and `Symbol` from `features` and save the result in `features_filtered`
+
+
+*** =hint
+Use the `colnames()` function to look at the column names of `phenotypes` and `features`. Then use `dplyr::select()` to retain a subset of the columns.
+
+*** =pre_exercise_code
+```{r}
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1843/datasets/extractedEset.RData"))
+```
+
+*** =sample_code
+```{r}
+library(dplyr)
+
+# Print column names of phenotypes and features
+
+# Only keep subset of columns needed for analysis
+```
+
+*** =solution
+```{r}
+library(dplyr)
+
+# Print column names of phenotypes and features
+colnames(phenotypes)
+colnames(features)
+
+# Only keep subset of columns needed for analysis
+phenotypes_filtered <- dplyr::select(phenotypes, geo_accession, title,
+                                     Treatment, Time, Replicate)
+features_filtered <- dplyr::select(features, ID, Entrez_Gene_ID, Symbol)
+```
+
+*** =sct
+```{r}
+test_output_contains("colnames(phenotypes)",
+                     incorrect_msg = "Did you remember to print out the column names of `phenotypes`?")
+test_output_contains("colnames(features)",
+                     incorrect_msg = "Did you remember to print out the column names of `features`?")
+test_object("phenotypes_filtered", 
+            undefined_msg = "Make sure to name your new variable `phenotypes_filtered`.",
+            incorrect_msg = "Have you selected the corrected columns from `phenotypes`?")
+test_object("features_filtered", 
+            undefined_msg = "Make sure to name your new variable `features_filtered`.",
+            incorrect_msg = "Have you selected the corrected columns from `features`?")
+success_msg("Great! Continue to the next exercise.")
+```
+
+
+
 --- type:NormalExercise  xp:100 skills:1 key:e7416248d9
 ## Combine the data
 
-Currently our data is stored in 3 variables, `expr`, `features`, and `phenotypes`. Eventually we want to combine all of these into a single tidy data frame.
+Currently our data is stored in 3 variables, `expr`, `features_filtered`, and `phenotypes_filtered`. Eventually we want to combine all of these into a single tidy data frame.
 
-To begin, we can combine the information on the features with the expression data. Each row of `features` gives additional information on the gene expression probe while each row of `expr` gives the expression levels of each probe in different samples.
+To begin, we can combine the information on the features with the expression data. Each row of `features_filtered` gives additional information on the gene expression probe while each row of `expr` gives the expression levels of each probe in different samples.
 
 We can combine these together in a data frame using the [`data.frame()`](http://www.rdocumentation.org/packages/base/functions/data.frame) function.
 
 *** =instructions
 
-- Pass `features` and `expr` to the [`data.frame()`](http://www.rdocumentation.org/packages/base/functions/data.frame) function and assign this new data frame to a variable named `expr_df`.
+- Pass `features_filtered` and `expr` to the [`data.frame()`](http://www.rdocumentation.org/packages/base/functions/data.frame) function and assign this new data frame to a variable named `expr_df`.
 - Click 'Submit Answer'.
 
 *Note: We are ignoring the `factor` data type by setting the global option `stringsAsFactors` to `FALSE` in the R workspace.*
@@ -161,13 +222,27 @@ options(stringsAsFactors = FALSE)
 
 *** =sample_code
 ```{r}
+library(dplyr)
+
+# Only keep subset of columns needed for analysis
+phenotypes_filtered <- dplyr::select(phenotypes, geo_accession, title,
+                                     Treatment, Time, Replicate)
+features_filtered <- dplyr::select(features, ID, Entrez_Gene_ID, Symbol)
+
 # Combine features and expr into a data frame named expr_df
 ```
 
 *** =solution
 ```{r}
+library(dplyr)
+
+# Only keep subset of columns needed for analysis
+phenotypes_filtered <- dplyr::select(phenotypes, geo_accession, title,
+                                     Treatment, Time, Replicate)
+features_filtered <- dplyr::select(features, ID, Entrez_Gene_ID, Symbol)
+
 # Combine features and expr into a data frame named expr_df
-expr_df <- data.frame(features, expr)
+expr_df <- data.frame(features_filtered, expr)
 ```
 
 *** =sct
@@ -204,8 +279,8 @@ options(stringsAsFactors = FALSE)
 library(tidyr)
 library(dplyr)
 
-# Combine features and expr into a data frame named expr_df
-expr_df <- data.frame(features, expr)
+# Combine features_filtered and expr into a data frame named expr_df
+expr_df <- data.frame(features_filtered, expr)
 
 # Gather expression columns of expr_df and print structure of dat
 ```
@@ -215,8 +290,13 @@ expr_df <- data.frame(features, expr)
 library(tidyr)
 library(dplyr)
 
-# Combine features and expr into a data frame named expr_df
-expr_df <- data.frame(features, expr)
+# Only keep subset of columns needed for analysis
+phenotypes_filtered <- dplyr::select(phenotypes, geo_accession, title,
+                                     Treatment, Time, Replicate)
+features_filtered <- dplyr::select(features, ID, Entrez_Gene_ID, Symbol)
+
+# Combine features_filtered and expr into a data frame named expr_df
+expr_df <- data.frame(features_filtered, expr)
 
 # Gather expression columns of expr_df and print structure of dat
 dat <- gather(data = expr_df, key = geo_accession,
@@ -237,14 +317,14 @@ success_msg("Great! Continue to the next exercise!")
 --- type:NormalExercise xp:100 skills:1,4 key:ebeb4cda30
 ## Join the data
 
-Finally, you want to add phenotype data in `phenotypes` to `dat` so you have all the information describing the geo_accession (i.e. sample) in each row.
+Finally, you want to add phenotype data in `phenotypes_filtered` to `dat` so you have all the information describing the geo_accession (i.e. sample) in each row.
 
 [`full_join()`](http://www.rdocumentation.org/packages/dplyr/functions/full_join) can be used to join two data frames and retain all values, and all rows.
 
 
 *** =instructions
 
-- Use [`full_join()`](http://www.rdocumentation.org/packages/dplyr/functions/full_join) to join `dat` and `phenotypes` by the "geo_accession" column and save the result in a new variabled called `data`
+- Use [`full_join()`](http://www.rdocumentation.org/packages/dplyr/functions/full_join) to join `dat` and `phenotypes_filtered` by the "geo_accession" column and save the result in a new variabled called `data`
 
 *** =hint
 
@@ -259,14 +339,14 @@ options(stringsAsFactors = FALSE)
 library(tidyr)
 library(dplyr)
 
-# Combine features and expr into a data frame named expr_df
-expr_df <- data.frame(features, expr)
+# Combine features_filtered and expr into a data frame named expr_df
+expr_df <- data.frame(features_filtered, expr)
 
 # Gather expression columns of expr_df and print structure of dat
 dat <- gather(data = expr_df, key = geo_accession,
               value = expression, starts_with("GSM"))
 
-# Join dat and phenotypes
+# Join dat and phenotypes_filtered
 ```
 
 *** =solution
@@ -274,15 +354,15 @@ dat <- gather(data = expr_df, key = geo_accession,
 library(tidyr)
 library(dplyr)
 
-# Combine features and expr into a data frame named expr_df
-expr_df <- data.frame(features, expr)
+# Combine features_filtered and expr into a data frame named expr_df
+expr_df <- data.frame(features_filtered, expr)
 
 # Gather expression columns of expr_df and print structure of dat
 dat <- gather(data = expr_df, key = geo_accession,
               value = expression, starts_with("GSM"))
 
-# Join dat and phenotypes
-data <- full_join(dat, phenotypes, by = "geo_accession")
+# Join dat and phenotypes_filtered
+data <- full_join(dat, phenotypes_filtered, by = "geo_accession")
 ```
 
 *** =sct
@@ -292,8 +372,6 @@ test_object("data",
             incorrect_msg = "Looks like `data` is not set properly. Check your `full_join()` call")
 success_msg("Great! Now that your data is tidy, it's time for the fun part - exploring and visualizing the data!")
 ```
-
-<!-- TODO: Add another exercise to tidy this data using piping? -->
 
 --- type:NormalExercise xp:200 skills:1 key:9c603bbce2
 ## Plotting Gene Expression
@@ -332,7 +410,9 @@ library(ggplot2)
 # Note we are doing the same steps here using piping (%>%)
 data <- data.frame(features, expr) %>%
   gather(key = geo_accession, value = expression, starts_with("GSM")) %>%
-  full_join(phenotypes, by = "geo_accession")
+  full_join(phenotypes, by = "geo_accession") %>%
+  select(geo_accession, title, Treatment, Time, Replicate,
+         ID, Entrez_Gene_ID, Symbol, expression)
 
 # Filter the data
 
@@ -349,9 +429,10 @@ library(ggplot2)
 # Tidy data
 # Note we are doing the same steps here using piping (%>%)
 data <- data.frame(features, expr) %>%
-  gather(key = geo_accession, value = expression,
-         starts_with("GSM")) %>%
-  full_join(phenotypes, by = "geo_accession")
+  gather(key = geo_accession, value = expression, starts_with("GSM")) %>%
+  full_join(phenotypes, by = "geo_accession") %>%
+  select(geo_accession, title, Treatment, Time, Replicate,
+         ID, Entrez_Gene_ID, Symbol, expression)
 
 # Filter the data
 plotData <- data %>% filter(Symbol == "MX1", Treatment == "Brevig")
@@ -365,7 +446,7 @@ ggplot(data = plotData, aes(x = Time, y = expression)) +
 # # In comparison, the same plot can be made without tidying
 # # the data first but it is less readable and more code.
 # cond <- phenotypes[, "Treatment"] == "Brevig"
-# exp <- expr[features[,"Symbol"] == "MX1", cond]
+# exp <- expr[features_filtered[,"Symbol"] == "MX1", cond]
 # times <- phenotypes[cond, "Time"]
 # plot(x = times, y = exp, pch = 19)
 ```
@@ -414,7 +495,9 @@ library(ggplot2)
 # Note we are doing the same steps here using piping (%>%)
 data <- data.frame(features, expr) %>%
   gather(key = geo_accession, value = expression, starts_with("GSM")) %>%
-  full_join(phenotypes, by = "geo_accession")
+  full_join(phenotypes, by = "geo_accession") %>%
+  select(geo_accession, title, Treatment, Time, Replicate,
+         ID, Entrez_Gene_ID, Symbol, expression)
 
 # Filter the data
 plotData <- data %>% filter(Symbol == "MX1", Treatment == "Brevig")
@@ -434,9 +517,10 @@ library(ggplot2)
 # Tidy data
 # Note we are doing the same steps here using piping (%>%)
 data <- data.frame(features, expr) %>%
-  gather(key = geo_accession, value = expression,
-         starts_with("GSM")) %>%
-  full_join(phenotypes, by = "geo_accession")
+  gather(key = geo_accession, value = expression, starts_with("GSM")) %>%
+  full_join(phenotypes, by = "geo_accession") %>%
+  select(geo_accession, title, Treatment, Time, Replicate,
+         ID, Entrez_Gene_ID, Symbol, expression)
 
 # Filter the data
 plotData <- data %>% filter(Symbol == "MX1", Treatment == "Brevig")
@@ -506,7 +590,9 @@ library(ggplot2)
 # Note we are doing the same steps here using piping (%>%)
 data <- data.frame(features, expr) %>%
   gather(key = geo_accession, value = expression, starts_with("GSM")) %>%
-  full_join(phenotypes, by = "geo_accession")
+  full_join(phenotypes, by = "geo_accession") %>%
+  select(geo_accession, title, Treatment, Time, Replicate,
+         ID, Entrez_Gene_ID, Symbol, expression)
 
 # Filter the data
 plotData <- data %>% filter(Symbol == "MX1", Treatment == "Brevig")
@@ -533,9 +619,10 @@ library(ggplot2)
 # Tidy data
 # Note we are doing the same steps here using piping (%>%)
 data <- data.frame(features, expr) %>%
-  gather(key = geo_accession, value = expression,
-         starts_with("GSM")) %>%
-  full_join(phenotypes, by = "geo_accession")
+  gather(key = geo_accession, value = expression, starts_with("GSM")) %>%
+  full_join(phenotypes, by = "geo_accession") %>%
+  select(geo_accession, title, Treatment, Time, Replicate,
+         ID, Entrez_Gene_ID, Symbol, expression)
 
 # Filter the data
 plotData <- data %>% filter(Symbol == "MX1", Treatment == "Brevig")
