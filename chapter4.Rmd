@@ -134,7 +134,7 @@ test_object("phenotypes",
 success_msg("Nice job! Notice in the output that printing `eset` tells you about what it contains including the number of features (genes) and samples.")
 ```
 
---- type:NormalExercise  xp:100 skills:1 key:
+--- type:NormalExercise  xp:100 skills:1 key: key:d454b2036d
 ## Filter the Data
 
 Now that we extracted our data from the Expression Set, we can take a quick look.
