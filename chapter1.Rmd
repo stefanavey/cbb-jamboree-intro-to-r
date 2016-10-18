@@ -52,7 +52,6 @@ Just add a line of R code that calculates the sum of 6 and 12, just like the exa
 28 %% 6
 
 # Exponentiation
-2 ^ 5
 ```
 
 *** =solution
@@ -109,7 +108,7 @@ Look at how the value 4 was assigned to `my_var` in the exercise's assignment. D
 *** =sample_code
 ```{r}
 # Assign the value 42 to x
-x <- __
+x <- ____
 
 # Print out the value of the variable x
 x
