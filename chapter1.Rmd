@@ -8,74 +8,26 @@ description : "In this chapter, based on DataCamp's Intro To R course, you will 
 
 In the editor on the right you should type R code to solve the exercises. When you hit the 'Submit Answer' button, every line of code is interpreted and executed by R and you get a message whether or not your code was correct. The output of your R code is shown in the console in the lower right corner.
 
-R makes use of the `#` sign to add comments, so that you and others can understand what the R code is about. Just like Twitter! Comments are not run as R code, so they will not influence your result. For example, _Calculate 3 + 4_ in the editor on the right is a comment.
+R makes use of the `#` sign to add comments, so that you and others can understand what the R code is about. Just like Twitter! Comments are not run as R code, so they will not influence your result. For example, _An addition_ in the editor on the right is a comment.
 
 You can also execute R commands straight in the console. This is a good way to experiment with R code, as your submission is not checked for correctness.
 
-For help on any built-in functions or operators, you can type `help("func_name")` in the console. For example, help("+").
-
-*** =instructions
-- In the editor on the right there is already some sample code. Can you see which lines are actual R code and which are comments?
-- Add a line of code that calculates the sum of 6 and 12, and hit the 'Submit Answer' button.
-n
-*** =hint
-Just add a line of R code that calculates the sum of 6 and 12, just like the example in the sample code!
-
-*** =pre_exercise_code
-```{r}
-# no pec
-```
-
-*** =sample_code
-```{r}
-# Calculate 3 + 4
-3 + 4
-
-# Calculate 6 + 12
-
-```
-
-*** =solution
-```{r}
-# Calculate 3 + 4
-3 + 4
-
-# Calculate 6 + 12
-6 + 12
-```
-
-*** =sct
-```{r}
-test_output_contains("18", incorrect_msg = "Make sure to add `6 + 12` on a new line. Do not start the line with a `#`, otherwise your R code is not executed!")
-success_msg("Awesome! See how the console shows the result of the R code you submitted? Now that you're familiar with the interface, let's get down to R business!")
-```
-
---- type:NormalExercise xp:100 skills:1 key:15143ba0d7
-## Arithmetic with R
-
-In its most basic form, R can be used as a simple calculator. Consider the following arithmetic operators:
+Consider the following arithmetic operators:
 
 - Addition: `+`
 - Subtraction: `-`
 - Multiplication: `*`
 - Division: `/`
 - Exponentiation: `^`
-- Modulo: `%%`
+- Modulo: `%%` (returns the remainder of the division of the number to the left by the number on its right)
 
-The last two might need some explaining:
-- The `^` operator raises the number to its left to the power of the number to its right: for example `3^2` is 9.
-- The modulo returns the remainder of the division of the number to the left by the number on its right, for example 5 modulo 3 or `5 %% 3` is 2.
-
-With this knowledge, follow the instructions below to complete the exercise.
+For help on any built-in functions or operators, you can type `help("func_name")` in the console. For example, help("+").
 
 *** =instructions
-- Type `2^5` in the editor to calculate 2 to the power 5.
-- Type `28 %% 6` to calculate 28 modulo 6.
-- Click 'Submit Answer' and have a look at the R output in the console.
-- Note how the `#` symbol is used to add comments on the R code.
-
+- In the editor on the right there is already some sample code. Can you see which lines are actual R code and which are comments?
+- Add a line of code that calculates 2 raised to the power 5 and hit the 'Submit Answer' button.
 *** =hint
-Another example of the modulo operator: `9 %% 2` equals `1`.
+Just add a line of R code that calculates the sum of 6 and 12, just like the example in the sample code!
 
 *** =pre_exercise_code
 ```{r}
@@ -96,17 +48,17 @@ Another example of the modulo operator: `9 %% 2` equals `1`.
  # A division
 (5 + 5) / 2 
 
-# Exponentiation
-
-
 # Modulo
+28 %% 6
 
+# Exponentiation
+2 ^ 5
 ```
 
 *** =solution
 ```{r}
 # An addition
-5 + 5
+5 + 5 
 
 # A subtraction
 5 - 5 
@@ -117,21 +69,18 @@ Another example of the modulo operator: `9 %% 2` equals `1`.
  # A division
 (5 + 5) / 2 
 
-# Exponentiation
-2 ^ 5
-
 # Modulo
 28 %% 6
+
+# Exponentiation
+2 ^ 5
 ```
 
 *** =sct
 ```{r}
-msg = "Do not remove the other arithmetic examples!"
-test_output_contains("2^5", incorrect_msg = "The exponentiation example is not correct. Write `2 ^ 5` on a new line.")
-test_output_contains("28 %% 6", incorrect_msg = "There seems to be an issue with the modulo example. Write `28 %% 6` on a new line.")
-success_msg("Great! Head over to the next exercise.")
+test_output_contains("32", incorrect_msg = "Make sure to raise 2 to the power 5. Do not start the line with a `#`, otherwise your R code is not executed!")
+success_msg("Awesome! See how the console shows the result of the R code you submitted? Now that you're familiar with the interface, let's get down to R business!")
 ```
-
 
 --- type:NormalExercise xp:100 skills:1 key:2b39bce1c1
 ## Variable assignment 
@@ -150,7 +99,7 @@ my_var <- 4
 Over to you: complete the code in the editor such that it assigns the value **42** to the variable `x` in the editor. Click 'Submit Answer'. Notice that when you ask R to print `x`, the value 42 appears.
 
 *** =hint
-Look at how the value 4 was assigned to `my_variable` in the exercise's assignment. Do the exact same thing in the editor, but now assign 42 to the variable `x`.
+Look at how the value 4 was assigned to `my_var` in the exercise's assignment. Do the exact same thing in the editor, but now assign 42 to the variable `x`.
 
 *** =pre_exercise_code
 ```{r}
@@ -160,7 +109,7 @@ Look at how the value 4 was assigned to `my_variable` in the exercise's assignme
 *** =sample_code
 ```{r}
 # Assign the value 42 to x
-x <- 
+x <- __
 
 # Print out the value of the variable x
 x
@@ -417,6 +366,8 @@ Data frames can be sliced (indexed) by `[row, col]` where `row` and `col` are:
 - Logical vectors equal in length to the dimensions
 - Character vectors specifying the row and column names
 
+If either `row` or `col` is left blank, all elements will be selected. Be careful here to still include the comma. And if you only select a single column, R will convert the result to a vector (you have to specify `drop = FALSE` to keep the result as a data frame)
+
 *** =instructions
 Slice the `mtcars` data frame to extract the $10^{\textrm{th}}$ row for the `mpg` and `carb` columns.
 
@@ -430,23 +381,39 @@ Index `mtcars` with `[row, col]`
 
 *** =sample_code
 ```{r}
+# Get row 1, all columns
+mtcars[1, ]
+ 
+# Get all rows, column 1 (result is a vector)
+mtcars[,1]
+# Get all rows, column 1 (result is a data frame)
+mtcars[ , 1, drop = FALSE]
+
 # Define row to be a numeric type
 row <- 10
 # Define col to be a character vector
-col <- c("mpg", "carb")   
+col <- c("mpg", "carb")
 
 # Slice mtcars
 ```
 
 *** =solution
 ```{r}
+# Get row 1, all columns
+mtcars[1, ]
+ 
+# Get all rows, column 1 (result is a vector)
+mtcars[,1]
+# Get all rows, column 1 (result is a data frame)
+mtcars[ , 1, drop = FALSE]
+
 # Define row to be a numeric type
 row <- 10
 # Define col to be a character vector
-col <- c("mpg", "carb")   
+col <- c("mpg", "carb")
 
 # Slice mtcars
-mtcars[row,col]
+mtcars[row, col]
 ```
 
 *** =sct
