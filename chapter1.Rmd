@@ -108,7 +108,7 @@ Look at how the value 4 was assigned to `my_var` in the exercise's assignment. D
 *** =sample_code
 ```{r}
 # Assign the value 42 to x
-x <- ____
+x <- ___
 
 # Print out the value of the variable x
 x
