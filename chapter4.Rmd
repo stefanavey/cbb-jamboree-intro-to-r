@@ -260,7 +260,8 @@ Next you'll need to transform your data frame into a tidy format using [`gather(
 
 *** =instructions
 
-- Use [`gather()`](http://www.rdocumentation.org/packages/tidyr/functions/gather) on `expr_df` specifying the key as 'geo_accession' and the value as 'expression' and save this in a variable called `dat`
+- Use [`gather()`](http://www.rdocumentation.org/packages/tidyr/functions/gather) on `expr_df` specifying the key as `geo_accession` and the value as `expression` and save this in a variable called `dat`.
+  - You will have to specify in `gather()` which columns should be gathered (expression samples start with "GSM")
 - Look at the structure of `dat` using the `str()` function
 
 *** =hint
@@ -278,6 +279,11 @@ options(stringsAsFactors = FALSE)
 ```{r}
 library(tidyr)
 library(dplyr)
+
+# Only keep subset of columns needed for analysis
+phenotypes_filtered <- dplyr::select(phenotypes, geo_accession, title,
+                                     Treatment, Time, Replicate)
+features_filtered <- dplyr::select(features, ID, Entrez_Gene_ID, Symbol)
 
 # Combine features_filtered and expr into a data frame named expr_df
 expr_df <- data.frame(features_filtered, expr)
