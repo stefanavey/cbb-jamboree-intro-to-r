@@ -264,14 +264,16 @@ Working with large data sets is not uncommon in bioinformatics. When you work wi
 
 So how to do this in R? Well, the function [`head()`](http://www.rdocumentation.org/packages/utils/functions/head) enables you to show the first few observations (6 by default) of a data frame. Similarly, [`tail()`](http://www.rdocumentation.org/packages/utils/functions/head) prints out the last few observations in your data frame.
 
+When the number of columns is very large, even [`head()`](http://www.rdocumentation.org/packages/utils/functions/head) and [`tail()`](http://www.rdocumentation.org/packages/utils/functions/head) may print out so much that it is hard to read. In that case, you can view the row and column names with the [`rownames()`](http://www.rdocumentation.org/packages/base/functions/rownames) and [`colnames()`](http://www.rdocumentation.org/packages/base/functions/colnames) functions.
+
 *** =instructions
 
-Call [`head()`](http://www.rdocumentation.org/packages/utils/functions/head) on the [`mtcars`](http://www.rdocumentation.org/packages/datasets/functions/mtcars) data set to have a look at the header and the first observations.
+- Call [`head()`](http://www.rdocumentation.org/packages/utils/functions/head) on the [`mtcars`](http://www.rdocumentation.org/packages/datasets/functions/mtcars) data set to have a look at the header and the first observations.
 
+- Call [`rownames()`](http://www.rdocumentation.org/packages/base/functions/rownames) on the [`mtcars`](http://www.rdocumentation.org/packages/datasets/functions/mtcars) data set to view all of the row names.
 
 
 *** =hint
-`head(mtcars)` will show the first observations of the `mtcars` data frame.
 
 *** =pre_exercise_code
 ```{r}
@@ -282,18 +284,26 @@ Call [`head()`](http://www.rdocumentation.org/packages/utils/functions/head) on 
 ```{r}
 # Call head() on mtcars
 
+
+# Call rownames() on mtcars
 ```
 
 *** =solution
 ```{r}
 # Call head() on mtcars
 head(mtcars)
+
+# Call rownames() on mtcars
+rownames(mtcars)
 ```
 
 *** =sct
 ```{r}
 test_function("head", "x", incorrect_msg = "Have you correctly passed `mtcars` to the `head()` function?")
 test_output_contains("head(mtcars)", incorrect_msg = "Simply print out the result of the `head()` call, no need to assign it to a new variable.")
+
+test_function("rownames", "x", incorrect_msg = "Have you correctly passed `mtcars` to the `rownames()` function?")
+test_output_contains("rownames(mtcars)", incorrect_msg = "Simply print out the result of the `rownames()` call, no need to assign it to a new variable.")
 
 success_msg("Wonderful! So, what do we have in this data set? `hp` for example represents the car's horsepower; the Datsun has the lowest horse power of the 6 cars that are displayed. For a full overview of the variables' meaning, type `help(\"mtcars\")` in the console and read the help page. Continue to the next exercise!");
 ```
@@ -310,6 +320,8 @@ Another method that is often used to get a rapid overview of your data is the fu
 - The first observations
 
 Applying the [`str()`](http://www.rdocumentation.org/packages/utils/functions/str) function will often be the first thing that you do when receiving a new data set or data frame. It is a great way to get more insight in your data set before diving into the real analysis.
+
+
 
 It is also useful to summarize all of the observations in each column. You can do this in R with the [`summary()`](http://www.rdocumentation.org/packages/utils/functions/summary) function.
 
