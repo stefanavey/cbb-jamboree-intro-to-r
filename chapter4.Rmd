@@ -86,7 +86,7 @@ Remember that if you want to assign values to a variable in R, you can make use 
 
 *** =pre_exercise_code
 ```{r}
-load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1843/datasets/eset.RData"))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_cbb-jamboree-intro-to-r/datasets/eset.RData"))
 ```
 
 *** =sample_code
