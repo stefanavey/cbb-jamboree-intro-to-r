@@ -312,10 +312,14 @@ str(dat)
 
 *** =sct
 ```{r}
-# test_function("gather", args = c("data", "key", "value", "..."))
- test_object("dat",
-             undefined_msg = "Please make sure to define a variable `dat`.",
-             incorrect_msg = "Looks like `dat` is not set properly. Check your `tidyr::gather()` call")
+test_function("gather", args = c("data", "key", "value"),
+              not_called_msg = "Did you forget to call `tidyr::gather()`?",
+              incorrect_msg = "Looks like `dat` is not set properly. Check your `tidyr::gather()` call")
+## Testing the object here is too resource intensive and results in session disconnects
+## test_object("dat",
+##             undefined_msg = "Please make sure to define a variable `dat`.",
+##             incorrect_msg = "Looks like `dat` is not set properly. Check your
+## `tidyr::gather()` call")
 test_output_contains(str(dat), incorrect_msg = "Have you printed the structure of `dat`?")
 success_msg("Great! Continue to the next exercise!")
 ```
