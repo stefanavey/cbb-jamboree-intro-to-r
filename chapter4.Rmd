@@ -86,7 +86,7 @@ Remember that if you want to assign values to a variable in R, you can make use 
 
 *** =pre_exercise_code
 ```{r}
-load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_cbb-jamboree-intro-to-r/datasets/eset.RData"))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1841/datasets/eset.RData"))
 ```
 
 *** =sample_code
@@ -152,7 +152,7 @@ Use the `colnames()` function to look at the column names of `phenotypes` and `f
 
 *** =pre_exercise_code
 ```{r}
-load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1843/datasets/extractedEset.RData"))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1841/datasets/extractedEset.RData"))
 ```
 
 *** =sample_code
@@ -216,7 +216,7 @@ The [`data.frame()`](http://www.rdocumentation.org/packages/base/functions/data.
 
 *** =pre_exercise_code
 ```{r}
-load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1843/datasets/extractedEset.RData"))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1841/datasets/extractedEset.RData"))
 options(stringsAsFactors = FALSE)
 ```
 
@@ -271,7 +271,7 @@ You can specify all of the samples named by geo\_accession using `starts_with("G
 
 *** =pre_exercise_code
 ```{r}
-load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1843/datasets/extractedEset.RData"))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1841/datasets/extractedEset.RData"))
 options(stringsAsFactors = FALSE)
 ```
 
@@ -336,7 +336,7 @@ Finally, you want to add phenotype data in `phenotypes_filtered` to `dat` so you
 
 *** =pre_exercise_code
 ```{r}
-load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1843/datasets/extractedEset.RData"))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1841/datasets/extractedEset.RData"))
 options(stringsAsFactors = FALSE)
 ```
 
@@ -412,7 +412,7 @@ Review Chapter 3 if you forget what a `ggplot()` call should look like.
 *** =pre_exercise_code
 ```{r}
 
-load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1843/datasets/extractedEset.RData"))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1841/datasets/extractedEset.RData"))
 options(stringsAsFactors = FALSE)
 ```
 
@@ -497,7 +497,7 @@ Remember you can add a layer using `+`
 *** =pre_exercise_code
 ```{r}
 
-load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1843/datasets/extractedEset.RData"))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1841/datasets/extractedEset.RData"))
 options(stringsAsFactors = FALSE)
 ```
 
@@ -592,7 +592,7 @@ Remember you can add a layer using `+`
 *** =pre_exercise_code
 ```{r}
 
-load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1843/datasets/extractedEset.RData"))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1841/datasets/extractedEset.RData"))
 options(stringsAsFactors = FALSE)
 ```
 
