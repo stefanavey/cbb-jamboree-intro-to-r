@@ -312,7 +312,8 @@ str(dat)
 
 *** =sct
 ```{r}
-test_function("gather", args = c("data", "key", "value"),
+test_function("tidyr::gather", args = c("data", "key", "value"),
+              eval = FALSE,
               not_called_msg = "Did you forget to call `tidyr::gather()`?",
               incorrect_msg = "Looks like `dat` is not set properly. Check your `tidyr::gather()` call")
 ## Testing the object here is too resource intensive and results in session disconnects
