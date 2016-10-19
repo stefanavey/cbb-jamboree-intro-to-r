@@ -1,4 +1,4 @@
--- 
+---
 title_meta  : Chapter 4
 title       : Application to Expression Data
 description : "In this chapter, you will combine what you learned in the first three chapters to read in, tidy, and visualize gene expression data. Let's get started!"
@@ -105,7 +105,7 @@ library(Biobase)
 *** =solution
 ```{r}
 # Load Biobase package (from Bioconductor) to work with ExpressionSet Class
-library(Biobase)                                        
+library(Biobase)
 
 # Extract information out of eset into 3 new variables
 expr <- exprs(eset)
@@ -119,7 +119,7 @@ print(eset)
 *** =sct
 ```{r}
 test_student_typed(c("print(eset)", "eset", "show(eset)"),
-                    fixed = TRUE, times = 1, 
+                    fixed = TRUE, times = 1,
                     not_typed_msg = "Have you printed the `eset` variable?")
 # test_output_contains(print(eset), incorrect_msg = "Have you printed the `eset` variable?")
 test_object("expr",
@@ -129,7 +129,7 @@ test_object("features",
             undefined_msg = "Please make sure to define a variable `features`.",
             incorrect_msg = "Have you set the variable `features`?")
 test_object("phenotypes",
-            undefined_msg = "Please make sure to define a variable `phenotypes`.",            
+            undefined_msg = "Please make sure to define a variable `phenotypes`.",
             incorrect_msg = "Have you set the variable `phenotypes`?")
 success_msg("Nice job! Notice in the output that printing `eset` tells you about what it contains including the number of features (genes) and samples.")
 ```
@@ -184,10 +184,10 @@ test_output_contains("colnames(phenotypes)",
                      incorrect_msg = "Did you remember to print out the column names of `phenotypes`?")
 test_output_contains("colnames(features)",
                      incorrect_msg = "Did you remember to print out the column names of `features`?")
-test_object("phenotypes_filtered", 
+test_object("phenotypes_filtered",
             undefined_msg = "Make sure to name your new variable `phenotypes_filtered`.",
             incorrect_msg = "Have you selected the corrected columns from `phenotypes`?")
-test_object("features_filtered", 
+test_object("features_filtered",
             undefined_msg = "Make sure to name your new variable `features_filtered`.",
             incorrect_msg = "Have you selected the corrected columns from `features`?")
 success_msg("Great! Continue to the next exercise.")
@@ -247,7 +247,7 @@ expr_df <- data.frame(features_filtered, expr)
 
 *** =sct
 ```{r}
-test_object("expr_df", 
+test_object("expr_df",
             undefined_msg = "Please make sure to define a variable `expr_df`.",
             incorrect_msg = "Have you set the variable `expr_df`?")
 success_msg("Great! Continue to the next exercise to continue tidying this expression data.")
@@ -307,7 +307,7 @@ expr_df <- data.frame(features_filtered, expr)
 # Gather expression columns of expr_df and print structure of dat
 dat <- tidyr::gather(data = expr_df, key = geo_accession,
               value = expression, starts_with("GSM"))
-str(dat)  
+str(dat)
 ```
 
 *** =sct
@@ -470,7 +470,7 @@ ggplot(data = plotData, aes(x = Time, y = expression)) +
 *** =sct
 ```{r}
 test_ggplot(check_data = TRUE, data_fail_msg = "Make sure to provide the filtered data",
-            check_aes = TRUE, aes_fail_msg = "Did you specify the `x` and `y` aesthetics in `aes()` to plot `Time` versus `expression`?",            
+            check_aes = TRUE, aes_fail_msg = "Did you specify the `x` and `y` aesthetics in `aes()` to plot `Time` versus `expression`?",
             check_geom = TRUE, geom_fail_msg = "Did you add a `geom_point()` layer to create a scatter plot?")
 success_msg("Fantastic!  You just created a scatter plot of expression over time! You can see that the expression of *MX1* changes dramatically over the time course. That's because *MX1* is an antiviral response gene that gets activated when a cell is infected. Let's spice it up a bit...")
 ```
@@ -518,7 +518,7 @@ data <- data.frame(features, expr) %>%
 # Filter the data
 plotData <- dplyr::filter(data, Symbol == "MX1", Treatment == "Brevig")
 
-# Add a line to this plot 
+# Add a line to this plot
 ggplot(data = plotData, aes(x = Time, y = expression)) +
   geom_point()
 
@@ -553,7 +553,7 @@ ggplot(data = plotData, aes(x = Time, y = expression)) +
 # cond <- phenotypes[, "Treatment"] == "Brevig"
 # exp <- expr[features[,"Symbol"] == "MX1", cond]
 # times <- phenotypes[cond, "Time"]
-# matExp <- matrix(exp, ncol = 3, byrow = TRUE)  
+# matExp <- matrix(exp, ncol = 3, byrow = TRUE)
 # matTimes <- matrix(times, ncol = 3, byrow = TRUE)
 # reps <- phenotypes[cond, "Replicate"]
 # matplot(x = matTimes, y = matExp, type = 'b',
