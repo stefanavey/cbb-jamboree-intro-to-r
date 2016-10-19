@@ -319,7 +319,7 @@ str(dat)
 ## `tidyr::gather()` call")
 ## test_output_contains(str(dat),
 ##                      incorrect_msg = "Have you correctly gathered the data into `dat` and printed the structure of `dat`?")
-test_object(dat, eval = FALSE)
+test_object("dat", eval = FALSE)
 success_msg("Your dataset should contain 5 variables (`ID`, `Entrez_Gene_ID`, `Symbol`, `geo_accession`, `expression`) and 46,560 observations. If you did this correctly, continue to the next exercise. If not, look at the hint and try again!")
 ```
 
