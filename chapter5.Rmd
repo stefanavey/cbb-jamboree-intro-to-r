@@ -1,4 +1,4 @@
---- 
+---
 title_meta  : Chapter 5
 title       : Extra Credit - Summarising Data
 description : "Now at the end of our course, use what you know to take your data science investigations to the next level!"
@@ -6,17 +6,17 @@ description : "Now at the end of our course, use what you know to take your data
 --- type:NormalExercise lang:r xp: skills: key:a72efbc26f
 ## Summarising Data
 
-In your R environment, we have available two tables describing gene expression data. 
+In your R environment, we have available two tables describing gene expression data.
 
 - `ref` - annotation mappings between ENSEMBL gene identifiers and gene symbols for an assortment of 3000 genes
 - `fpm` - fragments per million (aka expression strength) of 1000 genes pulled at random from a genome-wide assay
 
-You'll be using these two objects over the next few exercises, so get cozy with them! You might want to explore them before working with them. 
+You'll be using these two objects over the next few exercises, so get cozy with them! You might want to explore them before working with them.
 
 Now our first task: *joining* together expression data with annotation data.
 
 *** =instructions
-- Combine `fpm` and `ref` into a new `fpm_anno`, such that genes whose expression was measured are annotated with gene symbol in addition to their ENSEMBL identifiers. 
+- Combine `fpm` and `ref` into a new `fpm_anno`, such that genes whose expression was measured are annotated with gene symbol in addition to their ENSEMBL identifiers.
 - Only annotate genes whose expression was measured (e.g., you should not be seeing `NA` values in your final result).
 
 *** =hint
@@ -88,22 +88,21 @@ You might be able to imagine a way of taking the average across a given group of
 However, this doesn't scale well, and we would have to somehow repeat it for all our groups! Luckily, there's a better way with `dplyr`.
 
 
-   
+
 
 *** =instructions
 First, let's use `tidyr::gather()` to convert our dataset from wide to long format, such that the columns are:
 
 `ensembl_id`, `symbol`, `sample`, `value`
 
-    
+
 *** =hint
-Make sure to specify the value columns correctly - in this case, exclude our annotation columns `symbol` and `ensembl_id`. Make a new object called `fpm_long` 
-    
+Make sure to specify the value columns correctly - in this case, exclude our annotation columns `symbol` and `ensembl_id`. Make a new object called `fpm_long`
+
 
 *** =pre_exercise_code
 ```{r}
 load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1841/datasets/fpm_anno.RData"))
-
 ```
 
 *** =sample_code
@@ -116,8 +115,8 @@ fpm_anno
 
 ## Use tidyr::gather() to organize data into the columns:
 ## `ensembl_id`, `symbol`, `sample`, `value`
-fpm_long 
-    
+fpm_long
+
 
 ```
 
@@ -128,7 +127,7 @@ library(tidyr)
 
 fpm_long <- tidyr::gather(fpm_anno, sample, value, 3:ncol(fpm_anno))
 ```
-	
+
 
 *** =sct
 ```{r}
@@ -147,11 +146,11 @@ You might notice however that the `sample` column actually contains two *separat
 
 To accomplish this, we will use the function `tidyr::separate()` to split upon a delimiter, in this case the underscore (`_`), keeping only the cell type and replicate information (since we will also extract `cell` if we split on the underscore).
 
-Lastly, we can drop this `cell` column, which is irrelevant since it provides no discriminatory information, using the `dplyr::select()` function. Note that one can select by specifying columns (`dplyr::select(dat, some_column_name)`) but also can *remove* columns by negation (`dplyr::select(dat, -column_to_drop)`). 
+Lastly, we can drop this `cell` column, which is irrelevant since it provides no discriminatory information, using the `dplyr::select()` function. Note that one can select by specifying columns (`dplyr::select(dat, some_column_name)`) but also can *remove* columns by negation (`dplyr::select(dat, -column_to_drop)`).
 
 *** =instructions
 Use `tidyr::separate()` to split the `sample` column into three new columns - `cell` (which should only contain the value `cell`), `cell_type` (`a` or `b`), and `replicate` (`1` or `2`). In addition, drop the irrelevant `cell` column using the `dplyr::select()` function using negation. Save this data into a new object called `fpm_sep`.
-    
+
 *** =hint
 The documentation for `tidyr::separate()` is the data, the column to separate, into is the names of the new columns, and the last argument you need is sep, which is the delimiter (in this case an underscore, `"_"`). Don't forget to drop the `cell` column afterwards!
 
@@ -203,7 +202,7 @@ Finally, we have a dataset that we can summarise the mean expression across diff
 To accomplish this last step, we will make use of two functions. Firstly, we need to *group* our data on the basis of the genes (`ensembl_id`, `symbol`) and `cell_type`. We can do this using the `dplyr::group_by()` function. The result of this is that any *summary* operations will be performed *based on the group*, rather than simply per row. We can write this roughly as:
 
 `dplyr::group_by(dat, grouping_variable_1, grouping_variable_2, ...)`
-   
+
 The second function provides the final outcome - `dplyr::summarise()`. Here, we provide the new column name and the operation by which to summarise across the rows. We could for example calculate the variance in expression by writing:
 
 `dplyr::summarise(dat, variance_per_group = var(value))`
@@ -211,7 +210,7 @@ The second function provides the final outcome - `dplyr::summarise()`. Here, we 
 
 *** =instructions
 Using the `dplyr::group_by()` and `dplyr::summarise()` functions, calculate the mean expression per gene and cell type. Save the object as `fpm_summary`, where the mean of the expression is saved into a column named `avg`.
-      
+
 *** =hint
 Did you know you can link operations using the pipe (`%>%`) operator? Instead of saving each step as a separate function, simply use a pipe to link the operations together. This pipe essentially sends the output of one command as the input of another, e.g.:
 
@@ -220,7 +219,7 @@ Did you know you can link operations using the pipe (`%>%`) operator? Instead of
 *** =pre_exercise_code
 ```{r}
 load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1841/datasets/fpm_sep.RData"))
-
+library(dplyr)
 ```
 
 *** =sample_code
@@ -230,7 +229,6 @@ fpm_sep
 
 ## Save your grouped/summarised data into a new object, `fpm_summary`
 fpm_summary
-
 ```
 
 *** =solution
@@ -262,7 +260,7 @@ Be amazed by how easy it is to munge, tidy, and analyze data using `dplyr` and `
 
 *** =hint
 Simply hit submit when you're ready!
-    
+
 *** =pre_exercise_code
 ```{r}
 load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1841/datasets/ref.RData"))
@@ -278,7 +276,7 @@ library(dplyr)
 ## We end on the tidied up dataset
 ## Explore each step by separating the individual lines into
 ## new objects and you'll see we recreated each step we took
-## Note that dot notation in the third line (`3:ncol(.)`) 
+## Note that dot notation in the third line (`3:ncol(.)`)
 ## is a reference to the piped in (input) object
 df <- dplyr::right_join(ref, fpm,  by = c("GENEID" = "ensembl_id")) %>%
     dplyr::rename(ensembl_id = GENEID, symbol = SYMBOL) %>%
