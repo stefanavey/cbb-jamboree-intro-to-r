@@ -8,3 +8,4 @@ university          : Yale University
 programming_language: r
 difficulty_level    : 2
 time_needed         : 1.5 hours
+from                : 'r-base-prod:18'
